@@ -6,11 +6,11 @@ on:
         name:
           description: "Person to greet"
           required: true
-          default: "bossm0n5t3r"
+          default: "kendrick.seo"
         home:
           description: "location"
           required: false
-          default: "The Octoverse"
+          default: "apeach-back"
   push:
     branches: [ master ]
   pull_request:
