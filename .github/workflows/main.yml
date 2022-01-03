@@ -1,6 +1,16 @@
 name: GCE Connect And Execute Script
 
 on:
+  workflow_dispatch:
+      inputs:
+        name:
+          description: "Person to greet"
+          required: true
+          default: "bossm0n5t3r"
+        home:
+          description: "location"
+          required: false
+          default: "The Octoverse"
   push:
     branches: [ master ]
   pull_request:
