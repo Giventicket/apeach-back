@@ -22,7 +22,6 @@ const upload = multer({
 // audio 저장하기
 router.post('/upload', upload.single('audio'), async (req, res, next) => {
     try {
-        console.log(req.file);
         if(req.file === undefined)
             res.status(400).json({
                 message: "upload failed [no audio file]",
