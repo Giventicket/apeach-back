@@ -8,8 +8,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  GCE_INSTANCE: apeach-back	  
-  GCE_INSTANCE_ZONE: asia-northeast3-a	
+  GCE_INSTANCE: apeach-back
+  GCE_INSTANCE_ZONE: asia-northeast3-a
   
 jobs:
   setup-pull-deploy:
