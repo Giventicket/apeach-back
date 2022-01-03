@@ -36,4 +36,4 @@ jobs:
       
       - name: Connect GCE And execute docker ps
         run: |-
-          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd ../home/kendrick_seo/apeach-back; git pull; npm install; fuser -k -n tcp 3000; npm start';
+          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'pwd';
