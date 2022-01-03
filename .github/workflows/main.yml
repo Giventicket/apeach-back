@@ -34,6 +34,6 @@ jobs:
             service_account_key: ${{ secrets.GCE_SA_KEY }}
             project_id: ${{ secrets.GCE_PROJECT_ID }}
       
-      - name: Connect GCE And execute docker ps
+      - name: Connect GCE And git pull, npm start
         run: |-
-          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd ../kendrick_seo/apeach-back; git pull; npm install; fuser -k -n tcp 3000; npm start';
+          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd ../kendrick_seo/apeach-back; sudo git pull; sudo npm install; sudo fuser -k -n tcp 3000; sudo npm start$';
