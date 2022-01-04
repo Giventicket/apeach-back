@@ -20,10 +20,9 @@ const uploadFile = async (req, res, next) => {
 
 const deleteFile = async (req, res, next) => {
     try {
-        const result = await storage.bucket('apeach-bucket').file(req.params.filename).delete();
-        console.log(result);
+        await storage.bucket('apeach-bucket').file(req.params.filename).delete();        
         res.status(200).json({
-            message: `remove file ${req.params.filename} from google bucket`,
+            message: `Delete success[${req.params.filename} from google bucket]`,
             data: { }
         });
     } catch (error) {

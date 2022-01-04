@@ -9,7 +9,7 @@ const connect = require('./schemas');
 const indexRouter = require('./routes/index');
 
 const app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 connect();
 
 app.use(morgan('dev'));
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors({ credentials: true }));
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} no routers!`);
