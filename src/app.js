@@ -9,7 +9,7 @@ const connect = require('./schemas');
 const indexRouter = require('./routes/index');
 
 const app = express();
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 3000);
 connect();
 
 app.use(morgan('dev'));
