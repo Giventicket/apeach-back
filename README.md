@@ -28,3 +28,5 @@
 ├── .env
 └── pathfinder-101-$.json
 ``` 
+## 벡엔드 인프라
+<image src="https://user-images.githubusercontent.com/39179946/148075429-0e935de1-cd7d-46c5-8acf-0eef86cd8595.jpeg"/>
