@@ -1,22 +1,7 @@
-const express = require('express');
-const path = require('path');
-const multer = require('multer');
-const multerGoogleStorage = require('multer-google-storage');
 const {Storage} = require('@google-cloud/storage');
-
-const router = express.Router();
 const storage = new Storage({ keyFilename: process.env.KEY_FILENAME });
 
-const upload = multer({
-    storage: multerGoogleStorage.storageEngine({
-        bucket: process.env.BUCKET_NAME,
-        projectId: process.env.PROJECT_ID,
-        keyFilename: process.env.KEY_FILENAME
-    })
-});
-
-// audio 저장하기
-router.post('/upload', upload.single('audio'), async (req, res, next) => {
+const uploadFile = async (req, res, next) => {
     try {
         if(req.file === undefined)
             res.status(400).json({
@@ -31,10 +16,9 @@ router.post('/upload', upload.single('audio'), async (req, res, next) => {
         console.log(error);
         next(error);
     }
-});
- 
-// audio 삭제하기
-router.delete('/:filename', async (req, res, next) => {
+} 
+
+const deleteFile = async (req, res, next) => {
     try {
         const result = await storage.bucket('apeach-bucket').file(req.params.filename).delete();
         console.log(result);
@@ -46,6 +30,6 @@ router.delete('/:filename', async (req, res, next) => {
         console.log(error);
         next(error);
     }
-});
+}
 
-module.exports = router;
+module.exports = {uploadFile, deleteFile};
