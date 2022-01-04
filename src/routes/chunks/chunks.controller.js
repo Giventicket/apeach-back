@@ -1,4 +1,5 @@
 const Chunk = require('../../schemas/chunk');
+const storage = require("../../services/googleCloudStorage");
 
 const createChunk = async (req, res, next) => {
     try {
@@ -12,7 +13,7 @@ const createChunk = async (req, res, next) => {
         console.log(chunk);
         res.status(201).json({ 
             message: `Create success[create ${chunk._id}}]`, 
-            data: {_id: chunk._id} 
+            data: chunk 
         });
     } catch (error) {
         console.log(error);
@@ -25,8 +26,14 @@ const getChunk = async (req, res, next) => {
         const chunk = await Chunk.find({_id: req.params.id}); 
         console.log(chunk.length);
         if(chunk.length == 0)
-            res.status(404).json({ message: `Cannot find ${req.params.id}`, data: {} });
-        res.status(200).json({ message: `Find success [find ${req.params.id}]`, data: chunk });
+            res.status(404).json({ 
+                message: `Cannot find ${req.params.id}`, 
+                data: {} 
+            });
+        res.status(200).json({ 
+            message: `Find success [find ${req.params.id}]`, 
+            data: chunk 
+        });
     } catch (error) {
         console.log(error);
         next(error);
@@ -56,9 +63,15 @@ const updateChunk = async (req, res, next) => {
             target_wave_url: req.body.target_wave_url,
         });
         if (result === null) 
-             res.status(404).json({ message: `Cannot find ${req.params.id}`, data: {} });
+             res.status(404).json({ 
+                 message: `Cannot find ${req.params.id}`, 
+                 data: {} 
+             });
         const chunk = await Chunk.find({_id: req.params.id}); 
-        res.status(200).json({ message: `update success [find ${req.params.id}]`, data: chunk });
+        res.status(200).json({ 
+            message: `update success [find ${req.params.id}]`, 
+            data: chunk 
+        });
         console.log(result);
     } catch (error) {
         console.log(error);
@@ -68,13 +81,22 @@ const updateChunk = async (req, res, next) => {
 
 const deleteChunk = async (req, res, next) => {
     try {
-        const result = await Chunk.deleteOne({ _id: req.params.id });
-        if (result.deletedCount === 0) {
+        const chunk = await Chunk.find({_id: req.params.id}); 
+        if (chunk.length === 0) {
             res.status(404).json({ 
                 message: `Cannot find ${req.params.id}`, 
                 data: {} 
             });        
         }
+        await Chunk.deleteOne({ _id: req.params.id });
+        const audios = [chunk[0]["source_wave_url"], chunk[0]["target_wave_url"]];
+        audios.forEach(async (audio) => {
+            try {
+                await storage.bucket('apeach-bucket').file(audio).delete();    
+            } catch(error) {
+                console.log(`${audio} is not on google bucket!`);
+            }
+        });
         res.status(200).json({
             message: `Delete success [delete ${req.params.id}]`,
             data: {}
@@ -87,7 +109,18 @@ const deleteChunk = async (req, res, next) => {
 
 const deleteChunks = async (req, res, next) => {
     try {
+        const chunks = await Chunk.find({}); 
         await Chunk.deleteMany({ });
+        chunks.forEach((chunk) => {
+            const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
+            audios.forEach(async (audio) => {
+                try {
+                    await storage.bucket('apeach-bucket').file(audio).delete();    
+                } catch(error) {
+                    console.log(`${audio} is not on google bucket!`);
+                }
+            });
+        });
         res.status(200).json({
             message: "Delete success [delete all]",
             data: {}
