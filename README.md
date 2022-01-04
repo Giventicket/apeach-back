@@ -1,8 +1,8 @@
-# apeach-back
+# apeach-back [dub-ai]
 
-## <a href="https://seo-jun-pyo.gitbook.io/apeach-back/"> 깃북 <a/>
+## <a href="https://seo-jun-pyo.gitbook.io/apeach-back/"> 1. 깃북 <a/>
 
-## 폴더구조
+## 2. 폴더구조
 ```bash
 ├── src
 │   ├── app.js
@@ -28,5 +28,5 @@
 ├── .env
 └── pathfinder-101-$.json
 ``` 
-## 벡엔드 인프라
+## 3. 벡엔드 인프라
 <image src="https://user-images.githubusercontent.com/39179946/148075429-0e935de1-cd7d-46c5-8acf-0eef86cd8595.jpeg"/>
