@@ -1,3 +1,4 @@
+const url = require('url');
 const Chunk = require('../../schemas/chunk');
 const storage = require("../../services/googleCloudStorage");
 
@@ -79,6 +80,8 @@ const updateChunk = async (req, res, next) => {
     }
 }
 
+
+
 const deleteChunk = async (req, res, next) => {
     try {
         const chunk = await Chunk.find({_id: req.params.id}); 
@@ -92,9 +95,11 @@ const deleteChunk = async (req, res, next) => {
         const audios = [chunk[0]["source_wave_url"], chunk[0]["target_wave_url"]];
         audios.forEach(async (audio) => {
             try {
-                await storage.bucket('apeach-bucket').file(audio).delete();    
+                const parsedAudio = url.parse(audio).path.split("/");
+                await storage.bucket('apeach-bucket').file(parsedAudio[2]).delete();    
+                console.log(`${parsedAudio[2]} is deleted on google bucket!`);
             } catch(error) {
-                console.log(`${audio} is not on google bucket!`);
+                console.log(`${parsedAudio[2]} is not on google bucket!`);
             }
         });
         res.status(200).json({
@@ -115,9 +120,11 @@ const deleteChunks = async (req, res, next) => {
             const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
             audios.forEach(async (audio) => {
                 try {
-                    await storage.bucket('apeach-bucket').file(audio).delete();    
+                    const parsedAudio = url.parse(audio).path.split("/");
+                    await storage.bucket('apeach-bucket').file(parsedAudio[2]).delete();    
+                    console.log(`${parsedAudio[2]} is deleted on google bucket!`);
                 } catch(error) {
-                    console.log(`${audio} is not on google bucket!`);
+                    console.log(`${parsedAudio.path.substr(1)} is not on google bucket!`);
                 }
             });
         });
