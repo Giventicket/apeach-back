@@ -5,7 +5,7 @@ const cors = require('cors');
 const indexRouter = require('../api/routes/index');
 
 module.exports = (app) => {
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 80);
     
     app.use(morgan('dev'));
     app.use(express.json());

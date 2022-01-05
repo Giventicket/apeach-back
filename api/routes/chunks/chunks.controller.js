@@ -9,7 +9,7 @@ const createChunk = async (req, res, next) => {
         res.status(201).json({ 
             message: `Create success[create ${chunk._id}}]`, 
             data: chunk 
-            });
+        });
     } catch (error) {
         //console.log(error);
         next(error);

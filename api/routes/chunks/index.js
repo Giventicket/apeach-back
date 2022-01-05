@@ -1,10 +1,11 @@
 const express = require('express');
 const controller = require('./chunks.controller');
+const {isRequired} = require('../../middlewares/index');
 
 const router = express.Router();
 
 // [post] chunk 생성하기
-router.post('/', controller.createChunk);
+router.post('/', isRequired("body", 'source_wave_url'), controller.createChunk);
 
 // [get] 매칭 되는 chunk 가져오기
 router.get('/:id', controller.getChunk);
