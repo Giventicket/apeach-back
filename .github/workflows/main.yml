@@ -36,4 +36,4 @@ jobs:
       
       - name: Connect GCE And git pull, npm start
         run: |-
-          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd ../kendrick_seo/apeach-back; sudo git pull; sudo npm install; sudo npm install -g pm2; sudo fuser -k -n tcp 3000; sudo pm2 kill; sudo pm2 start src/app.js';
+          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd ../kendrick_seo/apeach-back; sudo git pull; sudo npm install; sudo npm install -g pm2; sudo fuser -k -n tcp 3000; sudo pm2 kill; sudo pm2 start app.js';
