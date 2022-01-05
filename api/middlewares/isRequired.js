@@ -5,10 +5,8 @@ const isRequired = (type, prop) => (req, res, next) => {
             message: `Wrong access! required ${type} : ${prop}`, 
             data: { }
         });
-        next();
     } else {
-        console.log(error);
-        next(error);
+        next();
     }
 };
 

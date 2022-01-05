@@ -80,6 +80,7 @@ const deleteChunk = async (req, res, next) => {
     try {
         const gcStorage = req.gcStorage;
         const chunk = await Chunk.find({_id: req.params.id}); 
+        let messageFromBucket = "";
         if (chunk.length === 0) {
             res.status(404).json({ 
                 message: `Cannot find ${req.params.id}`, 
@@ -92,9 +93,11 @@ const deleteChunk = async (req, res, next) => {
             try {
                 const parsedAudio = url.parse(audio).path.split("/");
                 console.log(parsedAudio);
-                await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();    
+                await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();                     
+                messageFromBucket += `(From Google Bucket)${parsedAudio[2]} is deleted on google bucket!\n`;   
                 console.log(`${parsedAudio[2]} is deleted on google bucket!`);
             } catch(error) {
+                messageFromBucket += "(From Google Bucket)"+error.message;
                 console.log(error.message);
             }
         });
@@ -113,20 +116,23 @@ const deleteChunks = async (req, res, next) => {
         const gcStorage = req.gcStorage;
         const chunks = await Chunk.find({}); 
         await Chunk.deleteMany({ });
+        let messageFromBucket = "";
         chunks.forEach((chunk) => {
             const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
             audios.forEach(async (audio) => {
                 try {
                     const parsedAudio = url.parse(audio).path.split("/");
-                    await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();    
+                    await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();
+                    messageFromBucket += `(From Google Bucket)${parsedAudio[2]} is deleted on google bucket!\n`;
                     console.log(`${parsedAudio[2]} is deleted on google bucket!`);
                 } catch(error) {
                     console.log(error.message);
+                    messageFromBucket += "(From Google Bucket)"+error.message;
                 }
             });
         });
         res.status(200).json({
-            message: "Delete success [delete all]",
+            message: "Delete success [delete all]\n" + messageFromBucket,
             data: {}
         });
     } catch (error) {
