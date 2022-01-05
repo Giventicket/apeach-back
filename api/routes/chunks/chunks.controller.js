@@ -4,19 +4,14 @@ const Chunk = require('../../../models/chunk');
 const createChunk = async (req, res, next) => {
     try {
         const chunk = await Chunk.create({
-            status: req.body.status,
             source_wave_url: req.body.source_wave_url,
-            source_text: req.body.source_text,
-            target_text: req.body.target_text,
-            target_wave_url: req.body.target_wave_url,
         });
-        console.log(chunk);
         res.status(201).json({ 
             message: `Create success[create ${chunk._id}}]`, 
             data: chunk 
-        });
+            });
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         next(error);
     }
 }

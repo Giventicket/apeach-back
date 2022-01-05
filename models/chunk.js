@@ -4,18 +4,23 @@ const { Schema } = mongoose;
 const chunkSchema = new Schema({
     status: {
         type: String, // 0 : source_wave, 1 : source_text, 2 : target_text, 3 : target_wave
+        default: "0",
     }, 
     source_wave_url: {
-        type: String
+        type: String,
+        required: true
     }, 
     source_text: {
-        type: String
+        type: String,
+        default: ""
     }, 
     target_text: {
-        type: String
+        type: String,
+        default: ""
     }, 
     target_wave_url: {
-        type: String
+        type: String,
+        default: ""
     }, 
     createdAt: {
         type: Date,
