@@ -38,10 +38,10 @@ jobs:
         run: |-
           gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- '\
           cd ../kendrick_seo/production/apeach-back;\  
-          rm .env\
-          rm pathfinder-101-6f8d719fc233.json\
-          echo ${{ secrets.ENV }} >> .env\
-          echo ${{ secrets.JSON }} >> pathfinder-101-6f8d719fc233.json\
+          rm .env;\
+          rm pathfinder-101-6f8d719fc233.json;\
+          echo ${{ secrets.ENV }} >> .env;\
+          echo ${{ secrets.JSON }} >> pathfinder-101-6f8d719fc233.json;\
           sudo git pull;\ 
           sudo npm install;\ 
           sudo npm install -g pm2;\ 
