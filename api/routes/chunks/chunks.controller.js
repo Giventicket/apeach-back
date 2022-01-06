@@ -10,9 +10,8 @@ const createChunk = async (req, res, next) => {
             message: `Create success[create ${chunk._id}}]`, 
             data: chunk 
         });
-    } catch (error) {
-        //console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -20,18 +19,17 @@ const getChunk = async (req, res, next) => {
     try {
         const chunk = await Chunk.find({_id: req.params.id}); 
         console.log(chunk.length);
-        if(chunk.length == 0)
-            res.status(404).json({ 
-                message: `Cannot find ${req.params.id}`, 
-                data: {} 
-            });
+        if(chunk.length == 0){
+            const err = new Error(`Cannot find ${req.params.id}`);
+            err.status = 404;
+            throw err;
+        }
         res.status(200).json({ 
             message: `Find success [find ${req.params.id}]`, 
             data: chunk 
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -42,9 +40,8 @@ const getChunks = async (req, res, next) => {
             message: "Find success [find all]", 
             data: chunks 
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -57,20 +54,19 @@ const updateChunk = async (req, res, next) => {
             target_text: req.body.target_text,
             target_wave_url: req.body.target_wave_url,
         });
-        if (result === null) 
-             res.status(404).json({ 
-                 message: `Cannot find ${req.params.id}`, 
-                 data: {} 
-             });
+        if (result === null){
+            const err = new Error(`Cannot find ${req.params.id}`);
+            err.status = 404;
+            throw err;
+        }
         const chunk = await Chunk.find({_id: req.params.id}); 
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
             data: chunk 
         });
         console.log(result);
-    } catch (error) {
-        console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -81,9 +77,9 @@ const asyncAudioDelete = async (gcStorage, audio, messageFromBucket) => {
         await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();                     
         console.log(`${parsedAudio[2]} is deleted on google bucket!`);
         return `[From Google Bucket] ${parsedAudio[2]} is deleted on google bucket!, `;   
-    } catch(error) {
-        console.log(error.message);
-        return "[From Google Bucket] " + error.message + ", ";
+    } catch(err) {
+        console.log(err.message);
+        return "[From Google Bucket] " + err.message + ", ";
     };
 }
 
@@ -91,10 +87,9 @@ const deleteChunk = async (req, res, next) => {
     try {
         const chunk = await Chunk.find({_id: req.params.id}); 
         if (chunk.length === 0) {
-            res.status(404).json({ 
-                message: `Cannot find ${req.params.id}`, 
-                data: {} 
-            });        
+            const err = new Error(`Cannot find ${req.params.id}`);
+            err.status = 404;
+            throw err;
         }
         await Chunk.deleteOne({ _id: req.params.id });
         const audios = [chunk[0]["source_wave_url"], chunk[0]["target_wave_url"]];
@@ -107,10 +102,9 @@ const deleteChunk = async (req, res, next) => {
             message: `Delete success [delete ${req.params.id}], ` + messageFromBucket,
             data: {}
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }  
+    } catch (err) {
+        next(err);
+    } 
 }
 
 const deleteChunks = async (req, res, next) => {
@@ -129,10 +123,9 @@ const deleteChunks = async (req, res, next) => {
             message: "Delete success [delete all], " + messageFromBucket,
             data: {}
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }  
+    } catch (err) {
+        next(err);
+    }
 }
 
 

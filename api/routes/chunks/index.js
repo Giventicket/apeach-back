@@ -14,7 +14,7 @@ router.get('/:id', controller.getChunk);
 router.get('/', controller.getChunks);
 
 // [update] chunk update 하기
-router.patch('/:id', controller.updateChunk);
+router.patch('/:id', isRequired("params", 'id'), controller.updateChunk);
 
 // [delete] id에 매칭되는 chunk 하나 삭제하기
 router.delete("/:id", controller.deleteChunk);

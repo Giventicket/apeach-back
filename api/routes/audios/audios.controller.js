@@ -1,17 +1,16 @@
 const uploadFile = async (req, res, next) => {
     try {
-        if(req.file === undefined)
-            res.status(400).json({
-                message: "upload failed [no audio file]",
-                data: { }
-            });
+        if(req.file === undefined){
+            const err = new Error("upload failed [no audio file]");
+            err.status = 400;
+            throw err;
+        }
         res.status(200).json({
             message: "upload success [upload audio on google bucket]",
             data: req.file
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 } 
 
@@ -23,9 +22,8 @@ const deleteFile = async (req, res, next) => {
             message: `Delete success[${req.params.filename} from google bucket]`,
             data: { }
         });
-    } catch (error) {
-        console.log(error);
-        next(error);
+    } catch (err) {
+        next(err);
     }
 }
 
