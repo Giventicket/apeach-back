@@ -47,39 +47,37 @@ const getChunks = async (req, res, next) => {
 
 const updateChunk = async (req, res, next) => {
     try {
-        const result = await Chunk.findOneAndUpdate({ _id: req.params.id }, { 
+        const chunk = await Chunk.findOneAndUpdate({ _id: req.params.id }, { 
             status: req.body.status,
             source_wave_url: req.body.source_wave_url,
             source_text: req.body.source_text,
             target_text: req.body.target_text,
             target_wave_url: req.body.target_wave_url,
-        });
-        if (result === null){
+        }, {new: true});
+        if (chunk === null){
             const err = new Error(`Cannot find ${req.params.id}`);
             err.status = 404;
             throw err;
         }
-        const chunk = await Chunk.find({_id: req.params.id}); 
+        if(chunk.status === "3"){
+            req.logger.info(chunk);
+        }
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
-            data: chunk 
+            data: [chunk]
         });
-        console.log(result);
     } catch (err) {
         next(err);
     }
 }
 
-const asyncAudioDelete = async (gcStorage, audio, messageFromBucket) => {
+const asyncAudioDelete = async (gcStorage, audio, logger) => {
     try {
         const parsedAudio = url.parse(audio).path.split("/");
-        console.log(parsedAudio);
         await gcStorage.bucket('apeach-bucket').file(parsedAudio[2]).delete();                     
-        console.log(`${parsedAudio[2]} is deleted on google bucket!`);
-        return `[From Google Bucket] ${parsedAudio[2]} is deleted on google bucket!, `;   
+        logger.info(`[From Google Bucket] ${parsedAudio[2]} is deleted on google bucket!, `)
     } catch(err) {
-        console.log(err.message);
-        return "[From Google Bucket] " + err.message + ", ";
+        logger.error("[From Google Bucket] " + err.message);
     };
 }
 
@@ -94,12 +92,11 @@ const deleteChunk = async (req, res, next) => {
         await Chunk.deleteOne({ _id: req.params.id });
         const audios = [chunk[0]["source_wave_url"], chunk[0]["target_wave_url"]];
 
-        let messageFromBucket = "";
         for(const audio of audios){
-            messageFromBucket += await asyncAudioDelete(req.gcStorage, audio, messageFromBucket);
+            await asyncAudioDelete(req.gcStorage, audio, req.logger);
         }
         res.status(200).json({
-            message: `Delete success [delete ${req.params.id}], ` + messageFromBucket,
+            message: `Delete success [delete ${req.params.id}]`,
             data: {}
         });
     } catch (err) {
@@ -112,15 +109,14 @@ const deleteChunks = async (req, res, next) => {
         const gcStorage = req.gcStorage;
         const chunks = await Chunk.find({}); 
         await Chunk.deleteMany({ });
-        let messageFromBucket = "";
         for(const chunk of chunks) {
             const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
             for(const audio of audios){
-                messageFromBucket += await asyncAudioDelete(req.gcStorage, audio, messageFromBucket);
+                await asyncAudioDelete(req.gcStorage, audio, req.logger);
             }
         };
         res.status(200).json({
-            message: "Delete success [delete all], " + messageFromBucket,
+            message: "Delete success [delete all]",
             data: {}
         });
     } catch (err) {

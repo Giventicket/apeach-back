@@ -52,4 +52,9 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-module.exports = { logger };
+module.exports = (app) => {
+    app.use((req, res, next) => {
+        req.logger = logger;
+        next();
+    });
+};
