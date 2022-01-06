@@ -20,7 +20,8 @@ env:
   PROJECT_ID: ${{ secrets.GCE_PROJECT_ID }}
   GCE_INSTANCE: apeach-back
   GCE_INSTANCE_ZONE: asia-northeast3-a
-  
+  ENV: ${{ secrets.ENV }}  
+  JSON: ${{ secrets.JSON }}
 jobs:
   setup-pull-deploy:
     runs-on: ubuntu-latest
@@ -40,8 +41,8 @@ jobs:
           cd ../kendrick_seo/production/apeach-back;\  
           sudo rm -f .env;\
           sudo rm -f pathfinder-101-6f8d719fc233.json;\
-          sudo echo ${{ secrets.ENV }} >> .env;\
-          sudo echo ${{ secrets.JSON }} >> pathfinder-101-6f8d719fc233.json;\
+          sudo echo "$ENV" >> .env;\
+          sudo echo "$JSON" >> pathfinder-101-6f8d719fc233.json;\
           sudo git pull;\ 
           sudo npm install;\ 
           sudo npm install -g pm2;\ 
