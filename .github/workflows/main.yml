@@ -39,5 +39,5 @@ jobs:
           cd ../kendrick_seo/production/apeach-back;\  
           sudo git pull;\ 
           sudo npm install;\
-          sudo fuser -k -n tcp 3000;\
-          sudo npm start';
+          sudo pm2 kill;\
+          sudo pm2 start app.js';
