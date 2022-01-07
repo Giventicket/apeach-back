@@ -38,6 +38,6 @@ jobs:
           gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- '\
           cd ../kendrick_seo/production/apeach-back;\  
           sudo git pull;\ 
-          sudo npm install;\ 
-          sudo pm2 kill;\ 
-          sudo pm2 start app.js';
+          sudo npm install;\
+          sudo fuser -k -n tcp 3000;\
+          sudo npm start';
