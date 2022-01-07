@@ -7,6 +7,11 @@ const createChunkData = {
     source_wave_url: "source_wave_url"
 };
 
+const createNewChunkData = {
+    status: "1",
+    source_text: "hello!"
+};
+
 beforeAll(async () => {
     await dbHandler.connect();
 });
@@ -80,6 +85,44 @@ describe("GET /api/chunks/:id", () => {
         .get(`/api/chunks/123`)
         .type('application/json');
 
+        expect(res.status).toStrictEqual(400);
+    });
+});
+
+describe("PATCH /api/chunks", () => {
+    it('chunk 업데이트 완료시 200 응답', async() => { 
+        const res = await request(app)
+        .patch(`/api/chunks/${chunkID}`)
+        .type('application/json')
+        .send(createNewChunkData);
+        
+        expect(res.status).toStrictEqual(200);
+    });
+    
+    it('id를 명시하지 않았을 경우 400 응답', async() => { 
+        const res = await request(app)
+        .patch(`/api/chunks`)
+        .type('application/json')
+        .send(createNewChunkData);
+        
+        expect(res.status).toStrictEqual(400);
+    });
+    
+    it('chunk를 찾지 못했을 경우 404 응답', async() => { 
+        const res = await request(app)
+        .patch(`/api/chunks/61d7f51cb51a2c7e5240d33e`)
+        .type('application/json')
+        .send(createNewChunkData);
+        
+        expect(res.status).toStrictEqual(404);
+    });
+    
+    it('chunk의 id 형식이 틀릴 경우 400 응답', async() => { 
+        const res = await request(app)
+        .patch(`/api/chunks/61d7f51cb5e`)
+        .type('application/json')
+        .send(createNewChunkData);
+        
         expect(res.status).toStrictEqual(400);
     });
 });
