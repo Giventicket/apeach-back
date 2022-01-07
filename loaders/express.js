@@ -6,8 +6,8 @@ const indexRouter = require('../api/routes/index');
 
 module.exports = (app) => {
     app.set('port', process.env.PORT || 80);
-    
-    app.use(morgan('dev'));
+    if (process.env.NODE_ENV !== 'test')
+        app.use(morgan('dev'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cors({ credentials: true }));
@@ -18,7 +18,6 @@ module.exports = (app) => {
         next(error);
     });
     app.use((err, req, res, next) => {
-        console.log(err);
         req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
         res.status(err.status || 500).json({message: err.message, data: { }});
     });

@@ -18,7 +18,6 @@ const createChunk = async (req, res, next) => {
 const getChunk = async (req, res, next) => {
     try {
         const chunk = await Chunk.find({_id: req.params.id}); 
-        console.log(chunk.length);
         if(chunk.length == 0){
             const err = new Error(`Cannot find ${req.params.id}`);
             err.status = 404;
