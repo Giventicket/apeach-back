@@ -53,7 +53,7 @@ const updateChunk = async (req, res, next) => {
             target_text: req.body.target_text,
             target_wave_url: req.body.target_wave_url,
         }, {new: true});
-        if (chunk === null){
+        if (chunk === null || chunk === undefined) {
             const err = new Error(`Cannot find ${req.params.id}`);
             err.status = 404;
             throw err;
