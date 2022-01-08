@@ -28,7 +28,7 @@
 │     └── api
 │          └── routes
 │                ├── db.js
-│                └── chunk.test.js
+│                └── chunks.test.js
 ├── models
 │     └── chunk.js
 ├── app.js
