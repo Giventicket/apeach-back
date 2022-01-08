@@ -1,5 +1,6 @@
 const url = require('url');
 const Chunk = require('../../../models/chunk');
+const axios = require("axios");
 
 const createChunk = async (req, res, next) => {
     try {
@@ -60,6 +61,10 @@ const updateChunk = async (req, res, next) => {
         }
         if(chunk.status === "3"){
             req.logger.info(chunk);
+            await axios.post('https://discord.com/api/webhooks/928943384708673588/YGutUPqLc1BxO497nVM15yPI02P6hXB-aGji_dQB8Vzd5720xKmFGZY2eLnPnDzB6wlk', {
+                content: chunk,
+                username: "Backend server"
+            });
         }
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
