@@ -4,27 +4,40 @@
 
 ## 2. 폴더구조
 ```bash
-├── src
-│   ├── app.js
-│   ├── routes
-│   │   ├── audios
-│   │   │     ├── audios.controller.js
-│   │   │     └── index.js
-│   │   ├── chunks
-│   │   │     ├── chunks.controller.js
-│   │   │     └── index.js
-│   │   └── index.js
-│   ├── schemas
-│   │     ├── chunk.js
-│   │     └── index.js
-│   └── service
-│         └── googleCloudStorage.js
-├── .github
-│   ├── workflows
-│       ├── main.yml
+├── api
+│    ├── routes
+│    │      ├── index.js
+│    │      ├── chunks
+│    │      │      ├── index.js
+│    │      │      └── chunks.controller.js
+│    │      └── audios
+│    │             ├── index.js
+│    │             └── audios.controller.js
+│    └── middlewares  
+│          ├── index.js
+│          ├── isRequired.js
+│          └── isValidID.js
 │
+├── loaders
+│      ├── express.js
+│      ├── gcStorage.js
+│      ├── logger.js
+│      └── mongoose.js
+│  
+├── tests
+│     └── api
+│          └── routes
+│                ├── db.js
+│                └── chunk.test.js
+├── models
+│     └── chunk.js
+├── app.js
 ├── package-lock.json
 ├── package.json
+├── jest.config.json
+├── babel.config.json
+├── README.md
+├── .gitignore
 ├── .env
 └── pathfinder-101-$.json
 ``` 
