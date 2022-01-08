@@ -15,8 +15,8 @@ router.get('/:id', middlewares.isValidID, controller.getChunk);
 router.get('/', controller.getChunks);
 
 // [update] chunk update 하기
-router.patch('/', middlewares.isRequired("params", 'id', true)); 
 router.patch('/:id', middlewares.isValidID, middlewares.isRequired("params", 'id', true), controller.updateChunk);
+router.patch('/', middlewares.isRequired("params", 'id', true)); 
 
 // [delete] id에 매칭되는 chunk 하나 삭제하기
 router.delete("/:id", middlewares.isValidID, controller.deleteChunk);

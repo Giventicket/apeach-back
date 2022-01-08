@@ -18,6 +18,7 @@ module.exports = (app) => {
         next(error);
     });
     app.use((err, req, res, next) => {
+        console.log(err);
         req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
         res.status(err.status || 500).json({message: err.message, data: { }});
     });
