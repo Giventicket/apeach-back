@@ -64,8 +64,7 @@ npm: 8.1.2
 <image src="https://user-images.githubusercontent.com/39179946/148674584-9dd9e605-959f-43d6-bbfc-4a687919e812.png"/>
 
 ## 4. 벡엔드 인프라
-<image src="https://user-images.githubusercontent.com/39179946/148075429-0e935de1-cd7d-46c5-8acf-0eef86cd8595.jpeg"/>
-  
+<image src="https://user-images.githubusercontent.com/39179946/148675677-4bdef770-1338-48d3-80b7-17856e123680.png"/>
 
 ## 5. 유닛 테스트
 <image src="https://user-images.githubusercontent.com/39179946/148551241-49fdd83b-7bc7-4538-a061-6d4a2d9eb23d.png"/>
