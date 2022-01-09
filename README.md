@@ -10,6 +10,8 @@ npm: 8.1.2
 <br/>
 <b>git clone https://github.com/Giventicket/apeach-back.git<b/>
 <br/>
+<b>cd apeach-back/<b/>
+<br/>
 <b>npm install<b/>
 <br/>
 <b>npm test<b/>
