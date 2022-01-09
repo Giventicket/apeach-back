@@ -3,6 +3,14 @@
 node: v16.13.1
 <br/>
 npm: 8.1.2
+
+<b>curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash<b/>
+<br/>
+<b>npm install<b/>
+<br/>
+<b>npm test<b/>
+<br/>
+<b>npm start<b/>
   
 ## <a href="https://seo-jun-pyo.gitbook.io/apeach-back/"> 1. 깃북 <a/>
 
