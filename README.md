@@ -4,7 +4,7 @@ node: v16.13.1
 <br/>
 npm: 8.1.2
 
-<b>curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash<b/>
+<b>curl -sL https://rpm.nodesource.com/setup_8.x | sudo -E bash<b/>
 <br/>
 <b>npm install<b/>
 <br/>
