@@ -1,5 +1,8 @@
 # apeach-back [dub-ai]
-
+## 0. Version
+node: v16.13.1
+npm: 8.1.2
+  
 ## <a href="https://seo-jun-pyo.gitbook.io/apeach-back/"> 1. 깃북 <a/>
 
 ## 2. 폴더구조
