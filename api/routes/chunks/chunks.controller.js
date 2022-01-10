@@ -46,7 +46,6 @@ const getChunks = async (req, res, next) => {
 }
 
 const updateChunk = async (req, res, next) => {
-    console.log("hi");
     try {
         const chunk = await Chunk.findOneAndUpdate({ _id: req.params.id }, { 
             status: req.body.status,
@@ -65,7 +64,7 @@ const updateChunk = async (req, res, next) => {
             await axios.post(process.env.DISCORD_WEBHOOK, {
                 content: String(chunk),
                 username: "Backend server"
-            }).catch((err) => {});
+            }).catch((err) => {req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`););
         }
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
