@@ -65,7 +65,7 @@ const updateChunk = async (req, res, next) => {
                 content: String(chunk),
                 username: "Backend server"
             }).catch((err) => {
-                req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
+                req.logger.error(`status: ${(err.status || 500)}, message: ${err}`);
             });
         }
         res.status(200).json({ 
