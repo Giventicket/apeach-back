@@ -6,7 +6,7 @@ module.exports = async (req, chunk) => {
             author: {
                 name: "anonymous user"
             },
-            description: `소스 음성: [source_wave_url](${chunk["source_wave_url"]}) \n 소스 텍스트: ${chunk["source_text"]} \n  타켓 텍스트: ${chunk["target_text"]} \n 타겟 음성: [target_wave_url](${chunk["target_wave_url"])}`,
+            description: `소스 음성: [source_wave_url](${chunk["source_wave_url"]}) \n 소스 텍스트: ${chunk["source_text"]} \n  타켓 텍스트: ${chunk["target_text"]} \n 타겟 음성: [target_wave_url](${chunk["target_wave_url"]})`,
             timestamp: chunk["createdAt"]
         }],
         username: "Apeach-backend",
