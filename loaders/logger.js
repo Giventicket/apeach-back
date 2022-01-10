@@ -1,12 +1,18 @@
 const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
+const moment = require('moment');
+require('moment-timezone');
 
 const logDir = 'logs';  // logs 디렉토리 하위에 로그 파일 저장
 const { combine, timestamp, printf } = winston.format;
 
+moment.tz.setDefault('Asia/Seoul');
+const timeStamp = () => moment().format('YYYY-MM-DD HH:mm:ss');
+
+
 // Define log format
 const logFormat = printf(info => {
-  return `${info.timestamp} ${info.level}: ${info.message}`;
+  return `${timeStamp} ${info.level}: ${info.message}`;
 });
 
 /*
@@ -15,10 +21,7 @@ const logFormat = printf(info => {
  */
 const logger = winston.createLogger({
   format: combine(
-    timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
-    }),
-    logFormat,
+    logFormat
   ),
   transports: [
     // info 레벨 로그를 저장할 파일 설정
