@@ -1,9 +1,10 @@
-# apeach-back [dub-ai]
+# apeach-back [dub-ai] 
+<img width="119" alt="logo" src="https://user-images.githubusercontent.com/39179946/148715614-9e50c8d3-338b-4af0-b109-dca28342155b.png">
 ## 0. Version
 node: v16.13.1
 <br/>
 npm: 8.1.2
-
+<br/>
 <b>curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -<b/>
 <br/>
 <b>sudo apt-get install -y nodejs<b/>
