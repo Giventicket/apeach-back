@@ -4,7 +4,7 @@ const moment = require('moment');
 require('moment-timezone');
 
 const logDir = 'logs';  // logs 디렉토리 하위에 로그 파일 저장
-const { combine, timestamp, printf } = winston.format;
+const { combine, printf } = winston.format;
 
 moment.tz.setDefault('Asia/Seoul');
 const timeStamp = () => moment().format('YYYY-MM-DD HH:mm:ss');
@@ -12,7 +12,7 @@ const timeStamp = () => moment().format('YYYY-MM-DD HH:mm:ss');
 
 // Define log format
 const logFormat = printf(info => {
-  return `${timeStamp} ${info.level}: ${info.message}`;
+  return `${timeStamp()} ${info.level}: ${info.message}`;
 });
 
 /*
