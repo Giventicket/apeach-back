@@ -1,6 +1,6 @@
 const url = require('url');
 const Chunk = require('../../../models/chunk');
-const axios = require("axios");
+const discordWebhook = require("./discordWebhook");
 
 const createChunk = async (req, res, next) => {
     try {
@@ -60,13 +60,7 @@ const updateChunk = async (req, res, next) => {
             throw err;
         }
         if(chunk.status === "3"){
-            req.logger.info(chunk);
-            await axios.post(process.env.DISCORD_WEBHOOK, {
-                content: String(chunk),
-                username: "Backend server"
-            }).catch((err) => {
-                req.logger.error(`status: ${(err.status || 500)}, message: ${err}`);
-            });
+            discordWebhook(req, chunk);
         }
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
