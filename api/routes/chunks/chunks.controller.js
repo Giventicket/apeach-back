@@ -64,7 +64,9 @@ const updateChunk = async (req, res, next) => {
             await axios.post(process.env.DISCORD_WEBHOOK, {
                 content: String(chunk),
                 username: "Backend server"
-            }).catch((err) => {req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`););
+            }).catch((err) => {
+                req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
+            });
         }
         res.status(200).json({ 
             message: `update success [find ${req.params.id}]`, 
