@@ -28,6 +28,7 @@ npm: 8.1.2
 │    │      ├── index.js
 │    │      ├── chunks
 │    │      │      ├── index.js
+│    │      │      ├── discordWebhook.js
 │    │      │      └── chunks.controller.js
 │    │      └── audios
 │    │             ├── index.js
