@@ -14,12 +14,12 @@ module.exports = (app) => {
     app.use('/api', indexRouter);
     app.use('*', (req, res, next) => {
         const err = new Error(`${ req.method } ${ req.url } no routers!`);
-        err.status = 404;
+        err.status = 400;
         next(err);
     });
     app.use((err, req, res, next) => {
         console.log(err);
-        req.logger.error(`status: ${(err.status || 500)}, message: ${ err.message }`);
-        res.status(err.status || 500).json({message: err.message, data: { }});
+        req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${ err }`);
+        res.status(err.status || err.code || 500).json({message: err.message, data: { }});
     });
 };

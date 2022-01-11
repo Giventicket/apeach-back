@@ -6,9 +6,8 @@ const syncParseForm = (req) => {
         form.parse(req, (err, fields, files) => {
             if (err)
                 reject(err);
-            req.files = files;
             //console.log(files);
-            resolve();
+            resolve(files);
         });
    });
 };

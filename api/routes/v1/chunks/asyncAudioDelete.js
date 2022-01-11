@@ -5,8 +5,8 @@ const asyncAudioDelete = async (gcStorage, audio, logger) => {
         const parsedAudio = url.parse(audio).path.split("/");
         await gcStorage.bucket('apeach-bucket').file(parsedAudio[1]).delete();                     
         logger.info(`[From Google Bucket] ${ parsedAudio[1] } is deleted on google bucket!, `)
-    } catch(err) {
-        logger.error("[From Google Bucket] " + err.message);
+    } catch(err) {err.code || 
+        logger.error(`status: ${(err.status || err.code ||  500)}, message: ${err}`);
     };
 }
 
