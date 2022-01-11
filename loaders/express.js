@@ -12,10 +12,10 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: false }));
     app.use(cors({ credentials: true }));
     app.use('/api', indexRouter);
-    app.use((req, res, next) => {
+    app.use('*', (req, res, next) => {
         const err = new Error(`${ req.method } ${ req.url } no routers!`);
-        error.status = 404;
-        next(error);
+        err.status = 404;
+        next(err);
     });
     app.use((err, req, res, next) => {
         console.log(err);
