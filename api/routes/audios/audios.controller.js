@@ -42,14 +42,13 @@ const uploadFileAfterPreprocesssing = asyncErrorWrapper(async (req, res, next) =
           contentType: 'audio/wave',
         },
     });
-    fs.unlink(req.files.audio.filepath,(err)=>{ 
-        if (err)
-            req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
-    });
-    fs.unlink(`${req.files.audio.filepath}R`,(err)=>{ 
-        if (err)
-            req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
-    });
+    const tmpFiles = [req.files.audio.filepath, `${req.files.audio.filepath}R`];
+    tmpFiles.forEach((filepath) => {
+        fs.unlink(filepath,(err)=>{ 
+            if (err)
+                req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
+        });
+    });    
     res.status(200).json({
         message: "upload success [upload preprocessed audio on google bucket]",
         data: result[0].metadata
