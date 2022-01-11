@@ -10,4 +10,4 @@ const isValidID = (req, res, next) => {
     }
 };
 
-module.exports = {isValidID};
+module.exports = { isValidID };

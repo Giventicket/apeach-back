@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-module.exports = async (req, chunk) => {
+const asyncDiscordWebhook = async (req, chunk) => {
     await axios.post(process.env.DISCORD_WEBHOOK, {
         embeds: [{
             author: {
@@ -15,3 +15,5 @@ module.exports = async (req, chunk) => {
         req.logger.error(`status: ${(err.status || 500)}, message: ${err}`);
     });
 };
+
+module.exports = asyncDiscordWebhook;

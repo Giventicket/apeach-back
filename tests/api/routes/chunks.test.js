@@ -92,7 +92,7 @@ describe("GET /api/chunks/:id", () => {
 describe("PATCH /api/chunks", () => {
     it('chunk 업데이트 완료시 200 응답', async() => { 
         const res = await request(app)
-        .patch(`/api/chunks/${chunkID}`)
+        .patch(`/api/chunks/${ chunkID }`)
         .type('application/json')
         .send(createNewChunkData);
         
@@ -131,7 +131,7 @@ describe("PATCH /api/chunks", () => {
 describe("DELETE /api/chunks/:id", () => {
     it('chunks id 삭제 성공시 200 응답', async() => { 
         const res = await request(app)
-        .delete(`/api/chunks/${chunkID}`);
+        .delete(`/api/chunks/${ chunkID }`);
         
         expect(res.status).toStrictEqual(200);
     }); 

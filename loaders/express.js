@@ -13,13 +13,13 @@ module.exports = (app) => {
     app.use(cors({ credentials: true }));
     app.use('/api', indexRouter);
     app.use((req, res, next) => {
-        const err = new Error(`${req.method} ${req.url} no routers!`);
+        const err = new Error(`${ req.method } ${ req.url } no routers!`);
         error.status = 404;
         next(error);
     });
     app.use((err, req, res, next) => {
         console.log(err);
-        req.logger.error(`status: ${(err.status || 500)}, message: ${err.message}`);
+        req.logger.error(`status: ${(err.status || 500)}, message: ${ err.message }`);
         res.status(err.status || 500).json({message: err.message, data: { }});
     });
 };

@@ -1,4 +1,4 @@
-const {isRequired} = require('./isRequired.js');
-const {isValidID} = require('./isValidID.js');
+const { isRequired } = require('./isRequired.js');
+const { isValidID } = require('./isValidID.js');
 
-module.exports = {isRequired, isValidID};
+module.exports = { isRequired, isValidID };
