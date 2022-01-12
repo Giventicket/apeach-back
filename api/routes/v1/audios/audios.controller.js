@@ -24,7 +24,7 @@ const preprocess = asyncErrorWrapper(async (req, res, next) => {
 
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
-    const result = await gcStorage.bucket('apeach-bucket').upload(req.files.audio.filepath, {
+    const result = await gcStorage.bucket(process.env.BUCKET_NAME).upload(req.files.audio.filepath, {
         destination: req.files.audio.newFilename,
         metadata: {
           contentType: req.files.audio.mimetype,
@@ -42,7 +42,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
 
 const uploadFileAfterPreprocesssing = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
-    const result = await gcStorage.bucket('apeach-bucket').upload(`${req.files.audio.filepath}R`, {
+    const result = await gcStorage.bucket(process.env.BUCKET_NAME).upload(`${req.files.audio.filepath}R`, {
         destination: `${req.files.audio.newFilename}R`,
         metadata: {
           contentType: 'audio/wave',
@@ -63,7 +63,7 @@ const uploadFileAfterPreprocesssing = asyncErrorWrapper(async (req, res, next) =
 
 const deleteFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
-    await gcStorage.bucket('apeach-bucket').file(req.params.filename).delete();        
+    await gcStorage.bucket(process.env.BUCKET_NAME).file(req.params.filename).delete();        
     res.status(200).json({
         message: `Delete success[${req.params.filename} from google bucket]`,
         data: { }
