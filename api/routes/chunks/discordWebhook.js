@@ -4,9 +4,9 @@ module.exports = async (req, chunk) => {
     await axios.post(process.env.DISCORD_WEBHOOK, {
         embeds: [{
             author: {
-                name: "anonymous user"
+                name: `${ process.env.NODE_ENV === 'test'? "Backend Scenario Test" : "anonymous user"}`
             },
-            description: `소스 음성: [source_wave_url](${chunk["source_wave_url"]}) \n소스 텍스트: ${chunk["source_text"]} \n타켓 텍스트: ${chunk["target_text"]} \n타겟 음성: [target_wave_url](${chunk["target_wave_url"]})`,
+            description: `소스 음성: [source_wave_url](${chunk["source_wave_url"]}) \n\n타겟 음성: [target_wave_url](${chunk["target_wave_url"]})`,
             timestamp: chunk["createdAt"]
         }],
         username: "Apeach-backend",

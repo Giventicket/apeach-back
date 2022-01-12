@@ -1,4 +1,4 @@
-const Chunk = require('../../../../models/chunk');
+const Chunk = process.env.NODE_ENV === 'production' ? require('../../../../models/chunk_v1') : require('../../../../models/chunk_v1_dev');
 const asyncDiscordWebhook = require("./asyncDiscordWebhook");
 const asyncAudioDelete = require("./asyncAudioDelete");
 const { asyncErrorWrapper } = require('../../asyncErrorWrapper.js');
@@ -38,8 +38,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOneAndUpdate({ _id: req.params.id }, { 
         status: req.body.status,
         source_wave_url: req.body.source_wave_url,
-        source_text: req.body.source_text,
-        target_text: req.body.target_text,
+        segments: req.body.segments,
         target_wave_url: req.body.target_wave_url,
     }, {new: true});
     if (chunk === null || chunk === undefined) {

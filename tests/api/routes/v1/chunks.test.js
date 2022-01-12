@@ -1,7 +1,7 @@
 require('regenerator-runtime');
 const request = require('supertest');
 const dbHandler = require('./db.js');
-const app = require('../../../app.js');
+const app = require('../../../../app.js');
 
 const createChunkData = {
     source_wave_url: "source_wave_url"
@@ -16,10 +16,17 @@ beforeAll(async () => {
     await dbHandler.connect();
 });
 
+const asyncAppClose = (app) => {
+    return new Promise((resolve, reject) =>{
+        app.close(() => {resolve();});
+    });
+};
+
 afterAll(async () => {
     await dbHandler.closeDatabase();
-    await app.close();
+    await asyncAppClose(app).then();
 });
+
 
 let chunkID;
 
