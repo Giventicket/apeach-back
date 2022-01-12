@@ -2,8 +2,7 @@ const url = require('url');
 
 const asyncAudioDelete = async (gcStorage, audio, logger) => {
     try {
-        const parsedAudio = url.parse(audio).pathname.split('/');
-        await gcStorage.bucket(process.env.BUCKET_NAME).file(parsedAudio[7]).delete();                     
+        await gcStorage.bucket(process.env.BUCKET_NAME).file(audio).delete();                     
         logger.info(`[From Google Bucket] ${ audio } is deleted!, `);
     } catch(err) {
         logger.info(`[From Google Bucket] ${ audio } is not deleted!, `);

@@ -1,6 +1,6 @@
 const fs = require('fs');
-const syncParseForm = require('./syncParseForm.js');
-const syncPreprocess = require('./syncPreprocess.js');
+const syncParseForm = require('../public/syncParseForm.js');
+const syncPreprocess = require('../public/syncPreprocess.js');
 const { asyncErrorWrapper } = require('../../asyncErrorWrapper.js');
 
 
@@ -19,44 +19,31 @@ const parseForm = asyncErrorWrapper(async (req, res, next) => {
 
 const preprocess = asyncErrorWrapper(async (req, res, next) => {
     await syncPreprocess(req.files.audio.filepath).then().catch((err) => { throw err; });
+    req.resampled = true;
     next();
 });
 
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
-    const result = await gcStorage.bucket(process.env.BUCKET_NAME).upload(req.files.audio.filepath, {
+    const filepath = req.resampled ? `${req.files.audio.filepath}R` : req.files.audio.filepath;
+    const mimetype = req.resampled ? 'audio/wave' : req.files.audio.mimetype;
+    const result = await gcStorage.bucket(process.env.BUCKET_NAME).upload(filepath, {
         destination: req.files.audio.newFilename,
         metadata: {
-          contentType: req.files.audio.mimetype,
+          contentType: mimetype,
         },
     });
-    fs.unlink(req.files.audio.filepath,(err)=>{ 
-        if (err)
-            req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${err}`);
-    });
-    res.status(200).json({
-        message: "upload success [upload audio on google bucket]",
-        data: result[0].metadata
-        });
-});
-
-const uploadFileAfterPreprocesssing = asyncErrorWrapper(async (req, res, next) => {
-    const gcStorage = req.gcStorage;
-    const result = await gcStorage.bucket(process.env.BUCKET_NAME).upload(`${req.files.audio.filepath}R`, {
-        destination: `${req.files.audio.newFilename}R`,
-        metadata: {
-          contentType: 'audio/wave',
-        },
-    });
-    const tmpFiles = [req.files.audio.filepath, `${req.files.audio.filepath}R`];
+    let tmpFiles = [req.files.audio.filepath];
+    if (req.resampled)
+        tmpFiles.push(`${req.files.audio.filepath}R`);
     tmpFiles.forEach((filepath) => {
         fs.unlink(filepath,(err)=>{ 
             if (err)
                 req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${err}`);
         });
-    });    
+    });   
     res.status(200).json({
-        message: "upload success [upload preprocessed audio on google bucket]",
+        message: `upload success [upload ${ req.resampled ? "preprocessed " : "" }audio on google bucket]`,
         data: result[0].metadata
     });
 });
@@ -70,4 +57,4 @@ const deleteFile = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = { uploadFile, deleteFile, parseForm, preprocess, uploadFileAfterPreprocesssing };
+module.exports = { uploadFile, deleteFile, parseForm, preprocess };

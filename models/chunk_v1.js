@@ -8,12 +8,20 @@ const chunkSchema = new Schema({
     }, 
     source_wave_url: {
         type: String,
-        required: true
+        default: ""
+    },
+    source_wave_name: {
+        type: String,
+        default: ""
     },
     target_wave_url: {
         type: String,
         default: ""
-    }, 
+    },
+    target_wave_name: {
+        type: String,
+        default: ""
+    },
     segments: [{
         start_time: {
             type: String,

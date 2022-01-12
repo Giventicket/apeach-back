@@ -1,6 +1,6 @@
 const Chunk = process.env.NODE_ENV === 'production' ? require('../../../../models/chunk_v1') : require('../../../../models/chunk_v1_dev');
-const asyncDiscordWebhook = require("./asyncDiscordWebhook");
-const asyncAudioDelete = require("./asyncAudioDelete");
+const asyncDiscordWebhook = require("../public/asyncDiscordWebhook");
+const asyncAudioDelete = require("../public/asyncAudioDelete");
 const { asyncErrorWrapper } = require('../../asyncErrorWrapper.js');
 
 const createChunk = asyncErrorWrapper(async (req, res, next) => {
@@ -56,14 +56,14 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
 });
 
 const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
-    const chunk = await Chunk.find({_id: req.params.id}); 
+    const chunk = await Chunk.findOne({_id: req.params.id}); 
     if (chunk.length === 0) {
         const err = new Error(`Cannot find ${ req.params.id }`);
         err.status = 404;
         throw err;
     }
     await Chunk.deleteOne({ _id: req.params.id });
-    const audios = [chunk[0]["source_wave_url"], chunk[0]["target_wave_url"]];
+    const audios = [chunk["source_wave_name"], chunk["target_wave_name"]];
 
     for(const audio of audios){
         await asyncAudioDelete(req.gcStorage, audio, req.logger);
@@ -79,7 +79,7 @@ const deleteChunks = asyncErrorWrapper(async (req, res, next) => {
     const chunks = await Chunk.find({ }); 
     await Chunk.deleteMany({ });
     for(const chunk of chunks) {
-        const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
+        const audios = [chunk["source_wave_name"], chunk["target_wave_name"]];
         for(const audio of audios){
             await asyncAudioDelete(req.gcStorage, audio, req.logger);
         }
