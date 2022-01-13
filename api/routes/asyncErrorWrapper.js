@@ -4,4 +4,4 @@ const asyncErrorWrapper = (func) => {
     };
 }
 
-module.exports = { asyncErrorWrapper }
+module.exports = asyncErrorWrapper

@@ -40,6 +40,8 @@
     "mongodb-memory-server": "^8.1.0",
     "nodemon": "^2.0.15",
     "regenerator-runtime": "^0.13.9",
-    "supertest": "^6.1.6"
+    "supertest": "^6.1.6",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
   }
 }

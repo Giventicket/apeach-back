@@ -1,7 +1,7 @@
 const fs = require('fs');
 const syncParseForm = require('../public/syncParseForm.js');
 const syncPreprocess = require('../public/syncPreprocess.js');
-const { asyncErrorWrapper } = require('../../asyncErrorWrapper.js');
+const asyncErrorWrapper = require('../../asyncErrorWrapper.js');
 
 
 const parseForm = asyncErrorWrapper(async (req, res, next) => {

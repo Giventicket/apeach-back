@@ -1,5 +1,5 @@
 const express = require('express');
-const controller = require('./chunks.controller');
+const controller = require('./controller/index');
 const middlewares = require('../../../middlewares/index');
 
 const router = express.Router();
