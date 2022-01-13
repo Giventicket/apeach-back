@@ -10,26 +10,18 @@ const chunkSchema = new Schema({
         type: String,
         default: ""
     },
-    source_wave_name: {
-        type: String,
-        default: ""
-    },
     target_wave_url: {
-        type: String,
-        default: ""
-    },
-    target_wave_name: {
         type: String,
         default: ""
     },
     segments: [{
         start_time: {
-            type: String,
-            default: ""
+            type: Number,
+            default: 0
         },
         end_time: {
-            type: String,
-            default: ""
+            type: Number,
+            default: 0
         },
         source_text: {
             type: String,
@@ -45,6 +37,8 @@ const chunkSchema = new Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    versionKey: false 
 });
 
-module.exports = mongoose.model('Chunk_v1_dev', chunkSchema);
+module.exports = chunkSchema;
