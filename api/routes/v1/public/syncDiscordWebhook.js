@@ -20,7 +20,7 @@ const syncDiscordWebhook = async (req, chunk) => {
         username: "Apeach-backend",
         avatar_url: process.env.LOGO_URL
     }).catch((err) => {
-        req.logger.error(`status: ${(err.status || err.code ||  500)}, message: ${err}`);
+        req.logger.error(`status: ${(err.status || err.code ||  500)}, message: ${err}\n`);
     });
 };
 

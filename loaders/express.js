@@ -1,13 +1,10 @@
 const express = require('express');
-const morgan = require('morgan');
 const cors = require('cors');
 
 const indexRouter = require('../api/routes/index');
 
 module.exports = (app) => {
     app.set('port', process.env.PORT || 80);
-    if (process.env.NODE_ENV !== 'test')
-        app.use(morgan('dev'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cors({ credentials: true }));
@@ -19,7 +16,7 @@ module.exports = (app) => {
     });
     app.use((err, req, res, next) => {
         console.log(err);
-        req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${ err }`);
+        req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${ err }\n`);
         res.status(err.status || err.code || 500).json({message: err.message, data: { }});
     });
 };

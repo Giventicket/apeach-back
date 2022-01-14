@@ -1,3 +1,4 @@
+const morgan = require('morgan');
 const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
 const moment = require('moment');
@@ -45,17 +46,23 @@ const logger = winston.createLogger({
   ],
 });
 
-// Production 환경이 아닌 경우(dev 등) 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),  // 색깔 넣어서 출력
-      winston.format.simple(),  // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
-    )
-  }));
-}
+logger.add(new winston.transports.Console({
+  format: winston.format.combine(
+    winston.format.colorize(),  // 색깔 넣어서 출력
+    winston.format.simple(),  // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
+  )
+}));
+
+const stream = {
+  write: message => {
+    logger.info(message)
+  }
+};
+
+const combined = ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"' 
 
 module.exports = (app) => {
+  app.use(morgan(combined, { stream }));
     app.use((req, res, next) => {
         req.logger = logger;
         next();

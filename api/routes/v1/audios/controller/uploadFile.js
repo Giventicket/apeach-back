@@ -17,7 +17,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     tmpFiles.forEach((filepath) => {
         fs.unlink(filepath,(err)=>{ 
             if (err)
-                req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${err}`);
+                req.logger.error(`status: ${(err.status || err.code || 500)}, message: ${err}\n`);
         });
     });   
     res.status(200).json({
