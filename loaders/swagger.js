@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'description for Apeach Backend Server'
   },        
-  host: `${process.env.IP_ADRESS || "localhost"}:${process.env.PORT || 80}`,
+  host: `${process.env.IP_ADDRESS || "localhost"}:${process.env.PORT || 80}`,
   basePath: "/",
   contact: {
     email: "kendrick.seo@kakaobrain.com"
