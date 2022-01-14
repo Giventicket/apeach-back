@@ -1,0 +1,19 @@
+config:
+  target: "http://34.64.243.135:3000"
+  phases:
+    - duration: 10
+      arrivalRate: 1000000
+      name: load test
+
+scenarios:
+  - name: "create one chunk and get"
+    flow:
+      - post:
+          url: "/api/v1/chunks"
+          json:
+            source_wave_url: "server stress test"
+          capture:
+            - json: "$.data._id"
+              as: "chunkId"
+      - get:
+          url: "/api/v1/chunks/{{ chunkId }}"

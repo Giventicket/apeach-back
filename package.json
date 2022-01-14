@@ -34,6 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
+    "artillery": "^2.0.0-10",
     "babel-jest": "^27.4.6",
     "jest": "^27.4.7",
     "mongodb-memory-server": "^8.1.0",
