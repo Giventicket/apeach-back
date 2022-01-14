@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'description for Apeach Backend Server'
   },        
-  host: 'localhost:80',
+  host: 'localhost:3000',
   basePath: "/",
   contact: {
     email: "kendrick.seo@kakaobrain.com"
