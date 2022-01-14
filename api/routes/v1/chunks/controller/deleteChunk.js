@@ -4,7 +4,7 @@ const asyncErrorWrapper = require('../../../asyncErrorWrapper.js');
 
 const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOne({_id: req.params.id}); 
-    if (chunk.length === 0) {
+    if (chunk == null) {
         const err = new Error(`Cannot find ${ req.params.id }`);
         err.status = 404;
         throw err;

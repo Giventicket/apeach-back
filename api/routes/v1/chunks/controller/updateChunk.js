@@ -9,7 +9,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
         segments: req.body.segments,
         target_wave_url: req.body.target_wave_url,
     }, {new: true});
-    if (chunk === null || chunk === undefined) {
+    if (chunk == null) {
         const err = new Error(`Cannot find ${ req.params.id }`);
         err.status = 404;
         throw err;
