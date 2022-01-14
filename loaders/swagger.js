@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'description for Apeach Backend Server'
   },        
-  host: `localhost:${process.env.PORT || 80}`,
+  host: `${process.env.IP_ADRESS || "localhost"}:${process.env.PORT || 80}`,
   basePath: "/",
   contact: {
     email: "kendrick.seo@kakaobrain.com"
@@ -19,7 +19,7 @@ module.exports = (app) => {
       apis: ['./loaders/*.js', './api/routes/v1/chunks/*.js', './api/routes/v1/audios/*.js'] 
     }; 
     const specs = swaggereJsdoc(options);
-    app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
 };
 
 
