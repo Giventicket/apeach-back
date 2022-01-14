@@ -1,77 +1,144 @@
 const swaggerUi = require('swagger-ui-express'); 
 const swaggereJsdoc = require('swagger-jsdoc'); 
 
+const swaggerDefinition = {
+  info: {
+    title: 'Apeach Backend Server [dubAI]',
+    version: '1.0.0',
+    description: 'description for Apeach Backend Server'
+  },        
+  host: 'localhost:80',
+  basePath: "/",
+  contact: {
+    email: "kendrick.seo@kakaobrain.com"
+  }
+};
 module.exports = (app) => {
     const options = { 
-      swaggerDefinition: {
-        // 정보
-        info: {
-          title: 'node js test app',
-          version: '1.0.0',
-          description: 'Make For node js test.'
-        },
-        // 주소
-        host: "localhost:3000",
-        // 기본 root path
-        basePath: "/",
-        contact: {
-          email: "rokking1@naver.com"
-        },
-        // 각 api에서 설명을 기록할 때 사용할 constant들을 미리 등록해놓는것
-        components: {
-          res: {
-            BadRequest: {
-              description: '잘못된 요청.',
-              schema: {
-                $ref: '#/components/errorResult/Error'
-              }
-            },
-            Forbidden: {
-              description: '권한이 없슴.',
-              schema: {
-                $ref: '#/components/errorResult/Error'
-              }
-            },
-            NotFound: {
-              description: '없는 리소스 요청.',
-              schema: {
-                $ref: '#/components/errorResult/Error'
-              }
-            }
-          },
-          errorResult: {
-            Error: {
-              type: 'object',
-              properties: {
-                errMsg: {
-                  type: 'string',
-                  description: '에러 메시지 전달.'
-                }
-              }
-            }
-          }
-        },
-        schemes: ["http", "https"], // 가능한 통신 방식
-        definitions:  // 모델 정의 (User 모델에서 사용되는 속성 정의)
-          {
-            'User': {
-              type: 'object',
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                age: {
-                  type: 'integer'
-                },
-                addr: {
-                  type: 'string'
-                }
-              }
-            }
-          }
-      }, 
-        apis: ['./api/routes/v1/chunks/controller/createChunk.js', './models/chunk.js', "./app.js"] 
+      swaggerDefinition,
+      apis: ['./loaders/*.js', './api/routes/v1/chunks/*.js', './api/routes/v1/audios/*.js'] 
     }; 
     const specs = swaggereJsdoc(options);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
 };
+
+
+/** 
+ *  @swagger
+ *  definitions:
+ *    Response_Chunk:
+ *      properties:
+ *        message: 
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/Chunk' 
+ *    Response_Audio:
+ *      properties:
+ *        message: 
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/Audio' 
+ * 
+ *    Response_Chunks:
+ *      properties:
+ *        message: 
+ *          type: string
+ *        data:
+ *          type: array
+ *          items:
+ *            $ref: '#/definitions/Chunk' 
+ *    
+ *    Response_Only_Message:
+ *      properties:
+ *        message: 
+ *          type: string
+ *        data:
+ *          type: object
+ * 
+ *    Chunk_For_Patch:
+ *      properties:
+ *        status:
+ *          type: string
+ *        source_wave_url:
+ *          type: string 
+ *        target_wave_url:
+ *          type: string
+ *        segments:
+ *          type: array
+ *          items:
+ *            type: object
+ *            properties:
+ *              start_time: 
+ *                type: number
+ *              end_time: 
+ *                type: number
+ *              source_text:
+ *                type: string
+ *              target_text:
+ *                type: string
+ * 
+ *    Chunk: 
+ *      properties:
+ *        _id:   
+ *          type: string
+ *        status:
+ *          type: string
+ *        source_wave_url:
+ *          type: string 
+ *        target_wave_url:
+ *          type: string
+ *        segments:
+ *          type: array
+ *          items:
+ *            type: object
+ *            properties:
+ *              start_time: 
+ *                type: number
+ *              end_time: 
+ *                type: number
+ *              source_text:
+ *                type: string
+ *              target_text:
+ *                type: string
+ *        createdAt:
+ *          type: string
+ * 
+ *    Audio: 
+ *      properties:
+ *        kind:   
+ *          type: string
+ *        id:
+ *          type: string
+ *        selfLink:
+ *          type: string 
+ *        mediaLink:
+ *          type: string
+ *        name:
+ *          type: string
+ *        bucket:
+ *          type: string
+ *        generation:
+ *          type: string
+ *        metageneration:
+ *          type: string
+ *        contentType:
+ *          type: string
+ *        storageClass:
+ *          type: string
+ *        size:
+ *          type: string
+ *        md5Hash:
+ *          type: string
+ *        crc32c:
+ *          type: string
+ *        etag:
+ *          type: string
+ *        timeCreated:
+ *          type: string
+ *        updated:
+ *          type: string
+ *        timeStorageClassUpdated:
+ *          type: string
+ */
