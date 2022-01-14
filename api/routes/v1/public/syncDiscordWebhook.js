@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const asyncDiscordWebhook = async (req, chunk) => {
+const syncDiscordWebhook = async (req, chunk) => {
     await axios.post(process.env.DISCORD_WEBHOOK, {
         embeds: [{
             author: {
@@ -16,4 +16,4 @@ const asyncDiscordWebhook = async (req, chunk) => {
     });
 };
 
-module.exports = asyncDiscordWebhook;
+module.exports = syncDiscordWebhook;

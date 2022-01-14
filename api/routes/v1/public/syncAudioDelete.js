@@ -1,6 +1,6 @@
 const url = require('url');
 
-const asyncAudioDelete = async (gcStorage, audio, logger) => {
+const syncAudioDelete = async (gcStorage, audio, logger) => {
     try {
         const parsedAudio = url.parse(audio).pathname.split("/");
         await gcStorage.bucket(process.env.BUCKET_NAME).file(parsedAudio[7]).delete();                     
@@ -11,4 +11,4 @@ const asyncAudioDelete = async (gcStorage, audio, logger) => {
     };
 }
 
-module.exports = asyncAudioDelete;
+module.exports = syncAudioDelete;
