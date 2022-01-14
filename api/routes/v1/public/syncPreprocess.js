@@ -11,6 +11,7 @@ const preprocessSync = (filepath) => {
                 `-sample_fmt s16`])
             .output(`${filepath}R`)
             .on('end', () => {
+                console.log("preprocessed!!~!")
                 resolve();
             })
             .on('error', (err) => { return reject(new Error(err)); })

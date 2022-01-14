@@ -19,7 +19,7 @@ module.exports = (app) => {
       apis: ['./loaders/*.js', './api/routes/v1/chunks/*.js', './api/routes/v1/audios/*.js'] 
     }; 
     const specs = swaggereJsdoc(options);
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
+    app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
 };
 
 
