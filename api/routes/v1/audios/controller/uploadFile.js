@@ -1,5 +1,5 @@
 const fs = require('fs');
-const asyncErrorWrapper = require('../../../asyncErrorWrapper.js');
+const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;

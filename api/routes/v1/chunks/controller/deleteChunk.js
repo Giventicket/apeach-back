@@ -1,6 +1,6 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
 const syncAudioDelete = require("../../public/syncAudioDelete");
-const asyncErrorWrapper = require('../../../asyncErrorWrapper.js');
+const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOne({_id: req.params.id}); 

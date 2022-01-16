@@ -1,8 +1,8 @@
 config:
   target: "http://34.64.243.135:3000"
   phases:
-    - duration: 10
-      arrivalRate: 40
+    - duration: 1
+      arrivalRate: 1000
       name: load test
 
 scenarios:
