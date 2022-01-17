@@ -3,7 +3,6 @@ const syncAudioDelete = require("../../public/syncAudioDelete");
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const deleteChunks = asyncErrorWrapper(async (req, res, next) => {
-    const gcStorage = req.gcStorage;
     const chunks = await Chunk.find({ }); 
     await Chunk.deleteMany({ });
     chunks.forEach(chunk =>{ 
