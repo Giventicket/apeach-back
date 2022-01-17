@@ -12,9 +12,7 @@ const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
     await Chunk.deleteOne({ _id: req.params.id });
     const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
 
-    for(const audio of audios){
-        await syncAudioDelete(req.gcStorage, audio, req.logger);
-    }
+    audios.forEach(audio =>{ syncAudioDelete(req.gcStorage, audio, req.logger) });
     res.status(200).json({
         message: `Delete success [delete ${ req.params.id }]`,
         data: { }
