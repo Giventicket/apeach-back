@@ -1,5 +1,6 @@
 const swaggerUi = require('swagger-ui-express'); 
 const swaggereJsdoc = require('swagger-jsdoc'); 
+const path = require('path');
 
 const swaggerDefinition = {
   info: {
@@ -14,9 +15,10 @@ const swaggerDefinition = {
   }
 };
 module.exports = (app) => {
+    const root = path.resolve(__dirname, "../");
     const options = { 
       swaggerDefinition,
-      apis: ['./loaders/*.js', './api/routes/v1/chunks/*.js', './api/routes/v1/audios/*.js'] 
+      apis: [root + '/loaders/*.js', root + '/api/routes/v1/chunks/*.js', root + '/api/routes/v1/audios/*.js'] 
     }; 
     const specs = swaggereJsdoc(options);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
