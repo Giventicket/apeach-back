@@ -5,8 +5,7 @@ const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 const deleteChunks = asyncErrorWrapper((req, res, next) => {
     return Chunk.find({ }).then((chunks) => {
       console.log('chunks', chunks);
-      Chunk.deleteMany({ }).then(() => {
-        
+      Chunk.deleteMany({ }).exec().then(() => {
         chunks.forEach(chunk =>{ 
           const audios = [chunk["source_wave_url"], chunk["target_wave_url"]];
           audios.forEach(audio =>{ syncAudioDelete(req.gcStorage, audio, req.logger) });
