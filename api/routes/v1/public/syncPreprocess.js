@@ -1,6 +1,6 @@
 const ffmpeg = require('fluent-ffmpeg');
 
-const preprocessSync = (filepath) => {
+const syncPreprocess = (filepath) => {
     //ffmpeg -i {input} -ar 16000 -ac 1 -sample_fmt s16 {output}        
     return new Promise((resolve,reject)=>{
         ffmpeg(filepath)
@@ -18,4 +18,4 @@ const preprocessSync = (filepath) => {
    });
 };
 
-module.exports = preprocessSync;
+module.exports = syncPreprocess;

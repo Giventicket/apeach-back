@@ -1,37 +1,29 @@
-
 config:
-  target: "http://localhost:80"
-  #target: "http://34.64.243.135:3000"
+  #target: "http://localhost:3000"
+  target: "http://34.64.243.135:3000"
   phases:
     - duration: 1
-      arrivalRate: 100
+      arrivalRate: 80
       name: load test
-Comment: >
-  scenarios:
-    - name: "create one chunk and get"
-      flow:
-        - post:
-            url: "/api/v1/chunks"
-            json:
-              source_wave_url: "server stress test"
-            capture:
-              - json: "$.data._id"
-                as: "chunkId"
-        - patch:
-            url: "/api/v1/chunks/{{ chunkId }}"
-            json:
-              target_wave_url: "server stress test"
-              status: "1"
-              segments: [{
-                start_time: 0,
-                end_time: 0,
-                source_text: "server stress test",
-                target_text: "server stress test"
-              }]
-
 
 scenarios:
-  - name: "async test"
+  - name: "create one chunk and get"
     flow:
-      - get:
-          url: "/api/v1/tests/a"
+      - post:
+          url: "/api/v1/chunks"
+          json:
+            source_wave_url: "server stress test"
+          capture:
+            - json: "$.data._id"
+              as: "chunkId"
+      - patch:
+          url: "/api/v1/chunks/{{ chunkId }}"
+          json:
+            target_wave_url: "server stress test"
+            status: "1"
+            segments: [{
+              start_time: 0,
+              end_time: 0,
+              source_text: "server stress test",
+              target_text: "server stress test"
+            }]
