@@ -65,8 +65,9 @@ const combined = ':remote-addr - :remote-user ":method :url HTTP/:http-version" 
 
 module.exports = (app) => {
   app.use(morgan(combined, { stream }));
-    app.use((req, res, next) => {
-        req.logger = logger;
-        next();
-    });
+  app.use((req, res, next) => {
+      req.logger = logger;
+      next();
+  });
+  app.set('logger', logger);
 };

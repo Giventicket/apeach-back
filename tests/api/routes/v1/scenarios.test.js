@@ -58,7 +58,7 @@ describe("SCENARIO: 유저가 소스 음성을 등록한 뒤 타켓 음성을 �
         .patch(`/api/v1/chunks/${ chunkID }`)
         .type('application/json')
         .send({
-            status: "3",
+            status: "2",
             target_wave_url: chunkData.target_wave_url,
             segments: chunkData.segments
         });

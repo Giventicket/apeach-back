@@ -1,6 +1,6 @@
 const asyncErrorWrapper = (func) => {
     return (req, res, next) => {
-      setImmediate(() => func(req, res, next).catch(next));
+      func(req, res, next).catch(next);
     };
 }
 
