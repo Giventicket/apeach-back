@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const { v4 } = require("uuid");
 
-const syncDumpDiscordWebhook = (req, chunk) => {
+const syncThrowDiscordWebhook = (req, chunk) => {
     const sourceD = `소스 음성: [source_wave_url](${chunk["source_wave_url"]})\n`;
     const targetD = `타겟 음성: [target_wave_url](${chunk["target_wave_url"]})\n\n`;
     let segsD = "";
@@ -33,10 +33,8 @@ const syncDumpDiscordWebhook = (req, chunk) => {
           contentType: "text/plain;charset=UTF-8",
         },
       }).then(() => { fs.unlink(filepath, () => {}) }).catch((err) => { throw err });
-    }).catch((err) => {
-      logger.error(`status: ${(err.status || err.code ||  500)}, message: ${err}\n`);
     });
 };
 
 
-module.exports = syncDumpDiscordWebhook;
+module.exports = syncThrowDiscordWebhook;

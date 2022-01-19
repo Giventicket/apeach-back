@@ -1,5 +1,5 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
-const syncDumpDiscordWebhook = require("../../public/syncDumpDiscordWebhook");
+const syncStreamDiscordWebhook = require("../../public/syncThrowDiscordWebhook");
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const updateChunk = asyncErrorWrapper((req, res, next) => {
@@ -16,7 +16,7 @@ const updateChunk = asyncErrorWrapper((req, res, next) => {
         throw err;
       }
       if(chunk.status === "3"){
-        syncDumpDiscordWebhook(req, chunk);
+        asyncErrorWrapper(syncStreamDiscordWebhook(req, chunk));
       }
       res.status(200).json({ 
           message: `update success [find ${ req.params.id }]`, 
