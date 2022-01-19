@@ -1,9 +1,9 @@
-const createChunk = require("./createChunk");
-const getChunk = require("./getChunk");
-const getChunks = require("./getChunks");
-const updateChunk = require("./updateChunk");
-const deleteChunk = require("./deleteChunk");
-const deleteChunks = require("./deleteChunks");
+const createChunk = require('./createChunk');
+const getChunk = require('./getChunk');
+const getChunks = require('./getChunks');
+const updateChunk = require('./updateChunk');
+const deleteChunk = require('./deleteChunk');
+const deleteChunks = require('./deleteChunks');
 
 module.exports = {
     createChunk,
@@ -11,5 +11,5 @@ module.exports = {
     getChunks,
     updateChunk,
     deleteChunk,
-    deleteChunks
+    deleteChunks,
 };

@@ -10,11 +10,11 @@ const connect = async () => {
     };
 
     await mongoose.connect(uri, mongooseOpts);
-}
+};
 
 const closeDatabase = async () => {
     await mongoose.disconnect();
     await mongod.stop();
-}
+};
 
-module.exports = {connect, closeDatabase};
+module.exports = { connect, closeDatabase };

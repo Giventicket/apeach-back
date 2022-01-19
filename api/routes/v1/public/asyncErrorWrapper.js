@@ -1,7 +1,7 @@
-const asyncErrorWrapper = (func) => {
+const asyncErrorWrapper = func => {
     return (req, res, next) => {
-      func(req, res, next).catch(next);
+        func(req, res, next).catch(next);
     };
-}
+};
 
-module.exports = asyncErrorWrapper
+module.exports = asyncErrorWrapper;

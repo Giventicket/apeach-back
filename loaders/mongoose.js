@@ -5,18 +5,20 @@ module.exports = () => {
         mongoose.set('debug', true);
     }
 
-    mongoose.connect(`mongodb+srv://${process.env.MONGODB_HOST}:${process.env.MONGODB_PASSWORD}@apeach-data.jrqlj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
-        dbName: 'myFirstDatabase',
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    }, (error) => {
-        if (error)
-            console.log('mongoDB 연결 에러', error);
-        else 
-            console.log('mongoDB 연결 성공!');
-    });
+    mongoose.connect(
+        `mongodb+srv://${process.env.MONGODB_HOST}:${process.env.MONGODB_PASSWORD}@apeach-data.jrqlj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+        {
+            dbName: 'myFirstDatabase',
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        error => {
+            if (error) console.log('mongoDB 연결 에러', error);
+            else console.log('mongoDB 연결 성공!');
+        },
+    );
 
-    mongoose.connection.on('error', (error) => {
+    mongoose.connection.on('error', error => {
         console.error('mongoDB connection error', error);
     });
 

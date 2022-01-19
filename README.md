@@ -1,7 +1,9 @@
-# apeach-back [dub-ai] 
+# apeach-back [dub-ai]
+
 <img src="https://user-images.githubusercontent.com/39179946/148715614-9e50c8d3-338b-4af0-b109-dca28342155b.png"/>
 
 ## 0. Version
+
 <br/>
 node: v16.13.1
 <br/>
@@ -24,6 +26,7 @@ npm: 8.1.2
 ## <a href="https://seo-jun-pyo.gitbook.io/apeach-back/"> 1. 깃북 <a/>
 
 ## 2. 폴더구조
+
 ```bash
 ├── api
 │    ├── routes
@@ -35,7 +38,7 @@ npm: 8.1.2
 │    │      └── audios
 │    │             ├── index.js
 │    │             └── audios.controller.js
-│    └── middlewares  
+│    └── middlewares
 │          ├── index.js
 │          ├── isRequired.js
 │          └── isValidID.js
@@ -45,7 +48,7 @@ npm: 8.1.2
 │      ├── gcStorage.js
 │      ├── logger.js
 │      └── mongoose.js
-│  
+│
 ├── tests
 │     └── api
 │          └── routes
@@ -62,13 +65,16 @@ npm: 8.1.2
 ├── .gitignore
 ├── .env
 └── pathfinder-101-$.json
-``` 
+```
 
 ## 3. 데이터 구조
+
 <image src="https://user-images.githubusercontent.com/39179946/148674584-9dd9e605-959f-43d6-bbfc-4a687919e812.png"/>
 
 ## 4. 벡엔드 인프라
+
 <image src="https://user-images.githubusercontent.com/39179946/148675677-4bdef770-1338-48d3-80b7-17856e123680.png"/>
 
 ## 5. 유닛 테스트
+
 <image src="https://user-images.githubusercontent.com/39179946/148551241-49fdd83b-7bc7-4538-a061-6d4a2d9eb23d.png"/>
