@@ -22,8 +22,7 @@ module.exports = app.listen(app.get('port'), () => {
 
 if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
-    if (process.env.NODE_APP_INSTANCE == 0){
+    if (process.env.NODE_APP_INSTANCE === 'production' && process.env.NODE_APP_INSTANCE == 0){
       webhookJobLoader(app);
-      console.log(process.env.NODE_APP_INSTANCE);
     }
 }
