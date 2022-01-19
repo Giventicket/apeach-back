@@ -1,9 +1,9 @@
 config:
-  target: "http://localhost:80"
-  #target: "http://34.64.243.135:3000"
+  #target: "http://localhost:80"
+  target: "http://34.64.243.135:3000"
   phases:
     - duration: 1
-      arrivalRate: 50
+      arrivalRate: 10
       name: load test
 
 

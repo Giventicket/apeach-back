@@ -18,10 +18,12 @@ expressLoader(app);
 module.exports = app.listen(app.get('port'), () => {
     if (process.env.NODE_ENV !== 'test')
         console.log(app.get('port'), '번 포트에서 대기 중..!');
-});
-
+})
 
 if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
-    //webhookJobLoader(app);
+    if (process.env.INSTANCE_ID == 0){
+      webhookJobLoader(app);
+      console.log(process.env.INSTANCE_ID);
+    }
 }
