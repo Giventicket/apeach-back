@@ -13,3 +13,5 @@ const deleteFile = asyncErrorWrapper((req, res, next) => {
             });
         });
 });
+
+module.exports = deleteFile;
