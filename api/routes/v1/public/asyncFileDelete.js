@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 
 const asyncFileDelete = (filepath, logger) => {
     asyncErrorLoggerWrapper(async () => {
-        return fs.unlink(filepath);
+        await fs.unlink(filepath);
     }, logger)();
 };
 

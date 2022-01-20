@@ -3,7 +3,7 @@ const asyncThrowDiscordWebhook = require('../../public/asyncThrowDiscordWebhook'
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const updateChunk = asyncErrorWrapper(async (req, res, next) => {
-    return Chunk.findOneAndUpdate(
+    const chunk = await Chunk.findOneAndUpdate(
         { _id: req.params.id },
         {
             status: req.body.status,
@@ -12,22 +12,22 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
             target_wave_url: req.body.target_wave_url,
         },
         { new: true },
-    )
-        .exec()
-        .then(chunk => {
-            if (chunk == null) {
-                const err = new Error(`Cannot find ${req.params.id}`);
-                err.status = 404;
-                throw err;
-            }
-            if (chunk.status === '3') {
-                asyncThrowDiscordWebhook(req.gcStorage, chunk, req.logger);
-            }
-            res.status(200).json({
-                message: `update success [find ${req.params.id}]`,
-                data: chunk,
-            });
-        });
+    ).exec();
+
+    if (chunk == null) {
+        const err = new Error(`Cannot find ${req.params.id}`);
+        err.status = 404;
+        throw err;
+    }
+
+    if (chunk.status === '3') {
+        asyncThrowDiscordWebhook(req.gcStorage, chunk, req.logger);
+    }
+
+    res.status(200).json({
+        message: `update success [find ${req.params.id}]`,
+        data: chunk,
+    });
 });
 
 module.exports = updateChunk;

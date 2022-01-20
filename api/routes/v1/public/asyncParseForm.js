@@ -1,6 +1,5 @@
 const formidable = require('formidable');
 const form = formidable({ multiples: true });
-const fs = require('fs').promises;
 const asyncFileDelete = require('./asyncFileDelete');
 
 const asyncParseForm = req => {
