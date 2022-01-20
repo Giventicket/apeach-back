@@ -34,26 +34,20 @@ const asyncThrowDiscordWebhook = (gcStorage, chunk, logger) => {
 
         const dataJSON = JSON.stringify(data);
         const filepath = v4();
-        return fs.writeFile(filepath, dataJSON).then(() => {
-            gcStorage
-                .bucket(process.env.BUCKET_NAME)
-                .upload(`./${filepath}`, {
-                    destination: `discord_webhook/${filepath}`,
-                    metadata: {
-                        contentType: 'text/plain; charset=utf-8',
-                    },
-                })
-                .catch(err => {
-                    asyncFileDelete(filepath, logger);
-                    throw err;
-                })
-                .then(() => {
-                    asyncFileDelete(filepath, logger);
-                })
-                .catch(err => {
-                    throw err;
-                });
-        });
+        await fs.writeFile(filepath, dataJSON);
+        await gcStorage
+            .bucket(process.env.BUCKET_NAME)
+            .upload(`./${filepath}`, {
+                destination: `discord_webhook/${filepath}`,
+                metadata: {
+                    contentType: 'text/plain; charset=utf-8',
+                },
+            })
+            .catch(err => {
+                asyncFileDelete(filepath, logger);
+                throw err;
+            });
+        asyncFileDelete(filepath, logger);
     }, logger)();
 };
 

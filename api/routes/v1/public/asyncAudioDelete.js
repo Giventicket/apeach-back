@@ -4,7 +4,7 @@ const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
 const asyncAudioDelete = (gcStorage, audio, logger) => {
     asyncErrorLoggerWrapper(async () => {
         const parsedAudio = url.parse(audio).pathname.split('/');
-        return gcStorage
+        await gcStorage
             .bucket(process.env.BUCKET_NAME)
             .file(decodeURIComponent(parsedAudio[7]))
             .delete();
