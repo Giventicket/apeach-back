@@ -43,11 +43,11 @@ const router = express.Router();
  *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
-	'/upload/preprocess',
-	controller.parseForm,
-	controller.checkfile,
-	controller.preprocess,
-	controller.uploadFile,
+    '/upload/preprocess',
+    controller.parseForm,
+    controller.checkfile,
+    controller.preprocess,
+    controller.uploadFile,
 );
 // audio 전처리 후 저장하기
 
@@ -90,7 +90,12 @@ router.post(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/upload', controller.parseForm, controller.checkfile, controller.uploadFile);
+router.post(
+    '/upload',
+    controller.parseForm,
+    controller.checkfile,
+    controller.uploadFile,
+);
 // audio 저장하기
 
 /**
