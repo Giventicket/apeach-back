@@ -1,8 +1,8 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
-const syncAudioDelete = require('../../public/syncAudioDelete');
+const asyncAudioDelete = require('../../public/asyncAudioDelete');
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
-const deleteChunk = asyncErrorWrapper((req, res, next) => {
+const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
     return Chunk.findOne({ _id: req.params.id })
         .exec()
         .then(chunk => {
@@ -20,13 +20,16 @@ const deleteChunk = asyncErrorWrapper((req, res, next) => {
                     ];
 
                     audios.forEach(audio => {
-                        syncAudioDelete(req.gcStorage, audio, req.logger);
+                        asyncAudioDelete(req.gcStorage, audio, req.logger);
                     });
 
                     res.status(200).json({
                         message: `Delete success [delete ${req.params.id}]`,
                         data: {},
                     });
+                })
+                .catch(err => {
+                    throw err;
                 });
         });
 });

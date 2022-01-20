@@ -1,6 +1,6 @@
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
-const deleteFile = asyncErrorWrapper((req, res, next) => {
+const deleteFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
     return gcStorage
         .bucket(process.env.BUCKET_NAME)

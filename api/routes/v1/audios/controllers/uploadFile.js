@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
-const uploadFile = asyncErrorWrapper((req, res, next) => {
+const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const gcStorage = req.gcStorage;
     const filepath = req.resampled
         ? `${req.files.audio.filepath}R`

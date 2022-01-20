@@ -1,7 +1,7 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
-const getChunks = asyncErrorWrapper((req, res, next) => {
+const getChunks = asyncErrorWrapper(async (req, res, next) => {
     return Chunk.find({})
         .exec()
         .then(chunks => {

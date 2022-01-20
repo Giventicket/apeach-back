@@ -15,7 +15,6 @@ module.exports = app => {
         next(err);
     });
     app.use((err, req, res, next) => {
-        console.log(err);
         req.logger.error(
             `status: ${err.status || err.code || 500}, message: ${err}\n`,
         );
