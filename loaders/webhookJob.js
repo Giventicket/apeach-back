@@ -65,8 +65,12 @@ module.exports = app => {
         webhook_start(files[0].length)
             .then(() => {
                 for (let file of files[0]) {
+                    let data = '';
                     file.createReadStream()
-                        .on('data', data => {
+                        .on('data', chunk => {
+                            data += chunk;
+                        })
+                        .on('end', () => {
                             setTimeout(() => {
                                 webhook_file(data, file.metadata.name);
                             }, 250 * turn++);
@@ -95,7 +99,7 @@ module.exports = app => {
             .getFiles({
                 prefix: `discord_webhook`,
                 metadata: {
-                    contentType: 'text/plain;charset=UTF-8',
+                    contentType: 'text/plain; charset=utf-8',
                 },
             })
             .then(job_callback)
