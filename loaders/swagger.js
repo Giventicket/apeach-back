@@ -150,4 +150,6 @@ module.exports = app => {
  *          type: string
  *        timeStorageClassUpdated:
  *          type: string
+ *        duration:
+ *          type: number
  */

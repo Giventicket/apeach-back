@@ -22,6 +22,7 @@ const checkfile = asyncErrorWrapper(async (req, res, next) => {
         err.status = 454;
         throw err;
     }
+    req.duration = metadata.streams[0].duration;
     next();
 });
 

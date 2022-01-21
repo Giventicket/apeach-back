@@ -33,6 +33,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
 
     deleteTmp();
 
+    result[0].metadata.duration = req.duration;
     res.status(200).json({
         message: `upload success [upload ${
             req.resampled ? 'preprocessed ' : ''
