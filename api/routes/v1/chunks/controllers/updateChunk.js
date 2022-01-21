@@ -1,5 +1,5 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
-const asyncThrowDiscordWebhook = require('../../public/asyncThrowDiscordWebhook');
+const asyncPublishMessage_webhook = require('../../public/asyncPublishMessage_webhook');
 const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
 
 const updateChunk = asyncErrorWrapper(async (req, res, next) => {
@@ -21,7 +21,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     }
 
     if (chunk.status === '3') {
-        asyncThrowDiscordWebhook(req.gcStorage, chunk, req.logger);
+        asyncPublishMessage_webhook(chunk, req.logger);
     }
 
     res.status(200).json({

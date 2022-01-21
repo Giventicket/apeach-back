@@ -6,7 +6,8 @@ const expressLoader = require('./loaders/express');
 const gcStorageLoader = require('./loaders/gcStorage');
 const mongooseLoader = require('./loaders/mongoose');
 const swaggerLoader = require('./loaders/swagger');
-const webhookJobLoader = require('./loaders/webhookJob');
+const jobWebhookLoader = require('./loaders/jobWebhook');
+const jobBucketLoader = require('./loaders/jobBucket');
 
 const app = express();
 
@@ -22,11 +23,11 @@ module.exports = app.listen(app.get('port'), () => {
 
 if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
-    //webhookJobLoader(app);
+    jobWebhookLoader(app);
     if (
         process.env.NODE_ENV === 'production' &&
         process.env.NODE_APP_INSTANCE == 0
     ) {
-        webhookJobLoader(app);
+        jobWebhookLoader(app);
     }
 }
