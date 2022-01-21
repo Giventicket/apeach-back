@@ -6,6 +6,7 @@ const subClient = new v1.SubscriberClient({
 });
 
 const asyncErrorLoggerWrapper = require('../api/routes/v1/public/asyncErrorLoggerWrapper');
+const asyncPublishMessage_webhook = require('../api/routes/v1/public/asyncPublishMessage_webhook');
 
 const getJson = data => {
     return {
@@ -23,10 +24,13 @@ const getJson = data => {
     };
 };
 
+let isOn = false;
+
 module.exports = app => {
     const logger = app.get('logger');
 
     const webhook = () => {
+        isOn = true;
         asyncErrorLoggerWrapper(async () => {
             const formattedSubscription = subClient.subscriptionPath(
                 process.env.PROJECT_ID,
@@ -41,23 +45,30 @@ module.exports = app => {
             const [response] = await subClient.pull(request);
             const ackIds = [];
             for (const message of response.receivedMessages) {
-                const dataJSON = getJson(JSON.parse(message.message.data));
+                const data = JSON.parse(message.message.data);
+
                 await axios
-                    .post(process.env.DISCORD_WEBHOOK, dataJSON)
-                    .catch(() => {});
+                    .post(process.env.DISCORD_WEBHOOK, getJson(data))
+                    .catch(err => {
+                        if (err.response.status === 429) {
+                            asyncPublishMessage_webhook(data, logger);
+                        }
+                    });
                 ackIds.push(message.ackId);
             }
-
             if (ackIds.length !== 0) {
                 const ackRequest = {
                     subscription: formattedSubscription,
                     ackIds: ackIds,
                 };
-
-                await subClient.acknowledge(ackRequest);
+                const result = await subClient.acknowledge(ackRequest);
+                console.log('end ', response.receivedMessages[0].message);
             }
+            isOn = false;
         }, logger)();
     };
 
-    const job = schedule.scheduleJob('*/1 * * * * *', webhook);
+    const job = schedule.scheduleJob('*/3 * * * * *', () => {
+        if (!isOn) webhook();
+    });
 };
