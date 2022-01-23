@@ -1,8 +1,8 @@
-const asyncPreprocess = require('../../public/asyncPreprocess.js');
-const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
+const asyncPreprocess = require('../../../../../utils/asyncPreprocess.js');
+const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const preprocess = asyncErrorWrapper(async (req, res, next) => {
-    await asyncPreprocess(req.files.audio.filepath, req.logger);
+    await asyncPreprocess(req.files.audio.filepath);
     req.resampled = true;
     next();
 });

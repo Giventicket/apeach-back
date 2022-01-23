@@ -1,4 +1,6 @@
-const asyncErrorLoggerWrapper = (func, logger) => {
+const logger = require('./logger');
+
+const asyncErrorLoggerWrapper = func => {
     return () => {
         func().catch(err => {
             logger.error(

@@ -1,5 +1,5 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
-const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
+const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const getChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOne({ _id: req.params.id }).exec();

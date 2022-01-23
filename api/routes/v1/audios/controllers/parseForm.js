@@ -1,5 +1,5 @@
-const asyncParseForm = require('../../public/asyncParseForm.js');
-const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
+const asyncParseForm = require('../../../../../utils/asyncParseForm.js');
+const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const parseForm = asyncErrorWrapper(async (req, res, next) => {
     const files = await asyncParseForm(req);

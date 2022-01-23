@@ -1,8 +1,9 @@
 const url = require('url');
 const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
-const asyncPublishMessage_bucket = require('./asyncPublishMessage_bucket');
+const asyncPublishMessageBucket = require('./asyncPublishMessageBucket');
+const gcStorage = require('./gcStorage');
 
-const asyncAudioDelete = (gcStorage, audio, logger) => {
+const asyncAudioDelete = audio => {
     asyncErrorLoggerWrapper(async () => {
         const parsedAudio = url.parse(audio).pathname.split('/');
         filename = decodeURIComponent(parsedAudio[7]);
@@ -11,11 +12,10 @@ const asyncAudioDelete = (gcStorage, audio, logger) => {
             .file(filename)
             .delete()
             .catch(err => {
-                if (err.code === 429)
-                    asyncPublishMessage_bucket(filename, logger);
-                throw err;
+                if (err.code === 429) asyncPublishMessageBucket(filename);
+                else throw err;
             });
-    }, logger)();
+    })();
 };
 
 module.exports = asyncAudioDelete;

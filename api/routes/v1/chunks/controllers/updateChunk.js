@@ -1,6 +1,6 @@
 const Chunk = require('../../../../../models/v1/chunk/index');
-const asyncSendWebhook = require('../../public/asyncSendWebhook');
-const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
+const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
+const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOneAndUpdate(
@@ -21,7 +21,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     }
 
     if (chunk.status === '3') {
-        asyncSendWebhook(chunk, req.logger);
+        asyncSendWebhook(chunk);
     }
 
     res.status(200).json({

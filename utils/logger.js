@@ -1,4 +1,3 @@
-const morgan = require('morgan');
 const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
 const moment = require('moment');
@@ -19,6 +18,7 @@ const logFormat = printf(info => {
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
  */
+
 const logger = winston.createLogger({
     format: combine(logFormat),
     transports: [
@@ -54,20 +54,4 @@ if (process.env.NODE_ENV !== 'production') {
     );
 }
 
-const stream = {
-    write: message => {
-        logger.info(message);
-    },
-};
-
-const combined =
-    ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"';
-
-module.exports = app => {
-    app.use(morgan(combined, { stream }));
-    app.use((req, res, next) => {
-        req.logger = logger;
-        next();
-    });
-    app.set('logger', logger);
-};
+module.exports = logger;

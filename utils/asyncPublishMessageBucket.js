@@ -5,16 +5,15 @@ const pubSubClient = new PubSub({
     keyFilename: process.env.KEY_FILENAME,
 });
 
-const asyncPublishMessage_bucket = (filename, logger) => {
+const asyncPublishMessageBucket = filename => {
     asyncErrorLoggerWrapper(async () => {
         const data = {
             filename: filename,
         };
         const dataBuffer = Buffer.from(JSON.stringify(data));
 
-        console.log(pubSubClient);
         await pubSubClient.topic(process.env.TOPIC_BUCKET).publish(dataBuffer);
-    }, logger)();
+    })();
 };
 
-module.exports = asyncPublishMessage_bucket;
+module.exports = asyncPublishMessageBucket;

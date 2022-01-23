@@ -1,5 +1,6 @@
-const asyncErrorWrapper = require('../../public/asyncErrorWrapper.js');
-const asyncFileDelete = require('../../public/asyncFileDelete.js');
+const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
+const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
+const gcStorage = require('../../../../../utils/gcStorage.js');
 
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const deleteTmp = () => {
@@ -7,10 +8,9 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
         if (req.resampled) tmpFiles.push(filepath);
 
         tmpFiles.forEach(fp => {
-            asyncFileDelete(fp, req.logger);
+            asyncFileDelete(fp);
         });
     };
-    const gcStorage = req.gcStorage;
     const filepath = req.resampled
         ? `${req.files.audio.filepath}R`
         : req.files.audio.filepath;

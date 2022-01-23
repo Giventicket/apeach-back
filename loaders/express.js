@@ -1,13 +1,25 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
+const logger = require('../utils/logger');
 
 const indexRouter = require('../api/routes/index');
+
+const stream = {
+    write: message => {
+        logger.info(message);
+    },
+};
+
+const combined =
+    ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"';
 
 module.exports = app => {
     app.set('port', process.env.PORT || 80);
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cors({ credentials: true }));
+    app.use(morgan(combined, { stream }));
     app.use('/api', indexRouter);
     app.use('*', (req, res, next) => {
         const err = new Error(`${req.method} ${req.url} no routers!`);
@@ -15,7 +27,7 @@ module.exports = app => {
         next(err);
     });
     app.use((err, req, res, next) => {
-        req.logger.error(
+        logger.error(
             `status: ${err.status || err.code || 500}, message: ${err}\n`,
         );
         res.status(err.status || err.code || 500).json({

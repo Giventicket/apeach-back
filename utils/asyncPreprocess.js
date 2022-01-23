@@ -2,7 +2,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs').promises;
 const asyncFileDelete = require('./asyncFileDelete');
 
-const asyncPreprocess = (filepath, logger) => {
+const asyncPreprocess = filepath => {
     //ffmpeg -i {input} -ar 16000 -ac 1 -sample_fmt s16 {output}
     return new Promise((resolve, reject) => {
         ffmpeg(filepath)
@@ -13,7 +13,7 @@ const asyncPreprocess = (filepath, logger) => {
                 resolve();
             })
             .on('error', err => {
-                asyncFileDelete(filepath, logger);
+                asyncFileDelete(filepath);
                 return reject(err);
             })
             .run();

@@ -1,6 +1,6 @@
 const axios = require('axios');
 const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
-const asyncPublishMessage_webhook = require('./asyncPublishMessage_webhook');
+const asyncPublishMessageWebhook = require('./asyncPublishMessageWebhook');
 
 const getJson = data => {
     return {
@@ -18,7 +18,7 @@ const getJson = data => {
     };
 };
 
-const asyncSendWebhook = (chunk, logger) => {
+const asyncSendWebhook = chunk => {
     asyncErrorLoggerWrapper(async () => {
         const sourceD = `소스 음성: [source_wave_url](${chunk['source_wave_url']})\n`;
         const targetD = `타겟 음성: [target_wave_url](${chunk['target_wave_url']})\n\n`;
@@ -44,12 +44,11 @@ const asyncSendWebhook = (chunk, logger) => {
         await axios
             .post(process.env.DISCORD_WEBHOOK, getJson(data))
             .catch(err => {
-                console.log(err.response.status);
                 if (err.response.status === 429)
-                    asyncPublishMessage_webhook(data, logger);
+                    asyncPublishMessageWebhook(data);
                 else throw err;
             });
-    }, logger)();
+    })();
 };
 
 module.exports = asyncSendWebhook;
