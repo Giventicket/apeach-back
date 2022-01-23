@@ -10,7 +10,7 @@ const asyncPublishMessageBucket = require('../utils/asyncPublishMessageBucket');
 const gcStorage = require('../utils/gcStorage');
 
 let isOn = false;
-const deleteBucket = () => {
+const deleteAudios = () => {
     asyncErrorLoggerWrapper(async () => {
         isOn = true;
         const formattedSubscription = subClient.subscriptionPath(
@@ -46,11 +46,12 @@ const deleteBucket = () => {
             };
             await subClient.acknowledge(ackRequest);
         }
+
         isOn = false;
     })();
 };
 module.exports = () => {
     const job = schedule.scheduleJob('*/5 * * * * *', () => {
-        if (!isOn) deleteBucket();
+        if (!isOn) deleteAudios();
     });
 };

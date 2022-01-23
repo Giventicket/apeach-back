@@ -25,7 +25,7 @@ const getJson = data => {
 };
 
 let isOn = false;
-const webhook = () => {
+const sendWebhook = () => {
     isOn = true;
     asyncErrorLoggerWrapper(async () => {
         const formattedSubscription = subClient.subscriptionPath(
@@ -65,6 +65,6 @@ const webhook = () => {
 
 module.exports = () => {
     const job = schedule.scheduleJob('*/3 * * * * *', () => {
-        if (!isOn) webhook();
+        if (!isOn) sendWebhook();
     });
 };

@@ -4,8 +4,8 @@ require('dotenv').config();
 const expressLoader = require('./loaders/express');
 const mongooseLoader = require('./loaders/mongoose');
 const swaggerLoader = require('./loaders/swagger');
-const jobWebhookLoader = require('./schedulers/jobWebhook');
-const jobBucketLoader = require('./schedulers/jobBucket');
+const jobSendWebhooks = require('./schedulers/jobSendWebhooks');
+const jobDeleteAudios = require('./schedulers/jobDeleteAudios');
 
 const app = express();
 
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== 'test') {
         process.env.NODE_ENV === 'production' &&
         process.env.NODE_APP_INSTANCE == 0
     ) {
-        jobWebhookLoader();
-        jobBucketLoader();
+        jobSendWebhooks();
+        jobDeleteAudios();
     }
 }
