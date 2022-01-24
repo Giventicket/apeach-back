@@ -31,13 +31,27 @@ npm: 8.1.2
 ├── api
 │    ├── routes
 │    │      ├── index.js
-│    │      ├── chunks
-│    │      │      ├── index.js
-│    │      │      ├── discordWebhook.js
-│    │      │      └── chunks.controller.js
-│    │      └── audios
-│    │             ├── index.js
-│    │             └── audios.controller.js
+│    │      └── v1
+│    │          ├── index.js
+│    │          ├── audios
+│    │          │      ├── index.js
+│    │          │      └── controllers
+│    │          │               ├── index.js
+│    │          │               ├── checkFile.js
+│    │          │               ├── deleteFile.js
+│    │          │               ├── parseForm.js
+│    │          │               ├── preprocess.js
+│    │          │               └── uploadFile.js
+│    │          └── chunks
+│    │                 ├── index.js
+│    │                 └── controllers
+│    │                          ├── index.js
+│    │                          ├── createChunk.js
+│    │                          ├── deleteChunk.js
+│    │                          ├── deleteChunks.js
+│    │                          ├── getChunk.js
+│    │                          ├── getChunks.js
+│    │                          └── updateChunk.js
 │    └── middlewares
 │          ├── index.js
 │          ├── isRequired.js
@@ -45,17 +59,37 @@ npm: 8.1.2
 │
 ├── loaders
 │      ├── express.js
-│      ├── gcStorage.js
-│      ├── logger.js
-│      └── mongoose.js
+│      ├── mongoose.js
+│      └── swagger.js
 │
+├── models
+│     └── v1
+│          └── chunk
+│                ├── index.js
+│                └── chunk.js
+├── utils
+│     ├── asyncAudioDelete.js
+│     ├── asyncAudioValidate.js
+│     ├── asyncErrorLoggerWrapper.js
+│     ├── asyncErrorWrapper.js
+│     ├── asyncFileDelete.js
+│     ├── asyncParseForm.js
+│     ├── asyncPreprocess.js
+│     ├── asyncPublishMessageBucket.js
+│     ├── asyncPublishMessageWebhook.js
+│     ├── asyncSendWebhook.js
+│     ├── gcStorage.js
+│     └── logger.js
+│
+├── schedulers
+│     ├── jobDeleteAudios.js
+│     └── jobSendWebhooks.js
+│  
 ├── tests
 │     └── api
 │          └── routes
 │                ├── db.js
 │                └── chunks.test.js
-├── models
-│     └── chunk.js
 ├── app.js
 ├── package-lock.json
 ├── package.json
