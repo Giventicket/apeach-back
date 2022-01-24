@@ -19,7 +19,10 @@ const deleteAudios = () => {
             maxMessages: 20,
         };
 
-        const [response] = await subClient.pull(request);
+        const [response] = await subClient.pull(request).catch(err => {
+            isOn = false;
+            throw err;
+        });
         const ackIds = [];
         for (const message of response.receivedMessages) {
             const filename = JSON.parse(message.message.data).filename;
@@ -40,7 +43,10 @@ const deleteAudios = () => {
                 subscription: formattedSubscription,
                 ackIds: ackIds,
             };
-            await subClient.acknowledge(ackRequest);
+            await subClient.acknowledge(ackRequest).catch(err => {
+                isOn = false;
+                throw err;
+            });
         }
 
         isOn = false;
