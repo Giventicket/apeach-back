@@ -35,7 +35,10 @@ const sendWebhook = () => {
             maxMessages: 3,
         };
 
-        const [response] = await subClient.pull(request);
+        const [response] = await subClient.pull(request).catch(err => {
+            isOn = false;
+            throw err;
+        });
         const ackIds = [];
         for (const message of response.receivedMessages) {
             const data = JSON.parse(message.message.data);
@@ -54,7 +57,10 @@ const sendWebhook = () => {
                 subscription: formattedSubscription,
                 ackIds: ackIds,
             };
-            await subClient.acknowledge(ackRequest);
+            await subClient.acknowledge(ackRequest).catch(err => {
+                isOn = false;
+                throw err;
+            });
         }
         isOn = false;
     })();

@@ -1,8 +1,18 @@
 const mongoose = require('mongoose');
+const logger = require('../utils/logger');
 
 module.exports = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        mongoose.set('debug', true);
+    if (process.env.NODE_ENV == 'dev') {
+        mongoose.set(
+            'debug',
+            function (collectionName, method, query, doc, options) {
+                logger.info(
+                    `mongo collection: ${collectionName}, method: ${method}, query: ${JSON.stringify(
+                        query,
+                    )}`,
+                );
+            },
+        );
     }
 
     mongoose.connect(

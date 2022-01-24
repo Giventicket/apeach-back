@@ -1,8 +1,8 @@
 const logger = require('./logger');
 
 const asyncErrorLoggerWrapper = func => {
-    return () => {
-        func().catch(err => {
+    return async () => {
+        await func().catch(err => {
             logger.error(
                 `status: ${err.status || err.code || 500}, message: ${err}\n`,
             );
