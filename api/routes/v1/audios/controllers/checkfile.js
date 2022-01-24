@@ -1,7 +1,7 @@
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const asyncAudioValidate = require('../../../../../utils/asyncAudioValidate.js');
 
-const checkfile = asyncErrorWrapper(async (req, res, next) => {
+const checkFile = asyncErrorWrapper(async (req, res, next) => {
     const metadata = await asyncAudioValidate(req.files.audio.filepath);
 
     if (metadata == null) {
@@ -23,4 +23,4 @@ const checkfile = asyncErrorWrapper(async (req, res, next) => {
     next();
 });
 
-module.exports = checkfile;
+module.exports = checkFile;

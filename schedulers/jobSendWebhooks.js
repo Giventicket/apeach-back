@@ -1,9 +1,6 @@
 const schedule = require('node-schedule');
 const axios = require('axios');
-const { v1 } = require('@google-cloud/pubsub');
-const subClient = new v1.SubscriberClient({
-    keyFilename: process.env.KEY_FILENAME,
-});
+const subClient = require('../utils/gcpSubclient');
 
 const asyncErrorLoggerWrapper = require('../utils/asyncErrorLoggerWrapper');
 const asyncPublishMessageWebhook = require('../utils/asyncPublishMessageWebhook');

@@ -3,7 +3,7 @@ config:
     #target: 'http://34.64.86.184:3000'
     phases:
         - duration: 1
-          arrivalRate: 100
+          arrivalRate: 6
           name: load test
 
 scenarios:

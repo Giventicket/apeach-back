@@ -45,7 +45,7 @@ const router = express.Router();
 router.post(
     '/upload/preprocess',
     controller.parseForm,
-    controller.checkfile,
+    controller.checkFile,
     controller.preprocess,
     controller.uploadFile,
 );
@@ -93,7 +93,7 @@ router.post(
 router.post(
     '/upload',
     controller.parseForm,
-    controller.checkfile,
+    controller.checkFile,
     controller.uploadFile,
 );
 // audio 저장하기

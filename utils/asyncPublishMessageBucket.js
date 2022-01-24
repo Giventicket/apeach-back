@@ -1,9 +1,5 @@
-const { PubSub } = require('@google-cloud/pubsub');
 const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
-
-const pubSubClient = new PubSub({
-    keyFilename: process.env.KEY_FILENAME,
-});
+const pubSubClient = require('./gcpPubSubClient');
 
 const asyncPublishMessageBucket = filename => {
     asyncErrorLoggerWrapper(async () => {
