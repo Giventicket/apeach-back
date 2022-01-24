@@ -1,13 +1,9 @@
 const schedule = require('node-schedule');
-const { v1 } = require('@google-cloud/pubsub');
-
-const subClient = new v1.SubscriberClient({
-    keyFilename: process.env.KEY_FILENAME,
-});
+const subClient = require('../utils/gcpSubclient');
 
 const asyncErrorLoggerWrapper = require('../utils/asyncErrorLoggerWrapper');
 const asyncPublishMessageBucket = require('../utils/asyncPublishMessageBucket');
-const gcStorage = require('../utils/gcStorage');
+const gcpStorage = require('../utils/gcpStorage');
 
 let isOn = false;
 const deleteAudios = () => {
@@ -27,7 +23,7 @@ const deleteAudios = () => {
         const ackIds = [];
         for (const message of response.receivedMessages) {
             const filename = JSON.parse(message.message.data).filename;
-            await gcStorage
+            await gcpStorage
                 .bucket(process.env.BUCKET_NAME)
                 .file(filename)
                 .delete()

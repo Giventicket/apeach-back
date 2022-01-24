@@ -1,6 +1,6 @@
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
-const gcStorage = require('../../../../../utils/gcStorage.js');
+const gcpStorage = require('../../../../../utils/gcpStorage.js');
 
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const deleteTmp = () => {
@@ -18,7 +18,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
         ? `${req.files.audio.newFilename}R`
         : req.files.audio.newFilename;
     const mimetype = req.resampled ? 'audio/wave' : req.files.audio.mimetype;
-    const result = await gcStorage
+    const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
         .upload(filepath, {
             destination: `audio/${destination}`,
