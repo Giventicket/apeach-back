@@ -1,9 +1,8 @@
 const schedule = require('node-schedule');
-const subClient = require('../utils/gcpSubclient');
-
 const asyncErrorLoggerWrapper = require('../utils/asyncErrorLoggerWrapper');
 const asyncPublishMessageBucket = require('../utils/asyncPublishMessageBucket');
 const gcpStorage = require('../utils/gcpStorage');
+const subClient = require('../utils/gcpSubClient');
 
 let isOn = false;
 const deleteAudios = () => {
