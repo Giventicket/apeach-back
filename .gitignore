@@ -105,3 +105,6 @@ dist
 
 # json authentication
 pathfinder-101*
+
+# audio files
+*.mp3
