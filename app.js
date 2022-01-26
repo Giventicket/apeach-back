@@ -19,8 +19,8 @@ module.exports = app.listen(app.get('port'), () => {
 
 if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
-    //jobSendWebhooks();
-    //jobDeleteAudios();
+    jobSendWebhooks();
+    jobDeleteAudios();
     if (
         process.env.NODE_ENV === 'production' &&
         process.env.NODE_APP_INSTANCE == 0

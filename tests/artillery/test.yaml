@@ -3,30 +3,32 @@ config:
     #target: 'http://34.64.86.184:3000'
     phases:
         - duration: 1
-          arrivalRate: 6
+          arrivalRate: 1
           name: load test
+    plugins:
+        http-file-uploads:
+            filePaths: '../../../minoi.mp3'
 
 scenarios:
-    - name: 'create one chunk and get'
+    - name: 'preprocess and upload, a create chunk, patch chunk'
       flow:
           - post:
-                url: '/api/v1/chunks'
+                url: '/api/v1/audios/upload/preprocess'
+                formData:
+                    audio:
+                        fromFile: '../../../minoi.mp3'
+                capture:
+                    - json: '$.data.mediaLink'
+                      as: 'mediaLink'
+          - post:
+                url: '/api/v1/chunks/'
                 json:
-                    source_wave_url: 'super intensive discord webhook test'
+                    source_wave_url: '{{ mediaLink }}'
                 capture:
                     - json: '$.data._id'
                       as: 'chunkId'
           - patch:
                 url: '/api/v1/chunks/{{ chunkId }}'
                 json:
-                    target_wave_url: 'super intensive discord webhook test'
                     status: '3'
-                    segments:
-                        [
-                            {
-                                start_time: 0,
-                                end_time: 0,
-                                source_text: 'hihi',
-                                target_text: '안녕안녕',
-                            },
-                        ]
+                    target_wave_url: '{{ mediaLink }}'
