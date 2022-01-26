@@ -12,7 +12,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
         });
     };
     const filepath = req.resampled
-        ? `${req.files.audio.filepath}R.wav`
+        ? `${req.files.audio.filepath}R`
         : req.files.audio.filepath;
     const destination = req.resampled
         ? `${req.files.audio.newFilename}R.wav`
