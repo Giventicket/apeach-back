@@ -14,6 +14,7 @@ const checkFile = asyncErrorWrapper(async (req, res, next) => {
     } else if (metadata.streams[0].codec_type !== 'audio') {
         const err = new Error('validation failed[not audio file!]');
         err.status = 453;
+        console.log(filepath);
         asyncFileDelete(filepath);
         throw err;
     } else if (metadata.streams[0].duration > 600) {
