@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+
 const logger = require('../utils/logger');
 
 const indexRouter = require('../api/routes/index');
@@ -27,6 +29,7 @@ module.exports = app => {
         next(err);
     });
     app.use((err, req, res, next) => {
+        if (err instanceof mongoose.Error) err.status = 400;
         logger.error(
             `status: ${err.status || err.code || 500}, message: ${err}\n`,
         );

@@ -1,6 +1,5 @@
 const express = require('express');
 const controller = require('./controllers/index');
-const middlewares = require('../../../middlewares/index');
 
 const router = express.Router();
 
@@ -36,11 +35,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post(
-    '/',
-    middlewares.isRequired('body', 'source_wave_url', true),
-    controller.createChunk,
-);
+router.post('/', controller.createChunk);
 // [post] chunk 생성하기
 
 /**
@@ -72,7 +67,7 @@ router.post(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.get('/:id', middlewares.isValidID, controller.getChunk);
+router.get('/:id', controller.getChunk);
 // [get] 매칭 되는 chunk 가져오기
 
 /**
@@ -129,7 +124,7 @@ router.get('/', controller.getChunks);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.patch('/:id', middlewares.isValidID, controller.updateChunk);
+router.patch('/:id', controller.updateChunk);
 // [update] chunk update 하기
 
 /**
@@ -163,7 +158,7 @@ router.patch('/:id', middlewares.isValidID, controller.updateChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/:id', middlewares.isValidID, controller.deleteChunk);
+router.delete('/:id', controller.deleteChunk);
 // [delete] id에 매칭되는 chunk 하나 삭제하기
 
 /**

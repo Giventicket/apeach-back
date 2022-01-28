@@ -1,7 +1,7 @@
 const ffmpeg = require('fluent-ffmpeg');
 const asyncFileDelete = require('./asyncFileDelete');
 
-const asyncAudioValidate = filepath => {
+const asyncAudioInfo = filepath => {
     return new Promise((resolve, reject) => {
         ffmpeg.ffprobe(filepath, (err, metadata) => {
             if (err) {
@@ -13,4 +13,4 @@ const asyncAudioValidate = filepath => {
     });
 };
 
-module.exports = asyncAudioValidate;
+module.exports = asyncAudioInfo;

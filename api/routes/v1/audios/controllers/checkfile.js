@@ -1,10 +1,10 @@
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
-const asyncAudioValidate = require('../../../../../utils/asyncAudioValidate.js');
+const asyncAudioInfo = require('../../../../../utils/asyncAudioInfo.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 
 const checkFile = asyncErrorWrapper(async (req, res, next) => {
     const filepath = req.files.audio.filepath;
-    const metadata = await asyncAudioValidate(filepath);
+    const metadata = await asyncAudioInfo(filepath);
 
     if (metadata == null) {
         const err = new Error('validation failed[no metadata!]');
