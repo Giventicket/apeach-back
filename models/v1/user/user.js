@@ -49,10 +49,7 @@ userSchema.pre('find', function (next) {
 
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
-        const hash = await bcrypt.hash(this.password, 10).catch(err => {
-            next(err);
-        });
-        console.log(hash);
+        const hash = await bcrypt.hash(this.password, 10);
         this.password = hash;
         next();
     }
