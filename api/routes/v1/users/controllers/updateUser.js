@@ -10,10 +10,7 @@ const updatUser = asyncErrorWrapper(async (req, res, next) => {
             chunks: req.body.chunks,
         },
         { new: true },
-    )
-        .populate('samples')
-        .populate('chunks')
-        .exec();
+    ).exec();
 
     if (user == null) {
         const err = new Error(`Cannot find ${req.params.id}`);

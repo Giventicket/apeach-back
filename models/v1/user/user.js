@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
 const chunkRef =
@@ -40,5 +41,21 @@ const userSchema = new Schema(
         versionKey: false,
     },
 );
+
+userSchema.pre('find', function (next) {
+    this.populate('chunks').populate('samples');
+    next();
+});
+
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        const hash = await bcrypt.hash(this.password, 10).catch(err => {
+            next(err);
+        });
+        console.log(hash);
+        this.password = hash;
+        next();
+    }
+});
 
 module.exports = userSchema;
