@@ -24,11 +24,10 @@ if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
     jobSendWebhooks();
     jobDeleteAudios();
-    if (
-        process.env.NODE_ENV === 'production' &&
-        process.env.NODE_APP_INSTANCE == 0
-    ) {
+    /*
+    if (process.env.NODE_APP_INSTANCE == 0) {
         jobSendWebhooks();
         jobDeleteAudios();
     }
+    */
 }
