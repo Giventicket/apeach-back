@@ -1,5 +1,7 @@
 const Sample = require('../../../../../models/v1/sample/index');
+
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
+const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 
 const deleteSample = asyncErrorWrapper(async (req, res, next) => {
     const sample = await Sample.findOne({ _id: req.params.id }).exec();
@@ -9,6 +11,8 @@ const deleteSample = asyncErrorWrapper(async (req, res, next) => {
         err.status = 404;
         throw err;
     }
+
+    asyncAudioDelete(sample.wave_url);
 
     await Sample.deleteOne({ _id: req.params.id }).exec();
 
