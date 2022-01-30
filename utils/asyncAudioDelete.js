@@ -3,10 +3,12 @@ const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
 const asyncPublishMessageBucket = require('./asyncPublishMessageBucket');
 const gcpStorage = require('./gcpStorage');
 
-const asyncAudioDelete = audio => {
+const asyncAudioDelete = audioUrl => {
     asyncErrorLoggerWrapper(async () => {
-        const parsedAudio = url.parse(audio).pathname.split('/');
-        filename = decodeURIComponent(parsedAudio[7]);
+        const parsedAudioUrl = url.parse(audioUrl).pathname.split('/');
+        filename = decodeURIComponent(
+            parsedAudioUrl[parsedAudioUrl.length - 1],
+        );
         await gcpStorage
             .bucket(process.env.BUCKET_NAME)
             .file(filename)
