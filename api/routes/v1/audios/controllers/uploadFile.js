@@ -1,3 +1,5 @@
+const path = require('path');
+
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
@@ -11,12 +13,15 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
             asyncFileDelete(fp);
         });
     };
+
     const filepath = req.resampled
         ? `${req.files.audio.filepath}R`
         : req.files.audio.filepath;
     const destination = req.resampled
         ? `${req.files.audio.newFilename}R.wav`
-        : `${req.files.audio.newFilename}.wav`;
+        : `${req.files.audio.newFilename}${path.extname(
+              req.files.audio.originalFilename,
+          )}`;
     const mimetype = req.resampled ? 'audio/wave' : req.files.audio.mimetype;
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
