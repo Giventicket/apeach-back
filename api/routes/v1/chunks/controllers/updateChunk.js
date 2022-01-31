@@ -15,7 +15,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     ).exec();
 
     if (chunk == null) {
-        const err = new Error(`Cannot find ${req.params.id}`);
+        const err = new Error(`Cannot find a chunk`);
         err.status = 404;
         throw err;
     }
@@ -25,7 +25,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     }
 
     res.status(200).json({
-        message: `update success [find ${req.params.id}]`,
+        message: `Update a chunk success`,
         data: chunk,
     });
 });

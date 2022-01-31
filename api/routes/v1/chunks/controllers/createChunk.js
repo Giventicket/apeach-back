@@ -6,7 +6,7 @@ const createChunk = asyncErrorWrapper(async (req, res, next) => {
         source_wave_url: req.body.source_wave_url,
     });
     res.status(201).json({
-        message: `Create success[create ${chunk._id}}]`,
+        message: `Create a chunk success`,
         data: chunk,
     });
 });

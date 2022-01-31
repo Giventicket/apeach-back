@@ -6,7 +6,7 @@ const deleteUser = asyncErrorWrapper(async (req, res, next) => {
     const user = await User.findOne({ _id: req.params.id }).exec();
 
     if (user == null) {
-        const err = new Error(`Cannot find ${req.params.id}`);
+        const err = new Error(`Cannot find an user`);
         err.status = 404;
         throw err;
     }
@@ -25,7 +25,7 @@ const deleteUser = asyncErrorWrapper(async (req, res, next) => {
     await User.deleteOne({ _id: req.params.id }).exec();
 
     res.status(200).json({
-        message: `Delete success [delete ${req.params.id}]`,
+        message: `Delete an user success`,
         data: {},
     });
 });

@@ -20,7 +20,7 @@ const deleteUsers = asyncErrorWrapper(async (req, res, next) => {
     await User.deleteMany({}).exec();
 
     res.status(200).json({
-        message: 'Delete success [delete all]',
+        message: 'Delete users success',
         data: {},
     });
 });

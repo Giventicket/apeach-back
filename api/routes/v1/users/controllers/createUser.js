@@ -7,7 +7,7 @@ const createUser = asyncErrorWrapper(async (req, res, next) => {
         password: req.body.password,
     });
     res.status(201).json({
-        message: `Create success[create ${user._id}}]`,
+        message: `Create an user success`,
         data: user,
     });
 });

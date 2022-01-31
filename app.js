@@ -1,8 +1,6 @@
 const express = require('express');
 require('dotenv').config();
 
-const cookieParser = require('cookie-parser');
-
 const expressLoader = require('./loaders/express');
 const mongooseLoader = require('./loaders/mongoose');
 const swaggerLoader = require('./loaders/swagger');
@@ -11,7 +9,6 @@ const jobDeleteAudios = require('./schedulers/jobDeleteAudios');
 
 const app = express();
 
-app.use(cookieParser());
 swaggerLoader(app);
 expressLoader(app);
 

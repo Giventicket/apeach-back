@@ -27,25 +27,21 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     }
 
     const token = jwt.sign({ id: user._id }, 'secret', {
-        expiresIn: '7d',
+        expiresIn: '1h',
     });
 
-    res.status(200)
-        .cookie('x_auth', token, {
-            maxAge: 1000 * 60 * 60 * 24 * 7, // 7d
-            httpOnly: true,
-        })
-        .json({
-            message: `login success`,
-            data: {
-                name: user.name,
-                samples: user.samples,
-                chunks: user.chunks,
-                qualified: user.qualified,
-                completed: user.completed,
-                accessToken: token,
-            },
-        });
+    res.status(200).json({
+        message: `login success`,
+        data: {
+            name: user.name,
+            samples: user.samples,
+            chunks: user.chunks,
+            qualified: user.qualified,
+            samplesAudioCnt: user.samplesAudioCnt,
+            chunksAudioCnt: user.chunksAudioCnt,
+            accessToken: token,
+        },
+    });
 });
 
 module.exports = login;

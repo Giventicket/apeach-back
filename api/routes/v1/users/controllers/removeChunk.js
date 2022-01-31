@@ -1,8 +1,9 @@
+const User = require('../../../../../models/v1/user/index');
 const Chunk = require('../../../../../models/v1/chunk/index');
 const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
+const removeChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOne({ _id: req.params.id }).exec();
 
     if (chunk == null) {
@@ -19,10 +20,20 @@ const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
         asyncAudioDelete(audio);
     });
 
+    const user = await User.findOneAndUpdate(
+        { _id: req.userId },
+        {
+            chunks: req.user.chunks.filter(id => {
+                return id !== req.params.id;
+            }),
+        },
+        { new: true },
+    ).exec();
+
     res.status(200).json({
-        message: `Delete a chunk success`,
-        data: {},
+        message: `Remove chunk from user success`,
+        data: user,
     });
 });
 
-module.exports = deleteChunk;
+module.exports = removeChunk;

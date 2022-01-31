@@ -9,7 +9,7 @@ const getChunk = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
     res.status(200).json({
-        message: `Find success [find ${req.params.id}]`,
+        message: `Find a chunk success`,
         data: chunk,
     });
 });

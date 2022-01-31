@@ -13,7 +13,7 @@ const deleteChunks = asyncErrorWrapper(async (req, res, next) => {
     });
 
     res.status(200).json({
-        message: 'Delete success [delete all]',
+        message: 'Delete chunks success',
         data: {},
     });
 });

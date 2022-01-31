@@ -28,7 +28,11 @@ const userSchema = new Schema(
             type: Boolean,
             default: false,
         },
-        completed: {
+        samplesAudioCnt: {
+            type: Number,
+            default: 0,
+        },
+        chunksAudioCnt: {
             type: Number,
             default: 0,
         },
