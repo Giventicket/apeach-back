@@ -17,7 +17,7 @@ const signout = asyncErrorWrapper(async (req, res, next) => {
     });
 
     res.status(200).json({
-        message: `Delete success [delete ${req.userId}]`,
+        message: `Delete an user success`,
         data: {},
     });
 });

@@ -1,32 +1,28 @@
 const User = require('../../../../../models/v1/user/index');
-const Chunk = require('../../../../../models/v1/chunk/index');
+const Sample = require('../../../../../models/v1/sample/index');
 const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const removeChunk = asyncErrorWrapper(async (req, res, next) => {
-    const chunk = await Chunk.findOne({ _id: req.params.id }).exec();
+const removeSample = asyncErrorWrapper(async (req, res, next) => {
+    const sample = await Sample.findOne({ _id: req.params.id }).exec();
 
-    if (chunk == null) {
-        const err = new Error(`Cannot find a chunk`);
+    if (sample == null) {
+        const err = new Error(`Cannot find a sample`);
         err.status = 404;
         throw err;
     }
 
-    await Chunk.deleteOne({ _id: req.params.id }).exec();
+    await Sample.deleteOne({ _id: req.params.id }).exec();
 
-    const audios = [chunk['source_wave_url'], chunk['target_wave_url']];
-
-    audios.forEach(audio => {
-        asyncAudioDelete(audio);
-    });
+    asyncAudioDelete(sample.wave_url);
 
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
         {
-            chunks: req.user.chunks.filter(id => {
+            samples: req.user.samples.filter(id => {
                 return id !== req.params.id;
             }),
-            chunksAudioCnt: req.user.chunksAudioCnt - 2,
+            samplesAudioCnt: req.user.samplesAudioCnt - 1,
         },
         { new: true },
     )
@@ -35,7 +31,7 @@ const removeChunk = asyncErrorWrapper(async (req, res, next) => {
         .exec();
 
     res.status(200).json({
-        message: `Remove a chunk from user success`,
+        message: `Remove a sample from user success`,
         data: {
             name: updatedUser.name,
             samples: updatedUser.samples,
@@ -47,4 +43,4 @@ const removeChunk = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = removeChunk;
+module.exports = removeSample;

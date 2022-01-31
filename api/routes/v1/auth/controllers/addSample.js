@@ -1,23 +1,23 @@
 const User = require('../../../../../models/v1/user/index');
-const Chunk = require('../../../../../models/v1/chunk/index');
+const Sample = require('../../../../../models/v1/sample/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const addChunk = asyncErrorWrapper(async (req, res, next) => {
+const addSample = asyncErrorWrapper(async (req, res, next) => {
     const user = req.user;
 
-    const chunk = await Chunk.findOne({ _id: req.params.id }).exec();
+    const sample = await Sample.findOne({ _id: req.params.id }).exec();
 
-    if (chunk == null) {
-        const err = new Error(`Cannot find a chunk`);
+    if (sample == null) {
+        const err = new Error(`Cannot find a sample`);
         err.status = 404;
         throw err;
     }
 
-    user.chunks.push(req.params.id);
+    user.samples.push(req.params.id);
 
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
-        { chunks: user.chunks },
+        { samples: user.samples },
         { new: true },
     )
         .populate('samples')
@@ -25,7 +25,7 @@ const addChunk = asyncErrorWrapper(async (req, res, next) => {
         .exec();
 
     res.status(200).json({
-        message: `Add a chunk on user success`,
+        message: `Add a sample on user success`,
         data: {
             name: updatedUser.name,
             samples: updatedUser.samples,
@@ -37,4 +37,4 @@ const addChunk = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = addChunk;
+module.exports = addSample;
