@@ -12,13 +12,13 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
     ).exec();
 
     if (sample == null) {
-        const err = new Error(`Cannot find ${req.params.id}`);
+        const err = new Error(`Cannot find a sample`);
         err.status = 404;
         throw err;
     }
 
     res.status(200).json({
-        message: `update success [find ${req.params.id}]`,
+        message: `update a sample success`,
         data: sample,
     });
 });

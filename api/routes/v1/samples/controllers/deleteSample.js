@@ -7,7 +7,7 @@ const deleteSample = asyncErrorWrapper(async (req, res, next) => {
     const sample = await Sample.findOne({ _id: req.params.id }).exec();
 
     if (sample == null) {
-        const err = new Error(`Cannot find ${req.params.id}`);
+        const err = new Error(`Cannot find a sample`);
         err.status = 404;
         throw err;
     }
@@ -17,7 +17,7 @@ const deleteSample = asyncErrorWrapper(async (req, res, next) => {
     await Sample.deleteOne({ _id: req.params.id }).exec();
 
     res.status(200).json({
-        message: `Delete success [delete ${req.params.id}]`,
+        message: `Delete a sample success`,
         data: {},
     });
 });

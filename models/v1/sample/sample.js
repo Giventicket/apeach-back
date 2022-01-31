@@ -9,7 +9,7 @@ const sampleSchema = new Schema(
         },
         wave_url: {
             type: String,
-            default: null,
+            required: true,
         },
         turn: {
             type: Number,

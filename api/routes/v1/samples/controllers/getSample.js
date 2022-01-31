@@ -4,12 +4,12 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const getSample = asyncErrorWrapper(async (req, res, next) => {
     const sample = await Sample.findOne({ _id: req.params.id }).exec();
     if (sample == null) {
-        const err = new Error(`Cannot find ${req.params.id}`);
+        const err = new Error(`Cannot find a sample`);
         err.status = 404;
         throw err;
     }
     res.status(200).json({
-        message: `Find success [find ${req.params.id}]`,
+        message: `Find a sample success`,
         data: sample,
     });
 });

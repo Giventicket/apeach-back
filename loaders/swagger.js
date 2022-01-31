@@ -22,6 +22,8 @@ module.exports = app => {
             root + '/loaders/*.js',
             root + '/api/routes/v1/chunks/*.js',
             root + '/api/routes/v1/audios/*.js',
+            root + '/api/routes/v1/samples/*.js',
+            root + '/api/routes/v1/auth/*.js',
         ],
     };
     const specs = swaggereJsdoc(options);
@@ -35,6 +37,29 @@ module.exports = app => {
 /**
  *  @swagger
  *  definitions:
+ *    Response_UserWithAccessToken:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/UserWithAccessToken'
+ *    Response_User:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/User'
+ *
+ *    Response_Sample:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/Sample'
+ *
  *    Response_Chunk:
  *      properties:
  *        message:
@@ -87,6 +112,18 @@ module.exports = app => {
  *                type: string
  *              target_text:
  *                type: string
+ *
+ *    Sample:
+ *      properties:
+ *        _id:
+ *          type: string
+ *        turn:
+ *          type: number
+ *        text:
+ *          type: string
+ *        wave_url:
+ *          type: string
+ *
  *
  *    Chunk:
  *      properties:
@@ -152,4 +189,46 @@ module.exports = app => {
  *          type: string
  *        duration:
  *          type: number
+ *
+ *
+ *    User:
+ *      properties:
+ *        name:
+ *          type: string
+ *        samples:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Sample'
+ *        chunks:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Chunk'
+ *        qualified:
+ *          type: boolean
+ *        samplesAudioCnt:
+ *          type: number
+ *        chunksAudioCnt:
+ *          type: number
+ *
+ *    UserWithAccessToken:
+ *      properties:
+ *        name:
+ *          type: string
+ *        samples:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Sample'
+ *        chunks:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Chunk'
+ *        qualified:
+ *          type: boolean
+ *        samplesAudioCnt:
+ *          type: number
+ *        chunksAudioCnt:
+ *          type: number
+ *        accesstoken:
+ *          type: string
+ *
  */

@@ -12,7 +12,7 @@ const deleteSamples = asyncErrorWrapper(async (req, res, next) => {
     await Sample.deleteMany({}).exec();
 
     res.status(200).json({
-        message: 'Delete success [delete all]',
+        message: 'Delete samples success',
         data: {},
     });
 });

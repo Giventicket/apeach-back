@@ -4,7 +4,7 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const getSamples = asyncErrorWrapper(async (req, res, next) => {
     const samples = await Sample.find({}).exec();
     res.status(200).json({
-        message: 'Find success [find all]',
+        message: 'Find samples success',
         data: samples,
     });
 });

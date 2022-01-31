@@ -5,9 +5,10 @@ const createSample = asyncErrorWrapper(async (req, res, next) => {
     const sample = await Sample.create({
         text: req.body.text,
         turn: req.body.turn,
+        wave_url: req.body.wave_url,
     });
     res.status(201).json({
-        message: `Create success[create ${sample._id}}]`,
+        message: `Create a sample success`,
         data: sample,
     });
 });
