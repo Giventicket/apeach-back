@@ -1,5 +1,6 @@
 const User = require('../../../../../models/v1/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
+const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 
 const deleteUsers = asyncErrorWrapper(async (req, res, next) => {
     const users = await User.find({}).exec();

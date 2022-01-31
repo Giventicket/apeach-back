@@ -6,15 +6,25 @@ const addChunk = asyncErrorWrapper(async (req, res, next) => {
 
     user.chunks.push(req.params.id);
 
-    const newUser = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
         { chunks: user.chunks },
         { new: true },
-    ).exec();
+    )
+        .populate('samples')
+        .populate('chunks')
+        .exec();
 
     res.status(200).json({
         message: `Add chunk on user success`,
-        data: newUser,
+        data: {
+            name: updatedUser.name,
+            samples: updatedUser.samples,
+            chunks: updatedUser.chunks,
+            qualified: updatedUser.qualified,
+            samplesAudioCnt: updatedUser.samplesAudioCnt,
+            chunksAudioCnt: updatedUser.chunksAudioCnt,
+        },
     });
 });
 

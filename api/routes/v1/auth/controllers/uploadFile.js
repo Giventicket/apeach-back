@@ -8,22 +8,13 @@ const gcpStorage = require('../../../../../utils/gcpStorage.js');
 const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const user = req.user;
 
-    let cnt = 0;
-    if (req.body.option === 'chunk') {
-        cnt = user.chunksAudioCnt + 1;
-        const user = await User.findOneAndUpdate(
-            { _id: req.userId },
-            { chunksAudioCnt: cnt },
-            { new: true },
-        ).exec();
-    } else if (req.body.option === 'sample') {
-        cnt = user.samplesAudioCnt + 1;
-        const user = await User.findOneAndUpdate(
-            { _id: req.userId },
-            { samplesAudioCnt: cnt },
-            { new: true },
-        ).exec();
-    }
+    const cnt = user.chunksAudioCnt + 1;
+    User.updateOne(
+        { _id: req.userId },
+        { chunksAudioCnt: cnt },
+        { new: true },
+    ).exec();
+
     const filepath = req.resampled
         ? `${req.files.audio.filepath}R`
         : req.files.audio.filepath;
@@ -44,7 +35,7 @@ const uploadFile = asyncErrorWrapper(async (req, res, next) => {
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
         .upload(filepath, {
-            destination: `audio/${user.name}/${destination}`,
+            destination: `audio/${user.name}/chunk/${destination}`,
             metadata: {
                 contentType: mimetype,
             },

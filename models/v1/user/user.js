@@ -46,11 +46,6 @@ const userSchema = new Schema(
     },
 );
 
-userSchema.pre('find', function (next) {
-    this.populate('chunks').populate('samples');
-    next();
-});
-
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         const hash = await bcrypt.hash(this.password, 10);

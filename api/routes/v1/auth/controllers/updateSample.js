@@ -17,7 +17,10 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
 
-    const user = await User.findOne({ _id: req.userId }).exec();
+    const user = await User.findOne({ _id: req.userId })
+        .populate('samples')
+        .populate('chunks')
+        .exec();
 
     if (user == null) {
         const err = new Error(`Cannot find user`);

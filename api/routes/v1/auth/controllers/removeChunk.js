@@ -20,19 +20,30 @@ const removeChunk = asyncErrorWrapper(async (req, res, next) => {
         asyncAudioDelete(audio);
     });
 
-    const user = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
         {
             chunks: req.user.chunks.filter(id => {
                 return id !== req.params.id;
             }),
+            chunksAudioCnt: req.user.chunksAudioCnt - 2,
         },
         { new: true },
-    ).exec();
+    )
+        .populate('samples')
+        .populate('chunks')
+        .exec();
 
     res.status(200).json({
         message: `Remove chunk from user success`,
-        data: user,
+        data: {
+            name: updatedUser.name,
+            samples: updatedUser.samples,
+            chunks: updatedUser.chunks,
+            qualified: updatedUser.qualified,
+            samplesAudioCnt: updatedUser.samplesAudioCnt,
+            chunksAudioCnt: updatedUser.chunksAudioCnt,
+        },
     });
 });
 
