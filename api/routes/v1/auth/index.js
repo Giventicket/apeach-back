@@ -115,7 +115,7 @@ router.post('/login', controller.login);
 
 /**
  *  @swagger
- *  /api/v1/auth/upload/preprocess/:option:
+ *  /api/v1/auth/upload/preprocess/{option}:
  *    post:
  *      tags:
  *      - Auth
@@ -126,6 +126,10 @@ router.post('/login', controller.login);
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: path
+ *          name: option
+ *          type: string
+ *          required: true
  *        - in: header
  *          name: Authorization
  *          type: string
@@ -168,7 +172,7 @@ router.post(
 
 /**
  *  @swagger
- *  /api/v1/auth/upload/:option:
+ *  /api/v1/auth/upload/{option}:
  *    post:
  *      tags:
  *      - Auth
@@ -179,6 +183,10 @@ router.post(
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: path
+ *          name: option
+ *          type: string
+ *          required: true
  *        - in: header
  *          name: Authorization
  *          type: string
@@ -218,15 +226,139 @@ router.post(
 );
 // ${user.name}/chunk의 폴더에 음성파일 업로드
 
+/**
+ *  @swagger
+ *  /api/v1/auth/chunk/{chunkId}:
+ *    post:
+ *      tags:
+ *      - Auth
+ *      summary: "생성된 chunk를 user의 chunks에 push"
+ *      description: user의 chunks에 chunk를 넣는다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: chunkId
+ *          type: string
+ *          required: true
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: chunk의 push가 user에 성공적으로 반영된 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          404:
+ *            description: access token이 유효하지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
 router.post('/chunk/:id', decodeAccessToken, controller.addChunk);
 //user의 chunks에 하나 추가하기
 
+/**
+ *  @swagger
+ *  /api/v1/auth/chunk/{chunkId}:
+ *    delete:
+ *      tags:
+ *      - Auth
+ *      summary: "chunk를 user의 chunks에 remove"
+ *      description: user의 chunks에 chunk를 제거한다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: chunkId
+ *          type: string
+ *          required: true
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: chunk의 remove가 user에 성공적으로 반영된 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          404:
+ *            description: access token이 유효하지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
 router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
 //user의 chunks에서 하나 제거하기
 
+/**
+ *  @swagger
+ *  /api/v1/auth/sample/{sampleId}:
+ *    post:
+ *      tags:
+ *      - Auth
+ *      summary: "sample를 user의 samples에 push"
+ *      description: user의 samples에 sample를 넣는다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: sampleId
+ *          type: string
+ *          required: true
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: sample의 remove가 user에 성공적으로 반영된 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          404:
+ *            description: access token이 유효하지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
 router.post('/chunk/:id', decodeAccessToken, controller.addSample);
 //user의 samples에 하나 추가하기
 
+/**
+ *  @swagger
+ *  /api/v1/auth/sample/{sampleId}:
+ *    delete:
+ *      tags:
+ *      - Auth
+ *      summary: "chunk를 user의 chunks에 remove"
+ *      description: user의 chunks에 chunk를 제거한다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: sampleId
+ *          type: string
+ *          required: true
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: sample의 remove가 user에 성공적으로 반영된 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          404:
+ *            description: access token이 유효하지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
 router.delete('/chunk/:id', decodeAccessToken, controller.removeSample);
 //user의 samples에서 하나 제거하기
 
