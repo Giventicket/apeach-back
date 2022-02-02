@@ -2,6 +2,7 @@ const express = require('express');
 const controller = require('./controllers/index');
 const audioController = require('../audios/controllers/index');
 const decodeAccessToken = require('../middlewares/decodeAccessToken');
+const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
 
 const router = express.Router();
 
@@ -106,12 +107,16 @@ router.delete('/signout', decodeAccessToken, controller.signout);
  *            description: user의 로그인이 성공적으로 된 경우
  *            schema:
  *              $ref: '#/definitions/Response_UserWithAccessToken'
+ *          400:
+ *            description: request body에 name, password가 명시되지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: access token이 유효하지 않은 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/login', controller.login);
+router.post('/login', isNameAndPasswordNotNull, controller.login);
 
 /**
  *  @swagger
@@ -325,7 +330,7 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/chunk/:id', decodeAccessToken, controller.addSample);
+router.post('/sample/:id', decodeAccessToken, controller.addSample);
 //user의 samples에 하나 추가하기
 
 /**
@@ -334,8 +339,8 @@ router.post('/chunk/:id', decodeAccessToken, controller.addSample);
  *    delete:
  *      tags:
  *      - Auth
- *      summary: "chunk를 user의 chunks에 remove"
- *      description: user의 chunks에 chunk를 제거한다.
+ *      summary: "sample를 user의 samples에 remove"
+ *      description: user의 samples에 sample를 제거한다.
  *      consumes:
  *        - application/json
  *      produces:
@@ -359,7 +364,7 @@ router.post('/chunk/:id', decodeAccessToken, controller.addSample);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/chunk/:id', decodeAccessToken, controller.removeSample);
+router.delete('/sample/:id', decodeAccessToken, controller.removeSample);
 //user의 samples에서 하나 제거하기
 
 module.exports = router;

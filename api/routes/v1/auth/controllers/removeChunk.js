@@ -20,11 +20,16 @@ const removeChunk = asyncErrorWrapper(async (req, res, next) => {
         asyncAudioDelete(audio);
     });
 
+    console.log(
+        req.user.chunks.filter(id => {
+            return id !== req.params.id;
+        }),
+    );
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
         {
             chunks: req.user.chunks.filter(id => {
-                return id !== req.params.id;
+                return String(id) !== req.params.id;
             }),
             chunksAudioCnt: req.user.chunksAudioCnt - 2,
         },

@@ -7,7 +7,10 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const login = asyncErrorWrapper(async (req, res, next) => {
     let user = await User.findOne({
         name: req.body.name,
-    }).exec();
+    })
+        //.populate('samples')
+        //.populate('chunks')
+        .exec();
 
     if (!user) {
         const err = new Error(`Login failed [Cannot find ${req.body.name}]`);

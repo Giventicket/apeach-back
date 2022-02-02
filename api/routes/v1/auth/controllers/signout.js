@@ -1,4 +1,5 @@
 const User = require('../../../../../models/v1/user/index');
+const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const signout = asyncErrorWrapper(async (req, res, next) => {

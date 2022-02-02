@@ -20,7 +20,7 @@ const removeSample = asyncErrorWrapper(async (req, res, next) => {
         { _id: req.userId },
         {
             samples: req.user.samples.filter(id => {
-                return id !== req.params.id;
+                return String(id) !== req.params.id;
             }),
             samplesAudioCnt: req.user.samplesAudioCnt - 1,
         },
