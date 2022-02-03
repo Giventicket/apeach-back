@@ -310,28 +310,36 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
 
 /**
  *  @swagger
- *  /api/v1/auth/sample/{sampleId}:
+ *  /api/v1/auth/sample:
  *    post:
  *      tags:
  *      - Auth
- *      summary: "sample를 user의 samples에 push"
- *      description: user의 samples에 sample를 넣는다.
+ *      summary: "sample를 user의 samples에서 update"
+ *      description: user의 samples에 sample를 update한다.
  *      consumes:
  *        - application/json
  *      produces:
  *        - application/json
  *      parameters:
- *        - in: path
- *          name: sampleId
- *          type: string
- *          required: true
+ *        - in: body
+ *          name: JSON
+ *          schema:
+ *            type: object
+ *            required:
+ *              - utteranceId
+ *              - wave_url
+ *            properties:
+ *              utteranceId:
+ *                type: number
+ *              wave_url:
+ *                type: string
  *        - in: header
  *          name: Authorization
  *          type: string
  *          required: true
  *      responses:
  *          200:
- *            description: sample의 remove가 user에 성공적으로 반영된 경우
+ *            description: sample의 update가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
  *          400:
@@ -343,7 +351,7 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post(
+router.patch(
     '/sample',
     isUtteranceIdAndUrlNotNull,
     decodeAccessToken,
