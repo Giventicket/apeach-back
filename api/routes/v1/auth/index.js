@@ -3,6 +3,7 @@ const controller = require('./controllers/index');
 const audioController = require('../audios/controllers/index');
 const decodeAccessToken = require('../middlewares/decodeAccessToken');
 const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
+const isUtteranceIdAndUrlNotNull = require('../middlewares/isUtteranceIdAndUrlNotNull');
 
 const router = express.Router();
 
@@ -342,7 +343,12 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/sample', decodeAccessToken, controller.updateSample);
-//user의 samples에 하나 추가하기
+router.post(
+    '/sample',
+    isUtteranceIdAndUrlNotNull,
+    decodeAccessToken,
+    controller.updateSample,
+);
+//user의 samples의 sample 업데이트
 
 module.exports = router;

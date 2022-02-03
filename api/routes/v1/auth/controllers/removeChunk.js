@@ -35,7 +35,6 @@ const removeChunk = asyncErrorWrapper(async (req, res, next) => {
         },
         { new: true },
     )
-        .populate('samples')
         .populate('chunks')
         .exec();
 

@@ -8,8 +8,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     let user = await User.findOne({
         name: req.body.name,
     })
-        //.populate('samples')
-        //.populate('chunks')
+        .populate('chunks')
         .exec();
 
     if (!user) {

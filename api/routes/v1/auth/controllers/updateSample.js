@@ -19,13 +19,10 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
         {
-            samples: req.user.samples.filter(id => {
-                return String(id) !== req.params.id;
-            }),
+            samples: req.user.samples,
         },
         { new: true },
     )
-        .populate('samples')
         .populate('chunks')
         .exec();
 

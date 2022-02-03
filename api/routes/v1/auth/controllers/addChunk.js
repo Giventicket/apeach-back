@@ -20,7 +20,6 @@ const addChunk = asyncErrorWrapper(async (req, res, next) => {
         { chunks: user.chunks },
         { new: true },
     )
-        .populate('samples')
         .populate('chunks')
         .exec();
 

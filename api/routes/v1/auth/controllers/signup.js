@@ -9,7 +9,7 @@ const signup = asyncErrorWrapper(async (req, res, next) => {
         err.status = 404;
         throw err;
     }
-    const newUser = await User.create({
+    await User.create({
         name,
         password,
     });
