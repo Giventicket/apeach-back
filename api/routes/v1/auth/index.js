@@ -8,7 +8,7 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v1/auth/signin:
+ *  /api/v1/auth/signup:
  *    post:
  *      tags:
  *      - Auth
@@ -45,7 +45,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/signin', controller.signin);
+router.post('/signup', controller.signup);
 //회원가입
 
 /**

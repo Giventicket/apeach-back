@@ -17,7 +17,23 @@ const userSchema = new Schema(
             required: true,
         },
         samples: {
-            type: [{ type: Schema.Types.ObjectId, ref: sampleRef }],
+            type: [
+                {
+                    utteranceId: {
+                        type: Number,
+                        required: true,
+                    },
+                    url: {
+                        type: String,
+                        default: '',
+                    },
+                    createdAt: {
+                        type: Date,
+                        default: Date.now,
+                    },
+                    _id: false,
+                },
+            ],
             default: [],
         },
         chunks: {

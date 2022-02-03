@@ -1,5 +1,5 @@
 const login = require('./login');
-const signin = require('./signin');
+const signup = require('./signup');
 const signout = require('./signout');
 const addChunk = require('../../auth/controllers/addChunk');
 const removeChunk = require('../../auth/controllers/removeChunk');
@@ -10,7 +10,7 @@ const removeSample = require('../../auth/controllers/removeSample');
 
 module.exports = {
     login,
-    signin,
+    signup,
     signout,
     addChunk,
     removeChunk,

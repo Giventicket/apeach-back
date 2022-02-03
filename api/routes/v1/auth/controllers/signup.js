@@ -1,7 +1,7 @@
 const User = require('../../../../../models/v1/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const signin = asyncErrorWrapper(async (req, res, next) => {
+const signup = asyncErrorWrapper(async (req, res, next) => {
     const { name, password, qualified } = req.body;
     const user = await User.findOne({ name });
     if (user) {
@@ -20,4 +20,4 @@ const signin = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = signin;
+module.exports = signup;
