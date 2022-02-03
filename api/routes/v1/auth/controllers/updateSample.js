@@ -9,6 +9,12 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
         sample => Number(utteranceId) === sample.utteranceId,
     );
 
+    if (sample == null) {
+        const err = new Error(`Cannot find a sample`);
+        err.status = 404;
+        throw err;
+    }
+
     if (sample.wave_url == null) {
         sample.wave_url = wave_url;
     } else {
