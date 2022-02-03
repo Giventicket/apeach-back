@@ -311,7 +311,7 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
 /**
  *  @swagger
  *  /api/v1/auth/sample:
- *    post:
+ *    patch:
  *      tags:
  *      - Auth
  *      summary: "sample를 user의 samples에서 update"

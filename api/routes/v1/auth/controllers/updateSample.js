@@ -7,7 +7,7 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
 
     const sample = req.user.samples.filter(
         sample => Number(utteranceId) === sample.utteranceId,
-    );
+    )[0];
 
     if (sample == null) {
         const err = new Error(`Cannot find a sample`);
