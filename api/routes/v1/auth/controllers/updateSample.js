@@ -1,20 +1,20 @@
 const User = require('../../../../../models/v1/user/index');
-const Sample = require('../../../../../models/v1/sample/index');
 const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const removeSample = asyncErrorWrapper(async (req, res, next) => {
-    const sample = await Sample.findOne({ _id: req.params.id }).exec();
+const updateSample = asyncErrorWrapper(async (req, res, next) => {
+    let { utteranceId, wave_url } = req.body;
 
-    if (sample == null) {
-        const err = new Error(`Cannot find a sample`);
-        err.status = 404;
-        throw err;
+    const sample = req.user.samples.filter(
+        sample => Number(utteranceId) === sample.utteranceId,
+    );
+
+    if (sample.wave_url == null) {
+        sample.wave_url = wave_url;
+    } else {
+        asyncAudioDelete(sample.wave_url);
+        sample.wave_url = wave_url;
     }
-
-    await Sample.deleteOne({ _id: req.params.id }).exec();
-
-    asyncAudioDelete(sample.wave_url);
 
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
@@ -22,7 +22,6 @@ const removeSample = asyncErrorWrapper(async (req, res, next) => {
             samples: req.user.samples.filter(id => {
                 return String(id) !== req.params.id;
             }),
-            samplesAudioCnt: req.user.samplesAudioCnt - 1,
         },
         { new: true },
     )
@@ -31,7 +30,7 @@ const removeSample = asyncErrorWrapper(async (req, res, next) => {
         .exec();
 
     res.status(200).json({
-        message: `Remove a sample from user success`,
+        message: `Update a sample from user success`,
         data: {
             name: updatedUser.name,
             samples: updatedUser.samples,
@@ -42,4 +41,4 @@ const removeSample = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = removeSample;
+module.exports = updateSample;

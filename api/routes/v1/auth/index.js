@@ -342,45 +342,7 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/sample/:id', decodeAccessToken, controller.addSample);
+router.post('/sample', decodeAccessToken, controller.updateSample);
 //user의 samples에 하나 추가하기
-
-/**
- *  @swagger
- *  /api/v1/auth/sample/{sampleId}:
- *    delete:
- *      tags:
- *      - Auth
- *      summary: "sample를 user의 samples에 remove"
- *      description: user의 samples에 sample를 제거한다.
- *      consumes:
- *        - application/json
- *      produces:
- *        - application/json
- *      parameters:
- *        - in: path
- *          name: sampleId
- *          type: string
- *          required: true
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
- *      responses:
- *          200:
- *            description: sample의 remove가 user에 성공적으로 반영된 경우
- *            schema:
- *              $ref: '#/definitions/Response_User'
- *          400:
- *            description: sample를 찾을 수 없는 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
- *          404:
- *            description: access token이 유효하지 않은 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
- */
-router.delete('/sample/:id', decodeAccessToken, controller.removeSample);
-//user의 samples에서 하나 제거하기
 
 module.exports = router;
