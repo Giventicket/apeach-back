@@ -30,7 +30,6 @@ const addSample = asyncErrorWrapper(async (req, res, next) => {
             name: updatedUser.name,
             samples: updatedUser.samples,
             chunks: updatedUser.chunks,
-            qualified: updatedUser.qualified,
             samplesAudioCnt: updatedUser.samplesAudioCnt,
             chunksAudioCnt: updatedUser.chunksAudioCnt,
         },

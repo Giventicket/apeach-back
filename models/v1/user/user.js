@@ -40,10 +40,6 @@ const userSchema = new Schema(
             type: [{ type: Schema.Types.ObjectId, ref: chunkRef }],
             default: [],
         },
-        qualified: {
-            type: Boolean,
-            default: false,
-        },
         samplesAudioCnt: {
             type: Number,
             default: 0,

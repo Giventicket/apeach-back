@@ -12,7 +12,6 @@ const signup = asyncErrorWrapper(async (req, res, next) => {
     const newUser = await User.create({
         name,
         password,
-        qualified: Boolean(qualified),
     });
     res.status(201).json({
         message: `Create an user success`,

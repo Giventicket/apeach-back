@@ -39,7 +39,6 @@ const login = asyncErrorWrapper(async (req, res, next) => {
             name: user.name,
             samples: user.samples,
             chunks: user.chunks,
-            qualified: user.qualified,
             samplesAudioCnt: user.samplesAudioCnt,
             chunksAudioCnt: user.chunksAudioCnt,
             accessToken: token,
