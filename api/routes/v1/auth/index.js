@@ -257,6 +257,10 @@ router.post(
  *            description: chunk의 push가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: chunk를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: access token이 유효하지 않은 경우
  *            schema:
@@ -291,6 +295,10 @@ router.post('/chunk/:id', decodeAccessToken, controller.addChunk);
  *            description: chunk의 remove가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: chunk를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: access token이 유효하지 않은 경우
  *            schema:
@@ -325,6 +333,10 @@ router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
  *            description: sample의 remove가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: sample를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: access token이 유효하지 않은 경우
  *            schema:
@@ -359,6 +371,10 @@ router.post('/sample/:id', decodeAccessToken, controller.addSample);
  *            description: sample의 remove가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: sample를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: access token이 유효하지 않은 경우
  *            schema:
