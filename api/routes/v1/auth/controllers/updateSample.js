@@ -15,12 +15,9 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
 
-    if (sample.wave_url == null) {
-        sample.wave_url = wave_url;
-    } else {
-        asyncAudioDelete(sample.wave_url);
-        sample.wave_url = wave_url;
-    }
+    if (sample.wave_url != null) asyncAudioDelete(sample.wave_url);
+
+    sample.wave_url = wave_url;
 
     const updatedUser = await User.findOneAndUpdate(
         { _id: req.userId },
