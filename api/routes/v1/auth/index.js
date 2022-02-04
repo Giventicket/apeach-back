@@ -1,6 +1,7 @@
 const express = require('express');
 const controller = require('./controllers/index');
 const audioController = require('../audios/controllers/index');
+const isAuthUser = require('../middlewares/isAuthUser');
 const decodeAccessToken = require('../middlewares/decodeAccessToken');
 const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
 const isUtteranceIdAndUrlNotNull = require('../middlewares/isUtteranceIdAndUrlNotNull');
@@ -76,7 +77,7 @@ router.post('/signup', controller.signup);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/signout', decodeAccessToken, controller.signout);
+router.delete('/signout', decodeAccessToken, isAuthUser, controller.signout);
 
 /**
  *  @swagger
@@ -169,6 +170,7 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
 router.post(
     '/upload/preprocess/:option',
     decodeAccessToken,
+    isAuthUser,
     audioController.parseForm,
     audioController.checkFile,
     audioController.preprocess,
@@ -226,6 +228,7 @@ router.post(
 router.post(
     '/upload/:option',
     decodeAccessToken,
+    isAuthUser,
     audioController.parseForm,
     audioController.checkFile,
     controller.uploadFile,
@@ -267,7 +270,7 @@ router.post(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/chunk/:id', decodeAccessToken, controller.addChunk);
+router.post('/chunk/:id', decodeAccessToken, isAuthUser, controller.addChunk);
 //user의 chunks에 하나 추가하기
 
 /**
@@ -305,7 +308,12 @@ router.post('/chunk/:id', decodeAccessToken, controller.addChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/chunk/:id', decodeAccessToken, controller.removeChunk);
+router.delete(
+    '/chunk/:id',
+    decodeAccessToken,
+    isAuthUser,
+    controller.removeChunk,
+);
 //user의 chunks에서 하나 제거하기
 
 /**
@@ -355,6 +363,7 @@ router.patch(
     '/sample',
     isUtteranceIdAndUrlNotNull,
     decodeAccessToken,
+    isAuthUser,
     controller.updateSample,
 );
 //user의 samples의 sample 업데이트

@@ -3,12 +3,17 @@ const asyncErrorWrapper = require('../../../../utils/asyncErrorWrapper.js');
 const jwt = require('jsonwebtoken');
 
 const decodeAccessToken = asyncErrorWrapper(async (req, res, next) => {
+    if (req.headers.authorization == null) {
+        req.isAuthUser = false;
+        return next();
+    }
+
     const userId = await new Promise(async (resolve, reject) => {
         jwt.verify(
             req.headers.authorization.split(' ')[1],
             'secret',
             (err, decoded) => {
-                if (err) {
+                if (err.name === 'TokenExpiredError') {
                     err.status = 401;
                     reject(err);
                 } else {
@@ -30,6 +35,7 @@ const decodeAccessToken = asyncErrorWrapper(async (req, res, next) => {
 
     req.user = user;
     req.userId = userId;
+    req.isAuthUser = true;
     next();
 });
 

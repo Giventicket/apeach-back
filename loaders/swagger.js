@@ -24,6 +24,7 @@ module.exports = app => {
             root + '/api/routes/v1/audios/*.js',
             root + '/api/routes/v1/samples/*.js',
             root + '/api/routes/v1/auth/*.js',
+            root + '/api/routes/v1/ai/*.js',
         ],
     };
     const specs = swaggereJsdoc(options);
@@ -115,13 +116,11 @@ module.exports = app => {
  *
  *    Sample:
  *      properties:
- *        _id:
- *          type: string
- *        turn:
+ *        utteranceId:
  *          type: number
- *        text:
- *          type: string
  *        wave_url:
+ *          type: string
+ *        createdAt:
  *          type: string
  *
  *
