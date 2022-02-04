@@ -59,14 +59,14 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { _id: chunkId },
         {
             status: '3',
-            target_wave_url: `https://storage.googleapis.com/download/storage/v1/b/${
+            target_wave_url: `https://storage.cloud.google.com/${
                 process.env.BUCKET_NAME
-            }/o/${encodeURIComponent(filename)}`,
+            }/${encodeURIComponent(filename)}`,
         },
         { new: true },
     ).exec();
 
-    if (isAuthUser) {
+    if (req.isAuthUser) {
         user.chunks.push(req.params.id);
 
         await User.updateOne(
