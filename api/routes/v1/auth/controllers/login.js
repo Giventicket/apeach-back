@@ -29,7 +29,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     }
 
     const token = jwt.sign({ id: user._id }, 'secret', {
-        expiresIn: '1s',
+        expiresIn: '1d',
     });
 
     res.status(200).json({
