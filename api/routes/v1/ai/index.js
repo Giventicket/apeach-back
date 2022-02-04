@@ -59,10 +59,6 @@ router.post(
  *        - application/json
  *      parameters:
  *        - in: path
- *          name: option
- *          type: string
- *          required: true
- *        - in: path
  *          name: id
  *          type: string
  *          required: true
