@@ -51,8 +51,8 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         });
 
     const filename = req.isAuthUser
-        ? `audio/anonymous/chunk/${v4()}.wav`
-        : `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`;
+        ? `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`
+        : `audio/anonymous/chunk/${v4()}.wav`;
     await streamFileUpload(result.data, filename);
 
     const updatedChunk = await Chunk.findOneAndUpdate(
