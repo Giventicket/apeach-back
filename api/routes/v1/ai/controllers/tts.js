@@ -68,11 +68,11 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             },
         })
         .catch(err => {
-            asyncFileDelete(filename);
+            asyncFileDelete(tmpPath);
             throw err;
         });
 
-    asyncFileDelete(filename);
+    asyncFileDelete(tmpPath);
 
     const updatedChunk = await Chunk.findOneAndUpdate(
         { _id: chunkId },
