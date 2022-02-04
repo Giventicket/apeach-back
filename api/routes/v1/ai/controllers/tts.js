@@ -1,6 +1,5 @@
 const axios = require('axios');
 const url = require('url');
-const stream = require('stream');
 const fs = require('fs');
 const { v4 } = require('uuid');
 
@@ -8,25 +7,6 @@ const Chunk = require('../../../../../models/v1/chunk/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
-
-const streamFileUpload = (buffer, filename) => {
-    const file = gcpStorage.bucket(process.env.BUCKET_NAME).file(filename);
-
-    const passthroughStream = new stream.PassThrough();
-    passthroughStream.write(buffer);
-    passthroughStream.end();
-
-    return new Promise((resolve, reject) => {
-        passthroughStream
-            .pipe(file.createWriteStream())
-            .on('finish', data => {
-                resolve(data);
-            })
-            .on('error', err => {
-                return reject(err);
-            });
-    });
-};
 
 const tts = asyncErrorWrapper(async (req, res, next) => {
     const { chunk, chunkId, user, userId, isAuthUser } = req;
