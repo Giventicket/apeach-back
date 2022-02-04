@@ -59,7 +59,9 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { _id: chunkId },
         {
             status: '3',
-            target_wave_url: `https://storage.googleapis.com/${process.env.BUCKET_NAME}/${filename}}`,
+            target_wave_url: `https://storage.googleapis.com/${
+                process.env.BUCKET_NAME
+            }/${encodeURIComponent(filename)}}`,
         },
         { new: true },
     ).exec();
