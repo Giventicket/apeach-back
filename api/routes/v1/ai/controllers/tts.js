@@ -1,6 +1,7 @@
 const axios = require('axios');
 const url = require('url');
 const stream = require('stream');
+//const fs = require('fs');
 const { v4 } = require('uuid');
 
 const Chunk = require('../../../../../models/v1/chunk/index');
@@ -50,6 +51,8 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             throw err;
         });
 
+    //const tmpPath = v4();
+
     const filename = isAuthUser
         ? `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`
         : `audio/anonymous/chunk/${v4()}.wav`;
@@ -59,7 +62,7 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { _id: chunkId },
         {
             status: '3',
-            target_wave_url: `https://storage.cloud.google.com/${
+            target_wave_url: `https://storage.googleapis.com/${
                 process.env.BUCKET_NAME
             }/${encodeURIComponent(filename)}`,
         },
