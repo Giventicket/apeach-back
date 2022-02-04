@@ -1,12 +1,13 @@
 const axios = require('axios');
 const url = require('url');
 const stream = require('stream');
-//const fs = require('fs');
+const fs = require('fs');
 const { v4 } = require('uuid');
 
 const Chunk = require('../../../../../models/v1/chunk/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
+const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 
 const streamFileUpload = (buffer, filename) => {
     const file = gcpStorage.bucket(process.env.BUCKET_NAME).file(filename);
@@ -51,25 +52,38 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             throw err;
         });
 
-    //const tmpPath = v4();
+    const tmpPath = `./${v4()}`;
+    await fs.writeFileSync(tmpPath, result.data);
 
     const filename = isAuthUser
         ? `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`
         : `audio/anonymous/chunk/${v4()}.wav`;
-    await streamFileUpload(result.data, filename);
+
+    const info = await gcpStorage
+        .bucket(process.env.BUCKET_NAME)
+        .upload(tmpPath, {
+            destination: filename,
+            metadata: {
+                contentType: 'audio/wave',
+            },
+        })
+        .catch(err => {
+            asyncFileDelete(filename);
+            throw err;
+        });
+
+    asyncFileDelete(filename);
 
     const updatedChunk = await Chunk.findOneAndUpdate(
         { _id: chunkId },
         {
             status: '3',
-            target_wave_url: `https://storage.googleapis.com/${
-                process.env.BUCKET_NAME
-            }/${encodeURIComponent(filename)}`,
+            target_wave_url: info[0].metadata.mediaLink,
         },
         { new: true },
     ).exec();
 
-    if (req.isAuthUser) {
+    if (isAuthUser) {
         user.chunks.push(req.params.id);
 
         await User.updateOne(
