@@ -27,7 +27,7 @@ const streamFileUpload = (buffer, filename) => {
 };
 
 const tts = asyncErrorWrapper(async (req, res, next) => {
-    const { chunk, chunkId, user, userId } = req;
+    const { chunk, chunkId, user, userId, isAuthUser } = req;
 
     const parsedAudioUrl = url.parse(chunk.source_wave_url).pathname.split('/');
     const gs_uri = `gs://${process.env.BUCKET_NAME}/${decodeURIComponent(
@@ -50,7 +50,7 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             throw err;
         });
 
-    const filename = req.isAuthUser
+    const filename = isAuthUser
         ? `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`
         : `audio/anonymous/chunk/${v4()}.wav`;
     await streamFileUpload(result.data, filename);
@@ -59,14 +59,14 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { _id: chunkId },
         {
             status: '3',
-            target_wave_url: `https://storage.googleapis.com/${
+            target_wave_url: `https://storage.googleapis.com/download/storage/v1/b/${
                 process.env.BUCKET_NAME
-            }/${encodeURIComponent(filename)}`,
+            }/o/${encodeURIComponent(filename)}`,
         },
         { new: true },
     ).exec();
 
-    if (req.isAuthUser) {
+    if (isAuthUser) {
         user.chunks.push(req.params.id);
 
         await User.updateOne(
