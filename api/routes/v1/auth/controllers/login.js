@@ -28,8 +28,16 @@ const login = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
 
-    const token = jwt.sign({ id: user._id }, 'secret', {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
         expiresIn: '1d',
+        issuer: ip,
+    });
+
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '1d',
+        issuer: ip,
     });
 
     res.status(200).json({
@@ -40,7 +48,6 @@ const login = asyncErrorWrapper(async (req, res, next) => {
             chunks: user.chunks,
             samplesAudioCnt: user.samplesAudioCnt,
             chunksAudioCnt: user.chunksAudioCnt,
-            accessToken: token,
         },
     });
 });
