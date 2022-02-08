@@ -45,6 +45,15 @@ module.exports = app => {
  *        data:
  *          type: object
  *          $ref: '#/definitions/UserWithAccessToken'
+ *
+ *    Response_AccessToken:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/AccessToken'
+ *
  *    Response_User:
  *      properties:
  *        message:
@@ -228,6 +237,11 @@ module.exports = app => {
  *        chunksAudioCnt:
  *          type: number
  *        accesstoken:
+ *          type: string
+ *
+ *    AccessToken:
+ *      properties:
+ *        accessToken:
  *          type: string
  *
  */

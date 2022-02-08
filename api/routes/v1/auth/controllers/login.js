@@ -47,7 +47,6 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     });
 
     res.cookie('refreshToken', refreshToken);
-    res.cookie('accessToken', accessToken);
 
     res.status(200).json({
         message: `login success`,
@@ -57,6 +56,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
             chunks: user.chunks,
             samplesAudioCnt: user.samplesAudioCnt,
             chunksAudioCnt: user.chunksAudioCnt,
+            accessToken,
         },
     });
 });

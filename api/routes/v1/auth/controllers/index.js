@@ -5,6 +5,8 @@ const addChunk = require('./addChunk');
 const removeChunk = require('./removeChunk');
 const updateSample = require('./updateSample');
 const uploadFile = require('./uploadFile');
+const logout = require('./logout');
+const silentRefresh = require('./silentRefresh');
 
 module.exports = {
     login,
@@ -14,4 +16,6 @@ module.exports = {
     removeChunk,
     updateSample,
     uploadFile,
+    logout,
+    silentRefresh,
 };

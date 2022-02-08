@@ -62,6 +62,10 @@ router.post('/signup', controller.signup);
  *        - application/json
  *      produces:
  *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *      responses:
  *          200:
  *            description: user의 회원탈퇴가 정상적으로 된 경우
@@ -124,6 +128,9 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: path
  *          name: option
  *          type: string
@@ -178,6 +185,9 @@ router.post(
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: path
  *          name: option
  *          type: string
@@ -231,6 +241,9 @@ router.post(
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: path
  *          name: chunkId
  *          type: string
@@ -265,6 +278,9 @@ router.post('/chunk/:id', decodeToken, isAuthUser, controller.addChunk);
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: path
  *          name: chunkId
  *          type: string
@@ -299,6 +315,9 @@ router.delete('/chunk/:id', decodeToken, isAuthUser, controller.removeChunk);
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: body
  *          name: JSON
  *          schema:
@@ -333,5 +352,63 @@ router.patch(
     controller.updateSample,
 );
 //user의 samples의 sample 업데이트
+
+/**
+ *  @swagger
+ *  /api/v1/auth/logout:
+ *    delete:
+ *      tags:
+ *      - Auth
+ *      summary: "logout"
+ *      description: DB에서 refreshToken을 삭제한다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *      responses:
+ *          200:
+ *            description: 로그아웃을 정상적으로 할 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
+router.delete('/logout', decodeToken, controller.logout);
+//user의 logout 진행
+
+/**
+ *  @swagger
+ *  /api/v1/auth/silentrefresh:
+ *    post:
+ *      tags:
+ *      - Auth
+ *      summary: "silent refresh"
+ *      description: silent refresh 실행
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      responses:
+ *          200:
+ *            description: 토큰의 정상적인 발급
+ *            schema:
+ *              $ref: '#/definitions/Response_AccessToken'
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
+router.post('/silentrefresh', controller.silentRefresh);
+//silentRefresh 진행
 
 module.exports = router;
