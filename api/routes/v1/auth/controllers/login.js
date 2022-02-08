@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../../../../models/v1/user/index');
+const Token = require('../../../../../models/v1/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const login = asyncErrorWrapper(async (req, res, next) => {
@@ -31,14 +32,22 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
-        expiresIn: '1d',
-        issuer: ip,
+        expiresIn: '1h',
+        issuer: 'dubai',
+    });
+
+    await Token.create({
+        refreshToken,
+        userIp: ip,
+        userId: user._id,
     });
 
     const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '1d',
-        issuer: ip,
+        expiresIn: '30s',
     });
+
+    res.cookie('refreshToken', refreshToken);
+    res.cookie('accessToken', accessToken);
 
     res.status(200).json({
         message: `login success`,
