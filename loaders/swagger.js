@@ -211,8 +211,6 @@ module.exports = app => {
  *          type: array
  *          items:
  *              $ref: '#/definitions/Chunk'
- *        qualified:
- *          type: boolean
  *        samplesAudioCnt:
  *          type: number
  *        chunksAudioCnt:
@@ -230,8 +228,6 @@ module.exports = app => {
  *          type: array
  *          items:
  *              $ref: '#/definitions/Chunk'
- *        qualified:
- *          type: boolean
  *        samplesAudioCnt:
  *          type: number
  *        chunksAudioCnt:
