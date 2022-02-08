@@ -38,12 +38,7 @@ const decodeToken = require('../middlewares/decodeToken');
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post(
-    '/stt/:option/:id',
-    decodeAccessToken,
-    controller.getChunk,
-    controller.stt,
-);
+router.post('/stt/:option/:id', controller.getChunk, controller.stt);
 
 /**
  *  @swagger
@@ -90,6 +85,9 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
  *        - in: path
  *          name: speakerId
  *          type: string
