@@ -22,14 +22,7 @@ module.exports = app => {
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-
-    const corsOptions = {
-        origin: '49.172.1.84:3000/',
-        credentials: true,
-    };
-
-    app.use(cors(corsOptions));
-
+    app.use(cors({ credentials: true }));
     app.use(morgan(combined, { stream }));
     app.use('/api', indexRouter);
     app.use('*', (req, res, next) => {
