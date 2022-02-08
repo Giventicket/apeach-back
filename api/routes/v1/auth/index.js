@@ -2,7 +2,7 @@ const express = require('express');
 const controller = require('./controllers/index');
 const audioController = require('../audios/controllers/index');
 const isAuthUser = require('../middlewares/isAuthUser');
-const decodeAccessToken = require('../middlewares/decodeAccessToken');
+const decodeToken = require('../middlewares/decodeToken');
 const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
 const isUtteranceIdAndUrlNotNull = require('../middlewares/isUtteranceIdAndUrlNotNull');
 
@@ -62,11 +62,6 @@ router.post('/signup', controller.signup);
  *        - application/json
  *      produces:
  *        - application/json
- *      parameters:
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
  *      responses:
  *          200:
  *            description: user의 회원탈퇴가 정상적으로 된 경우
@@ -77,7 +72,7 @@ router.post('/signup', controller.signup);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/signout', decodeAccessToken, isAuthUser, controller.signout);
+router.delete('/signout', decodeToken, isAuthUser, controller.signout);
 
 /**
  *  @swagger
@@ -133,10 +128,6 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *          name: option
  *          type: string
  *          required: true
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
  *        - in: formData
  *          name: audio
  *          type: file
@@ -165,7 +156,7 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  */
 router.post(
     '/upload/preprocess/:option',
-    decodeAccessToken,
+    decodeToken,
     isAuthUser,
     audioController.parseForm,
     audioController.checkFile,
@@ -189,10 +180,6 @@ router.post(
  *      parameters:
  *        - in: path
  *          name: option
- *          type: string
- *          required: true
- *        - in: header
- *          name: Authorization
  *          type: string
  *          required: true
  *        - in: formData
@@ -223,7 +210,7 @@ router.post(
  */
 router.post(
     '/upload/:option',
-    decodeAccessToken,
+    decodeToken,
     isAuthUser,
     audioController.parseForm,
     audioController.checkFile,
@@ -248,10 +235,6 @@ router.post(
  *          name: chunkId
  *          type: string
  *          required: true
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
  *      responses:
  *          200:
  *            description: chunk의 push가 user에 성공적으로 반영된 경우
@@ -266,7 +249,7 @@ router.post(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/chunk/:id', decodeAccessToken, isAuthUser, controller.addChunk);
+router.post('/chunk/:id', decodeToken, isAuthUser, controller.addChunk);
 //user의 chunks에 하나 추가하기
 
 /**
@@ -286,10 +269,6 @@ router.post('/chunk/:id', decodeAccessToken, isAuthUser, controller.addChunk);
  *          name: chunkId
  *          type: string
  *          required: true
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
  *      responses:
  *          200:
  *            description: chunk의 remove가 user에 성공적으로 반영된 경우
@@ -304,12 +283,7 @@ router.post('/chunk/:id', decodeAccessToken, isAuthUser, controller.addChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete(
-    '/chunk/:id',
-    decodeAccessToken,
-    isAuthUser,
-    controller.removeChunk,
-);
+router.delete('/chunk/:id', decodeToken, isAuthUser, controller.removeChunk);
 //user의 chunks에서 하나 제거하기
 
 /**
@@ -337,10 +311,6 @@ router.delete(
  *                type: number
  *              wave_url:
  *                type: string
- *        - in: header
- *          name: Authorization
- *          type: string
- *          required: true
  *      responses:
  *          200:
  *            description: sample의 update가 user에 성공적으로 반영된 경우
@@ -358,7 +328,7 @@ router.delete(
 router.patch(
     '/sample',
     isUtteranceIdAndUrlNotNull,
-    decodeAccessToken,
+    decodeToken,
     isAuthUser,
     controller.updateSample,
 );

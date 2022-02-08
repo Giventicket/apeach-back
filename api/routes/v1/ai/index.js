@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('./controllers/index');
 const router = express.Router();
-const decodeAccessToken = require('../middlewares/decodeAccessToken');
+const decodeToken = require('../middlewares/decodeToken');
 
 /**
  *  @swagger
@@ -90,9 +90,6 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *      produces:
  *        - application/json
  *      parameters:
- *        - in: header
- *          name: Authorization
- *          type: string
  *        - in: path
  *          name: speakerId
  *          type: string
@@ -117,7 +114,7 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  */
 router.post(
     '/tts/:speakerId/:id',
-    decodeAccessToken,
+    decodeToken,
     controller.getChunk,
     controller.tts,
 );
