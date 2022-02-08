@@ -24,7 +24,7 @@ module.exports = app => {
     app.use(express.urlencoded({ extended: false }));
 
     const corsOptions = {
-        origin: 'http://localhost:3000/',
+        origin: '49.172.1.84:3000/',
         credentials: true,
     };
 
