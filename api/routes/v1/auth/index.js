@@ -113,10 +113,6 @@ router.delete('/signout', decodeAccessToken, isAuthUser, controller.signout);
  *            description: request body에 name, password가 명시되지 않은 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
- *          404:
- *            description: access token이 유효하지 않은 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post('/login', isNameAndPasswordNotNull, controller.login);
 
