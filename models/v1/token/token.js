@@ -7,6 +7,14 @@ const tokenSchema = new Schema(
             type: String,
             required: true,
         },
+        userIp: {
+            type: String,
+            required: true,
+        },
+        userId: {
+            type: String,
+            required: true,
+        },
     },
     {
         versionKey: false,
