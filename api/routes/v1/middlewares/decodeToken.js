@@ -25,7 +25,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
 
     await new Promise(async (resolve, reject) => {
         jwt.verify(refreshToken, process.env.JWT_SECRET, (err, decoded) => {
-            if (err.name === 'TokenExpiredError') {
+            if (err && err.name === 'TokenExpiredError') {
                 // Case 3: refreshToken 만료
                 err.status = 401;
                 reject(err);
@@ -47,7 +47,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
     //Case 4-2: 클라이언트가 전송한 req의 refreshToken의 ip와 request의 header에서 뽑아낸 ip가 같음. request.refreshToken.ip == request.header.ip
     const decodedAccessToken = await new Promise(async (resolve, reject) => {
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
-            if (err.name === 'TokenExpiredError') {
+            if (err && err.name === 'TokenExpiredError') {
                 err.status = 401;
                 reject(err);
             } else {

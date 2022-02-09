@@ -1,8 +1,10 @@
+const jwt = require('jsonwebtoken');
+
 const Token = require('../../../../../models/v1/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
-    const { refreshToken, userId, userIp } = await Token.findOne({
+    const { refreshToken, userIp, userId } = await Token.findOne({
         refreshToken: req.cookies.refreshToken,
     }).exec();
 
@@ -14,7 +16,7 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
 
     await new Promise(async (resolve, reject) => {
         jwt.verify(refreshToken, process.env.JWT_SECRET, (err, decoded) => {
-            if (err.name === 'TokenExpiredError') {
+            if (err && err.name === 'TokenExpiredError') {
                 err.status = 401;
                 reject(err);
             } else {
