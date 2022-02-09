@@ -24,6 +24,7 @@ module.exports = app => {
             resave: false,
             saveUninitialized: false,
             secret: process.env.COOKIE_SECRET,
+            proxy: true,
             cookie: {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'dev' ? false : true,
