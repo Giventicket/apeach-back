@@ -35,7 +35,7 @@ module.exports = app => {
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-    app.use(cors({ credentials: true, origins: '*' }));
+    app.use(cors({ credentials: true }));
     app.use(morgan(combined, { stream }));
     app.use('/api', indexRouter);
     app.use('*', (req, res, next) => {
