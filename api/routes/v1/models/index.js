@@ -39,12 +39,12 @@ router.post('/upload/:speakerId', controller.parseForm, controller.uploadModel);
 
 /**
  *  @swagger
- *  /api/v1/models/{id}:
+ *  /api/v1/models/{name}:
  *    get:
  *      tags:
  *      - Model
- *      summary: '특정 id를 갖고 있는 model 찾기'
- *      description: 특정 id를 갖고 있는 model 찾고 반환
+ *      summary: 특정 name를 갖고 있는 model 찾기'
+ *      description: 특정 name를 갖고 있는 model 찾고 반환
  *      consumes:
  *        - application/json
  *      produces:
