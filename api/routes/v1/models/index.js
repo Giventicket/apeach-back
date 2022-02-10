@@ -10,7 +10,7 @@ const router = express.Router();
  *      tags:
  *      - Model
  *      summary: 'model 파일의 업로드'
- *      description: audio를 전처리하고 google storage의 bucket에 업로드합니다.
+ *      description: model을 google storage의 model/{speakerId}.zip에 업로드한다.
  *      consumes:
  *        - application/json
  *      produces:
@@ -39,19 +39,19 @@ router.post('/upload/:speakerId', controller.parseForm, controller.uploadModel);
 
 /**
  *  @swagger
- *  /api/v1/models/{name}:
+ *  /api/v1/models/{speakerId}:
  *    get:
  *      tags:
  *      - Model
- *      summary: 특정 name를 갖고 있는 model 찾기'
- *      description: 특정 name를 갖고 있는 model 찾고 반환
+ *      summary: 특정 speakerId를 갖고 있는 model 찾기'
+ *      description: 특정 speakerId를 갖고 있는 model 찾고 반환
  *      consumes:
  *        - application/json
  *      produces:
  *        - application/json
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: speakerId
  *          type: string
  *          required: true
  *      responses:
