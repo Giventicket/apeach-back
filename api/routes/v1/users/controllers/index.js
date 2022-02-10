@@ -4,6 +4,7 @@ const deleteUsers = require('./deleteUsers');
 const getUser = require('./getUser');
 const getUsers = require('./getUsers');
 const updateUser = require('./updateUser');
+const getSamplesbyName = require('./getSamplesbyName');
 
 module.exports = {
     createUser,
@@ -12,4 +13,5 @@ module.exports = {
     getUser,
     getUsers,
     updateUser,
+    getSamplesbyName,
 };

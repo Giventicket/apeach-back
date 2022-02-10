@@ -25,6 +25,8 @@ module.exports = app => {
             root + '/api/routes/v1/samples/*.js',
             root + '/api/routes/v1/auth/*.js',
             root + '/api/routes/v1/ai/*.js',
+            root + '/api/routes/v1/models/*.js',
+            root + '/api/routes/v1/users/*.js',
         ],
     };
     const specs = swaggereJsdoc(options);
@@ -38,6 +40,23 @@ module.exports = app => {
 /**
  *  @swagger
  *  definitions:
+ *    Response_Models:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: array
+ *          items:
+ *            $ref: '#/definitions/Model'
+ *
+ *    Response_Model:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: object
+ *          $ref: '#/definitions/Model'
+ *
  *    Response_UserWithAccessToken:
  *      properties:
  *        message:
@@ -62,6 +81,15 @@ module.exports = app => {
  *          type: object
  *          $ref: '#/definitions/User'
  *
+ *    Response_Samples:
+ *      properties:
+ *        message:
+ *          type: string
+ *        data:
+ *          type: array
+ *          items:
+ *            $ref: '#/definitions/Sample'
+ *
  *    Response_Sample:
  *      properties:
  *        message:
@@ -77,13 +105,13 @@ module.exports = app => {
  *        data:
  *          type: object
  *          $ref: '#/definitions/Chunk'
- *    Response_Audio:
+ *    Response_File:
  *      properties:
  *        message:
  *          type: string
  *        data:
  *          type: object
- *          $ref: '#/definitions/Audio'
+ *          $ref: '#/definitions/File'
  *
  *    Response_Chunks:
  *      properties:
@@ -159,7 +187,7 @@ module.exports = app => {
  *        createdAt:
  *          type: string
  *
- *    Audio:
+ *    File:
  *      properties:
  *        kind:
  *          type: string
@@ -238,6 +266,13 @@ module.exports = app => {
  *    AccessToken:
  *      properties:
  *        accessToken:
+ *          type: string
+ *
+ *    Model:
+ *      properties:
+ *        speakerId:
+ *          type: string
+ *        model_url:
  *          type: string
  *
  */

@@ -24,7 +24,7 @@ const router = express.Router();
  *          200:
  *            description: audio가 정상적으로 업로드 된 경우
  *            schema:
- *              $ref: '#/definitions/Response_Audio'
+ *              $ref: '#/definitions/Response_File'
  *          400:
  *            description: audio를 첨부하지 않은 경우
  *            schema:

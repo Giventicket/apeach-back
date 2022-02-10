@@ -1,12 +1,11 @@
 const formidable = require('formidable');
 const form = formidable({ multiples: true });
-const asyncFileDelete = require('./asyncFileDelete');
 
-const asyncParseForm = req => {
+const asyncParseForm = (req, key) => {
     return new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
             if (err) {
-                asyncFileDelete(files.audio.filepath);
+                asyncFileDelete(files.audio.filepath || files.model.filepath);
                 return reject(err);
             }
             resolve(files);
