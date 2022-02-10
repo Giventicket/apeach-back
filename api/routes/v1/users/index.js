@@ -8,7 +8,7 @@ router.post('/', controller.createUser);
 
 /**
  *  @swagger
- *  /api/v1/users/{name}:
+ *  /api/v1/users/samples/{name}:
  *    get:
  *      tags:
  *      - User
