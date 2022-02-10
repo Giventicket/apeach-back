@@ -64,7 +64,7 @@ router.post('/upload/:speakerId', controller.parseForm, controller.uploadModel);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.get('/:id', controller.getModel);
+router.get('/:speakerId', controller.getModel);
 
 /**
  *  @swagger
