@@ -6,7 +6,7 @@ const asyncPreprocess = filepath => {
     return new Promise((resolve, reject) => {
         ffmpeg(filepath)
             .format('wav')
-            .outputOptions([`-ar 16000`, `-ac 1`, `-sample_fmt s16`])
+            .outputOptions([`-ar 24000`, `-ac 1`, `-sample_fmt s16`])
             .output(`${filepath}R`)
             .on('end', () => {
                 resolve();

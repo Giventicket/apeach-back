@@ -1,0 +1,53 @@
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+const chunkSchema = new Schema(
+    {
+        userName: {
+            type: String,
+            required: true,
+        },
+        speakerName: {
+            type: String,
+            default: 'will.hajh@kakaobrain.com',
+        },
+        sourceWaveUrl: {
+            type: String,
+            default: '',
+        },
+        targetWaveUrl: {
+            type: String,
+            default: '',
+        },
+        segments: [
+            {
+                startTime: {
+                    type: Number,
+                    default: 0,
+                },
+                endTime: {
+                    type: Number,
+                    default: 0,
+                },
+                sourceText: {
+                    type: String,
+                    default: '',
+                },
+                targetText: {
+                    type: String,
+                    default: '',
+                },
+                _id: false,
+            },
+        ],
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+    },
+    {
+        versionKey: false,
+    },
+);
+
+module.exports = chunkSchema;

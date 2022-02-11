@@ -20,13 +20,13 @@ module.exports = app => {
         swaggerDefinition,
         apis: [
             root + '/loaders/*.js',
-            root + '/api/routes/v1/chunks/*.js',
-            root + '/api/routes/v1/audios/*.js',
-            root + '/api/routes/v1/samples/*.js',
-            root + '/api/routes/v1/auth/*.js',
-            root + '/api/routes/v1/ai/*.js',
-            root + '/api/routes/v1/models/*.js',
-            root + '/api/routes/v1/users/*.js',
+            root + '/api/routes/v2/chunks/*.js',
+            root + '/api/routes/v2/audios/*.js',
+            root + '/api/routes/v2/samples/*.js',
+            root + '/api/routes/v2/auth/*.js',
+            root + '/api/routes/v2/ai/*.js',
+            root + '/api/routes/v2/models/*.js',
+            root + '/api/routes/v2/users/*.js',
         ],
     };
     const specs = swaggereJsdoc(options);
@@ -133,29 +133,29 @@ module.exports = app => {
  *      properties:
  *        status:
  *          type: string
- *        source_wave_url:
+ *        sourceWaveUrl:
  *          type: string
- *        target_wave_url:
+ *        targetWaveUrl:
  *          type: string
  *        segments:
  *          type: array
  *          items:
  *            type: object
  *            properties:
- *              start_time:
+ *              startTime:
  *                type: number
- *              end_time:
+ *              endTime:
  *                type: number
- *              source_text:
+ *              sourceText:
  *                type: string
- *              target_text:
+ *              targetText:
  *                type: string
  *
  *    Sample:
  *      properties:
  *        utteranceId:
  *          type: number
- *        wave_url:
+ *        waveUrl:
  *          type: string
  *        createdAt:
  *          type: string
@@ -165,24 +165,26 @@ module.exports = app => {
  *      properties:
  *        _id:
  *          type: string
- *        status:
+ *        userName:
  *          type: string
- *        source_wave_url:
+ *        speakerName:
  *          type: string
- *        target_wave_url:
+ *        sourceWaveUrl:
+ *          type: string
+ *        targetWaveUrl:
  *          type: string
  *        segments:
  *          type: array
  *          items:
  *            type: object
  *            properties:
- *              start_time:
+ *              startTime:
  *                type: number
- *              end_time:
+ *              endTime:
  *                type: number
- *              source_text:
+ *              sourceText:
  *                type: string
- *              target_text:
+ *              targetText:
  *                type: string
  *        createdAt:
  *          type: string
@@ -270,9 +272,9 @@ module.exports = app => {
  *
  *    Model:
  *      properties:
- *        speakerId:
+ *        speakerName:
  *          type: string
- *        model_url:
+ *        modelUrl:
  *          type: string
  *
  */
