@@ -17,6 +17,7 @@ const getUser = asyncErrorWrapper(async (req, res, next) => {
 
         req.user = user;
         req.isAuthUser = true;
+
         next();
     }
 });
