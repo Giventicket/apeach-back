@@ -1,4 +1,5 @@
 const User = require('../../../../../models/v2/user/index');
+const Token = require('../../../../../models/v2/token/index');
 const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
@@ -16,6 +17,9 @@ const signout = asyncErrorWrapper(async (req, res, next) => {
             asyncAudioDelete(audio);
         });
     });
+
+    res.cookie('refreshToken', '');
+    await Token.deleteOne({ refreshToken: req.cookies.refreshToken }).exec();
 
     res.status(200).json({
         message: `Delete an user success`,
