@@ -62,7 +62,7 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
 
 /**
  *  @swagger
- *  /api/v2/ai/tts/{speakerId}/{id}:
+ *  /api/v2/ai/tts/{speakerName}/{id}:
  *    post:
  *      tags:
  *      - AI
@@ -77,6 +77,10 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *          name: id
  *          type: string
  *          required: true
+ *        - in: path
+ *          name: speakerName
+ *          type: string
+ *          required: true
  *      responses:
  *          200:
  *            description: tts가 정상적으로 완료되었을 경우 된 경우
@@ -88,7 +92,7 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
-    '/tts/:id',
+    '/tts/:speakerName/:id',
     controller.getChunk,
     controller.getUser,
     controller.tts,
