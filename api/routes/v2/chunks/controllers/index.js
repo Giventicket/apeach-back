@@ -7,6 +7,7 @@ const preprocess = require('./preprocess');
 const uploadAudio = require('./uploadAudio');
 const updateUserAfterCreateChunk = require('./updateUserAfterCreateChunk');
 const updateUserAfterDeleteChunk = require('./updateUserAfterDeleteChunk');
+const checkFile = require('./checkFile');
 
 module.exports = {
     createChunk,
@@ -18,4 +19,5 @@ module.exports = {
     preprocess,
     updateUserAfterCreateChunk,
     updateUserAfterDeleteChunk,
+    checkFile,
 };

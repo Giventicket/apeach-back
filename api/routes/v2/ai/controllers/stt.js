@@ -9,7 +9,7 @@ const stt = asyncErrorWrapper(async (req, res, next) => {
     filename = decodeURIComponent(parsedAudioUrl[parsedAudioUrl.length - 1]);
     const gs_uri = `gs://${process.env.BUCKET_NAME}/${filename}`;
 
-    const option = req.params.option;
+    const option = chunk.duration > 55 ? 'long' : 'short';
 
     const result = await axios
         .post(`${process.env.AI_SERVER}/api/${option}_stt`, {

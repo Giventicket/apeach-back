@@ -6,6 +6,7 @@ const createChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.create({
         sourceWaveUrl: req.sourceWaveUrl,
         userName: isAuthUser ? user.name : 'anonymous',
+        duration: req.duration,
     });
     req.chunk = chunk;
     next();

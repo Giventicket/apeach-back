@@ -41,11 +41,24 @@ const router = express.Router();
  *            description: 로그인 한 user를 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+ *          452:
+ *            description: 메타 데이터가 없는 경우 - 멀티 파트 데이터가 아닐 때와 동일
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          453:
+ *            description: audio 파일이 아닌 경우(ex. video, image)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          454:
+ *            description: audio 파일의 길이가 10분이 초과되는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
     '/',
     decodeToken,
     controller.parseForm,
+    controller.checkFile,
     controller.preprocess,
     controller.uploadAudio,
     controller.createChunk,

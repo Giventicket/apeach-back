@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const chunkSchema = new Schema(
     {
+        duration: {
+            type: Number,
+            required: true,
+        },
         userName: {
             type: String,
             required: true,
