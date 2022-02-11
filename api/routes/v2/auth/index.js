@@ -159,7 +159,6 @@ router.patch(
     '/sample',
     isUtteranceIdAndUrlNotNull,
     decodeToken,
-    isAuthUser,
     controller.updateSample,
 );
 //user의 samples의 sample 업데이트

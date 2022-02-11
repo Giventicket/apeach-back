@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const Token = require('../../../../../models/v1/token/index');
+const Token = require('../../../../../models/v2/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const logout = asyncErrorWrapper(async (req, res, next) => {

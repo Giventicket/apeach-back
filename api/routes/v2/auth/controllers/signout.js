@@ -1,4 +1,4 @@
-const User = require('../../../../../models/v1/user/index');
+const User = require('../../../../../models/v2/user/index');
 const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 

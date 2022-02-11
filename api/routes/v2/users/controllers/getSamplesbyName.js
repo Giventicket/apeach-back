@@ -1,4 +1,4 @@
-const User = require('../../../../../models/v2/user/index');
+let User = require('../../../../../models/v2/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const getSamplesbyName = asyncErrorWrapper(async (req, res, next) => {

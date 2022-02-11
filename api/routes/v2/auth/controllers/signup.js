@@ -1,4 +1,4 @@
-const User = require('../../../../../models/v1/user/index');
+const User = require('../../../../../models/v2/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const signup = asyncErrorWrapper(async (req, res, next) => {

@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const User = require('../../../../../models/v1/user/index');
-const Token = require('../../../../../models/v1/token/index');
+const User = require('../../../../../models/v2/user/index');
+const Token = require('../../../../../models/v2/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const login = asyncErrorWrapper(async (req, res, next) => {
