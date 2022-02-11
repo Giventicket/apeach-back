@@ -12,10 +12,8 @@ const uploadAudio = asyncErrorWrapper(async (req, res, next) => {
     const mimetype = file.mimetype;
 
     const destination = isAuthUser
-        ? `audio/${user.name}/chunk/${user.chunksAudioCnt}${path.extname(
-              file.originalFilename,
-          )}`
-        : `audio/anonymous/chunk/${v4()}${path.extname(file.originalFilename)}`;
+        ? `audio/${user.name}/chunk/${user.chunksAudioCnt}.wav`
+        : `audio/anonymous/chunk/${v4()}.wav`;
 
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)

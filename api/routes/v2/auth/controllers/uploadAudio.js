@@ -18,9 +18,7 @@ const uploadAudio = asyncErrorWrapper(async (req, res, next) => {
     const filepath = file.filepath + 'R';
     const mimetype = file.mimetype;
 
-    const destination = `audio/${
-        user.name
-    }/sample/${samplesAudioCnt}${path.extname(file.originalFilename)}`;
+    const destination = `audio/${user.name}/sample/${samplesAudioCnt}.wav`;
 
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)

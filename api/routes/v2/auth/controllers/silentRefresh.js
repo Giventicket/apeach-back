@@ -38,7 +38,7 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
     });
 
     res.status(200).json({
-        message: `Create an user success`,
+        message: `Create an accessToken success`,
         data: { accessToken },
     });
 });
