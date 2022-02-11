@@ -4,7 +4,7 @@ const asyncErrorWrapper = require('../../../../utils/asyncErrorWrapper.js');
 const jwt = require('jsonwebtoken');
 
 const decodeToken = asyncErrorWrapper(async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
+    const accessToken = req.headers.Authorization.split(' ')[1];
 
     // Case 1: refreshToken X accessToken X
     if (req.cookies.refreshToken == null && accessToken == null) {
