@@ -1,4 +1,4 @@
-const User = require('../../../../../models/v2/User/index');
+const User = require('../../../../../models/v2/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const updateUserAfterCreateChunk = asyncErrorWrapper(async (req, res, next) => {
