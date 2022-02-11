@@ -3,7 +3,9 @@ const Chunk = require('../../../../../models/v2/chunk/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const translate = asyncErrorWrapper(async (req, res, next) => {
-    const { chunk, chunkId } = req;
+    const { chunk } = req;
+
+    console.log(chunk);
 
     const result = await axios
         .post(`${process.env.AI_SERVER}/api/translate`, {
@@ -16,7 +18,7 @@ const translate = asyncErrorWrapper(async (req, res, next) => {
         });
 
     const updatedChunk = await Chunk.findOneAndUpdate(
-        { _id: chunkId },
+        { _id: chunk._id },
         {
             segments: result.data.data,
         },

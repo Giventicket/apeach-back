@@ -29,8 +29,8 @@ const decodeToken = require('../middlewares/decodeToken');
  *            description: stt가 정상적으로 완료되었을 경우 된 경우
  *            schema:
  *              $ref: '#/definitions/Response_Chunk'
- *          401:
- *            description: header를 명시했을 때 jwt 토큰의 기간이 만료된 경우
+ *          400:
+ *            description: option이 short나 long이 아닐 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
@@ -62,10 +62,6 @@ router.post('/stt/:option/:id', controller.getChunk, controller.stt);
  *            description: translate가 정상적으로 완료되었을 경우 된 경우
  *            schema:
  *              $ref: '#/definitions/Response_Chunk'
- *          401:
- *            description: header를 명시했을 때 jwt 토큰의 기간이 만료된 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
  *          404:
  *            description: header를 명시했을 때 user를 찾을 수 없는 경우, 구글 버켓에서 파일을 찾을 수 없는 경우, chunk를 찾을 수 없는 경우
  *            schema:
@@ -85,9 +81,6 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *      produces:
  *        - application/json
  *      parameters:
- *        - in: header
- *          name: Authorization
- *          type: string
  *        - in: path
  *          name: id
  *          type: string
@@ -97,15 +90,16 @@ router.post('/translate/:id', controller.getChunk, controller.translate);
  *            description: tts가 정상적으로 완료되었을 경우 된 경우
  *            schema:
  *              $ref: '#/definitions/Response_Chunk'
- *          401:
- *            description: header를 명시했을 때 jwt 토큰의 기간이 만료된 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
  *          404:
- *            description: header를 명시했을 때 user를 찾을 수 없는 경우, 구글 버켓에서 파일을 찾을 수 없는 경우, chunk를 찾을 수 없는 경우
+ *            description: user를 찾을 수 없는 경우, chunk를 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/tts/:id', controller.getChunk, controller.tts);
+router.post(
+    '/tts/:id',
+    controller.getChunk,
+    controller.getUser,
+    controller.tts,
+);
 
 module.exports = router;

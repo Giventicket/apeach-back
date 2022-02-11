@@ -32,7 +32,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     const refreshToken = jwt.sign({}, process.env.JWT_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '3h',
         issuer: 'dubai',
     });
 
@@ -43,7 +43,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
     });
 
     const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '30s',
+        expiresIn: '30m',
     });
 
     res.cookie('refreshToken', refreshToken);

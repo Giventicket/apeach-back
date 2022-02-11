@@ -2,7 +2,6 @@ const express = require('express');
 const controller = require('./controllers/index');
 const decodeToken = require('../middlewares/decodeToken');
 const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
-const isUtteranceIdAndUrlNotNull = require('../middlewares/isUtteranceIdAndUrlNotNull');
 
 const router = express.Router();
 
@@ -115,7 +114,7 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
 
 /**
  *  @swagger
- *  /api/v2/auth/sample:
+ *  /api/v2/auth/sample/{utteranceId}:
  *    patch:
  *      tags:
  *      - Auth
@@ -129,25 +128,21 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *        - in: header
  *          name: Authorization
  *          type: string
- *        - in: body
- *          name: JSON
- *          schema:
- *            type: object
- *            required:
- *              - utteranceId
- *              - waveUrl
- *            properties:
- *              utteranceId:
- *                type: number
- *              waveUrl:
- *                type: string
+ *        - in: path
+ *          name: utteranceId
+ *          type: string
+ *          required: true
+ *        - in: formData
+ *          name: file
+ *          type: file
+ *          required: true
  *      responses:
  *          200:
  *            description: sample의 update가 user에 성공적으로 반영된 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
  *          400:
- *            description: sample를 찾을 수 없는 경우
+ *            description: sample를 찾을 수 없는 경우, 파일을 첨부하지 않은 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
@@ -156,10 +151,13 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *              $ref: '#/definitions/Response_Only_Message'
  */
 router.patch(
-    '/sample',
-    isUtteranceIdAndUrlNotNull,
+    '/sample/:utteranceId',
     decodeToken,
-    controller.updateSample,
+    controller.parseForm,
+    controller.checkSample,
+    controller.preprocess,
+    controller.uploadAudio,
+    controller.updateUserAfterUploadAudio,
 );
 //user의 samples의 sample 업데이트
 
@@ -175,15 +173,11 @@ router.patch(
  *        - application/json
  *      produces:
  *        - application/json
- *      parameters:
- *        - in: header
- *          name: Authorization
- *          type: string
  *      responses:
  *          200:
  *            description: 로그아웃을 정상적으로 할 경우
  *            schema:
- *              $ref: '#/definitions/Response_User'
+ *              $ref: '#/definitions/Response_Only_Message'
  *          401:
  *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
  *            schema:

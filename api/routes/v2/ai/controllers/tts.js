@@ -22,7 +22,7 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             {
                 gs_uri,
                 segments: chunk.segments,
-                spk_id: chunk.speakerName,
+                spk_id: req.params.speakerName,
             },
             { responseType: 'arraybuffer' },
         )
@@ -36,7 +36,7 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
     await fs.writeFileSync(tmpPath, ttsResult.data);
 
     const filename = isAuthUser
-        ? `audio/${user.name}/chunk/${user.chunksAudioCnt + 1}.wav`
+        ? `audio/${user.name}/chunk/${user.chunksAudioCnt}.wav`
         : `audio/anonymous/chunk/${v4()}.wav`;
 
     const gcpResult = await gcpStorage
@@ -58,9 +58,19 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { _id: chunk._id },
         {
             targetWaveUrl: gcpResult[0].metadata.mediaLink,
+            speakerName: req.params.speakerName,
         },
         { new: true },
     ).exec();
+
+    if (isAuthUser)
+        await User.updateOne(
+            { _id: user._id },
+            {
+                chunksAudioCnt: chunksAudioCnt + 1,
+            },
+            { new: true },
+        ).exec();
 
     res.status(200).json({
         message: `tts request success`,

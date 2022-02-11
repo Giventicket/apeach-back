@@ -21,14 +21,14 @@ const router = express.Router();
  *          type: string
  *          required: true
  *        - in: formData
- *          name: model
+ *          name: file
  *          type: file
  *          required: true
  *      responses:
  *          200:
  *            description: model을 정상적으로 업로드 된 경우
  *            schema:
- *              $ref: '#/definitions/Response_File'
+ *              $ref: '#/definitions/Response_Model'
  *          400:
  *            description: model 파일을 첨부하지 않은 경우
  *            schema:
@@ -55,7 +55,7 @@ router.post(
  *        - application/json
  *      parameters:
  *        - in: path
- *          name: speakerId
+ *          name: speakerName
  *          type: string
  *          required: true
  *      responses:

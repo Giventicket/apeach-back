@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v2/users/samples/{name}:
+ *  /api/v2/users/samples/{userName}:
  *    get:
  *      tags:
  *      - User
@@ -17,7 +17,7 @@ const router = express.Router();
  *        - application/json
  *      parameters:
  *        - in: path
- *          name: name
+ *          name: userName
  *          type: string
  *          required: true
  *      responses:
@@ -30,7 +30,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.get('/samples/:name', controller.getSamplesbyName);
+router.get('/samples/:userName', controller.getSamplesbyName);
 // [get] 매칭 되는 user의 samples 가져오기
 
 module.exports = router;

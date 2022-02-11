@@ -3,8 +3,8 @@ const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const signout = asyncErrorWrapper(async (req, res, next) => {
-    const { user, userId } = req;
-    await User.deleteOne({ _id: userId }).exec();
+    const { user } = req;
+    await User.deleteOne({ _id: user._id }).exec();
 
     user.samples.forEach(sample => {
         asyncAudioDelete(sample.waveUrl);

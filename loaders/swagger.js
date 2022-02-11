@@ -20,13 +20,13 @@ module.exports = app => {
         swaggerDefinition,
         apis: [
             root + '/loaders/*.js',
-            root + '/api/routes/v1/chunks/*.js',
-            root + '/api/routes/v1/audios/*.js',
-            root + '/api/routes/v1/samples/*.js',
-            root + '/api/routes/v1/auth/*.js',
-            root + '/api/routes/v1/ai/*.js',
-            root + '/api/routes/v1/models/*.js',
-            root + '/api/routes/v1/users/*.js',
+            root + '/api/routes/v2/chunks/*.js',
+            root + '/api/routes/v2/audios/*.js',
+            root + '/api/routes/v2/samples/*.js',
+            root + '/api/routes/v2/auth/*.js',
+            root + '/api/routes/v2/ai/*.js',
+            root + '/api/routes/v2/models/*.js',
+            root + '/api/routes/v2/users/*.js',
         ],
     };
     const specs = swaggereJsdoc(options);

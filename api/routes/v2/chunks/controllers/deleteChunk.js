@@ -15,17 +15,15 @@ const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
 
     const audios = [chunk['sourceWaveUrl'], chunk['targetWaveUrl']];
     req.deletedAudioCnt = 0;
-    for (const audio in audios) {
+    for (const audio of audios) {
         if (audio) req.deletedAudioCnt++;
     }
+
     audios.forEach(audio => {
         asyncAudioDelete(audio);
     });
 
-    res.status(200).json({
-        message: `Delete a chunk success`,
-        data: {},
-    });
+    next();
 });
 
 module.exports = deleteChunk;

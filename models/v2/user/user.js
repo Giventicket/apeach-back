@@ -41,7 +41,7 @@ const userSchema = new Schema(
                         type: Number,
                         required: true,
                     },
-                    wave_url: {
+                    waveUrl: {
                         type: String,
                         default: '',
                     },

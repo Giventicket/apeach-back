@@ -1,16 +1,17 @@
 const User = require('../../../../../models/v2/User/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const updateUserAfterCreateChunk = asyncErrorWrapper(async (req, res, next) => {
-    const { user, isAuthUser, chunk } = req;
-    const updatedUser = null;
+const updateUserAfterDeleteChunk = asyncErrorWrapper(async (req, res, next) => {
+    const { user, isAuthUser } = req;
+
+    let updatedUser = null;
 
     if (isAuthUser)
         updatedUser = await User.findOneAndUpdate(
             { _id: user._id },
             {
-                chunks: user.chunks.filter(id => id !== chunk._id),
-                chunksAudioCnt: user.chunkAudioCnt - req.deletedAudioCnt,
+                chunks: user.chunks.filter(id => id !== req.params.id),
+                chunksAudioCnt: user.chunksAudioCnt - req.deletedAudioCnt,
             },
             { new: true },
         )
@@ -31,4 +32,4 @@ const updateUserAfterCreateChunk = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = updateUserAfterCreateChunk;
+module.exports = updateUserAfterDeleteChunk;

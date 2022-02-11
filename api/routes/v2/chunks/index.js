@@ -6,12 +6,12 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v2/chunks/{speakerName}:
+ *  /api/v2/chunks:
  *    post:
  *      tags:
  *      - Chunk
  *      summary: 'chunk 생성'
- *      description: chunk를 생성한다.
+ *      description: 오디오를 구글 버켓에 업로드하여 url을 받아오고 그것을 첨부하여 chunk를 생성한다.
  *      consumes:
  *        - application/json
  *      produces:
@@ -20,10 +20,6 @@ const router = express.Router();
  *        - in: header
  *          name: Authorization
  *          type: string
- *        - in: path
- *          name: speakerName
- *          type: string
- *          required: true
  *        - in: formData
  *          name: file
  *          type: file
@@ -47,7 +43,7 @@ const router = express.Router();
  *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
-    '/:speakerName',
+    '/',
     decodeToken,
     controller.parseForm,
     controller.preprocess,

@@ -5,11 +5,7 @@ const asyncParseForm = (req, key) => {
     return new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
             if (err) {
-                asyncFileDelete(
-                    files.file.filepath ||
-                        files.audio.filepath ||
-                        files.model.filepath,
-                );
+                asyncFileDelete(files.file.filepath);
                 return reject(err);
             }
             resolve(files);

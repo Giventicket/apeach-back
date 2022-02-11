@@ -1,21 +1,9 @@
 const User = require('../../../../../models/v2/user/index');
-const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const updateSample = asyncErrorWrapper(async (req, res, next) => {
-    let { utteranceId, waveUrl } = req.body;
-
-    const sample = req.user.samples.filter(
-        sample => Number(utteranceId) === sample.utteranceId,
-    )[0];
-
-    if (sample == null) {
-        const err = new Error(`Cannot find a sample`);
-        err.status = 404;
-        throw err;
-    }
-
-    if (sample.waveUrl != null) asyncAudioDelete(sample.waveUrl);
+const updateUserAfterUploadAudio = asyncErrorWrapper(async (req, res, next) => {
+    const { user, sample, waveUrl, samplesAudioCnt } = req;
+    console.log('updateUserAfterUploadAudio ', samplesAudioCnt, waveUrl);
 
     sample.waveUrl = waveUrl;
 
@@ -23,6 +11,7 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
         { _id: user._id },
         {
             samples: user.samples,
+            samplesAudioCnt: samplesAudioCnt + 1,
         },
         { new: true },
     )
@@ -41,4 +30,4 @@ const updateSample = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = updateSample;
+module.exports = updateUserAfterUploadAudio;

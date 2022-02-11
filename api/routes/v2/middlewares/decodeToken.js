@@ -4,10 +4,13 @@ const asyncErrorWrapper = require('../../../../utils/asyncErrorWrapper.js');
 const jwt = require('jsonwebtoken');
 
 const decodeToken = asyncErrorWrapper(async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
+    const accessToken = req.headers.authorization
+        ? req.headers.authorization.split(' ')[1]
+        : null;
 
     // Case 1: refreshToken X accessToken X
-    if (req.cookies.refreshToken == null && accessToken == null) {
+    if (req.cookies.refreshToken == null || accessToken == null) {
+        console.log('unauthorized user decoded');
         req.isAuthUser = false;
         return next();
     }
@@ -68,6 +71,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
 
     req.user = user;
     req.isAuthUser = true;
+    console.log('authorized user decoded');
     next();
 });
 

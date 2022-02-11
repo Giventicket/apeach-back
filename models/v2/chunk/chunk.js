@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const chunkSchema = new Schema(
     {
-        userId: {
+        userName: {
             type: String,
             required: true,
         },
-        speakerId: {
+        speakerName: {
             type: String,
-            required: true,
+            default: 'will.hajh@kakaobrain.com',
         },
         sourceWaveUrl: {
             type: String,

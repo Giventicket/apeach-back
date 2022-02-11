@@ -34,7 +34,7 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
     }
 
     const accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-        expiresIn: '30s',
+        expiresIn: '30m',
     });
 
     res.status(200).json({
