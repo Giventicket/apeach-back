@@ -1,5 +1,5 @@
 const formidable = require('formidable');
-const form = formidable({ multiples: true });
+const form = formidable({ multiples: true, maxFileSize: 500 * 1024 * 1024 });
 
 const asyncParseForm = (req, key) => {
     return new Promise((resolve, reject) => {

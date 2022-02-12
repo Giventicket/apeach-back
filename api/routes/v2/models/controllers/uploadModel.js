@@ -9,7 +9,7 @@ const uploadModel = asyncErrorWrapper(async (req, res, next) => {
     const file = req.files.file;
     const filepath = file.filepath;
     const mimetype = file.mimetype;
-
+    console.log('goal');
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
         .upload(filepath, {
@@ -24,7 +24,7 @@ const uploadModel = asyncErrorWrapper(async (req, res, next) => {
             asyncFileDelete(file.filepath);
             throw err;
         });
-
+    console.log('goal');
     asyncFileDelete(file.filepath);
 
     const model = await Model.create({
