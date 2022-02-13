@@ -206,7 +206,7 @@ router.delete('/logout', decodeToken, controller.logout);
  *          200:
  *            description: 토큰의 정상적인 발급
  *            schema:
- *              $ref: '#/definitions/Response_AccessToken'
+ *              $ref: '#/definitions/Response_UserWithAccessToken'
  *          401:
  *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
  *            schema:

@@ -37,9 +37,20 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
         expiresIn: '30m',
     });
 
+    const user = await User.findOne({
+        _id: userId,
+    }).exec();
+
     res.status(200).json({
-        message: `Create an accessToken success`,
-        data: { accessToken },
+        message: `refresh success`,
+        data: {
+            name: user.name,
+            samples: user.samples,
+            chunks: user.chunks,
+            samplesAudioCnt: user.samplesAudioCnt,
+            chunksAudioCnt: user.chunksAudioCnt,
+            accessToken,
+        },
     });
 });
 
