@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+const User = require('../../../../../models/v2/user/index');
 const Token = require('../../../../../models/v2/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
