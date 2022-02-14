@@ -9,7 +9,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
         : null;
 
     // Case 1: refreshToken X accessToken X
-    if (req.cookies.refreshToken == null || accessToken == null) {
+    if (accessToken == null) {
         console.log('unauthorized user decoded');
         req.isAuthUser = false;
         return next();
