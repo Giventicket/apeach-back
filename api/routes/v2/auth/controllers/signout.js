@@ -4,9 +4,12 @@ const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const signout = asyncErrorWrapper(async (req, res, next) => {
-    const { user } = req;
-
-    await user.populate('chunks').populate('model').exec();
+    const user = await User.findOne({
+        _id: req.user._id,
+    })
+        .populate('chunks')
+        .populate('models')
+        .exec();
 
     user.samples.forEach(sample => {
         asyncAudioDelete(sample.waveUrl);
