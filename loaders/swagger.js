@@ -131,8 +131,6 @@ module.exports = app => {
  *
  *    Chunk_For_Patch:
  *      properties:
- *        status:
- *          type: string
  *        sourceWaveUrl:
  *          type: string
  *        targetWaveUrl:
