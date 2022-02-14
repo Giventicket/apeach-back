@@ -182,9 +182,9 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
 router.patch(
     '/sample/:utteranceId',
     decodeToken,
-    controller.checkFile,
-    controller.parseForm,
     controller.checkSample,
+    controller.parseForm,
+    controller.checkFile,
     controller.preprocess,
     controller.uploadAudio,
     controller.updateUserAfterUploadAudio,

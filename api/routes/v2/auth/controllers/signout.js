@@ -5,10 +5,15 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const signout = asyncErrorWrapper(async (req, res, next) => {
     const { user } = req;
-    await User.deleteOne({ _id: user._id }).exec();
+
+    await user.populate('chunks').populate('model').exec();
 
     user.samples.forEach(sample => {
         asyncAudioDelete(sample.waveUrl);
+    });
+
+    user.models.forEach(model => {
+        asyncAudioDelete(model.modelUrl);
     });
 
     user.chunks.forEach(chunk => {
@@ -17,6 +22,8 @@ const signout = asyncErrorWrapper(async (req, res, next) => {
             asyncAudioDelete(audio);
         });
     });
+
+    await User.deleteOne({ _id: user._id }).exec();
 
     res.cookie('refreshToken', '');
     await Token.deleteOne({ refreshToken: req.cookies.refreshToken }).exec();
