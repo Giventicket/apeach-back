@@ -6,13 +6,7 @@ const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
 
 const uploadAudio = asyncErrorWrapper(async (req, res, next) => {
-    const { user, isAuthUser, sample, samplesAudioCnt } = req;
-
-    if (!isAuthUser) {
-        const err = new Error(`Not allowed, please login!`);
-        err.status = 404;
-        throw err;
-    }
+    const { user, samplesAudioCnt } = req;
 
     const file = req.files.file;
     const filepath = file.filepath + 'R';

@@ -34,7 +34,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
@@ -91,7 +91,7 @@ router.post(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
- *            description: 요청한 id를 찾을 수 없을 떄
+ *            description: 요청한 id의 chunk를 찾을 수 없을 떄
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
@@ -166,11 +166,11 @@ router.patch('/:id', controller.updateChunk);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
- *            description: 요청한 id의 chunk를 찾을 수 없는 경우, 로그인 한 user를 찾을 수 없는 경우
+ *            description: user가 chunk를 소유하지 않은 경우, 요청한 id의 chunk를 찾을 수 없는 경우, 로그인 한 user를 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */

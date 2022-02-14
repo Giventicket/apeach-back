@@ -42,7 +42,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
 
     //Case 4-1: 클라이언트가 전송한 req의 refreshToken의 ip와 request의 header에서 뽑아낸 ip가 다름. request.refreshToken.ip ≠ request.header.ip
     if (ip !== userIp) {
-        const err = new Error(`Ip address conflict`);
+        const err = new Error(`Ip address does not match`);
         err.status = 401;
         throw err;
     }
@@ -52,6 +52,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
             if (err && err.name === 'TokenExpiredError') {
                 err.status = 401;
+                // Case 5: accessToken 만료
                 reject(err);
             } else {
                 resolve(decoded);

@@ -131,10 +131,6 @@ module.exports = app => {
  *
  *    Chunk_For_Patch:
  *      properties:
- *        sourceWaveUrl:
- *          type: string
- *        targetWaveUrl:
- *          type: string
  *        segments:
  *          type: array
  *          items:
@@ -184,6 +180,8 @@ module.exports = app => {
  *                type: string
  *              targetText:
  *                type: string
+ *        duration:
+ *          type: number
  *        createdAt:
  *          type: string
  *

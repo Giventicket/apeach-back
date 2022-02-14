@@ -12,7 +12,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
         .populate('chunks')
         .exec();
 
-    if (!user) {
+    if (user == null) {
         const err = new Error(`Login failed [Cannot find ${req.body.name}]`);
         err.status = 404;
         throw err;

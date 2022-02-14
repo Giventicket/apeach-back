@@ -6,7 +6,7 @@ const signup = asyncErrorWrapper(async (req, res, next) => {
     const user = await User.findOne({ name });
     if (user) {
         const err = new Error(`Duplicate name ${name}`);
-        err.status = 404;
+        err.status = 409;
         throw err;
     }
     await User.create({

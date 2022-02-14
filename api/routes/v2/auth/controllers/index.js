@@ -8,6 +8,7 @@ const preprocess = require('./preprocess');
 const parseForm = require('./parseForm');
 const uploadAudio = require('./uploadAudio');
 const updateUserAfterUploadAudio = require('./updateUserAfterUploadAudio');
+const checkFile = require('./checkFile');
 
 module.exports = {
     login,
@@ -20,4 +21,5 @@ module.exports = {
     parseForm,
     uploadAudio,
     updateUserAfterUploadAudio,
+    checkFile,
 };

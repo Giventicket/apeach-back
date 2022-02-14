@@ -11,6 +11,12 @@ const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
 
+    if (req.isAuthUser && chunk.userName !== req.user.name) {
+        const err = new Error(`${req.user.name} does not own chunk`);
+        err.status = 404;
+        throw err;
+    }
+
     await Chunk.deleteOne({ _id: req.params.id }).exec();
 
     const audios = [chunk['sourceWaveUrl'], chunk['targetWaveUrl']];

@@ -39,6 +39,10 @@ const router = express.Router();
  *            description: name, password가 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+ *          409:
+ *            description: name이 중복되는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post('/signup', controller.signup);
 //회원가입
@@ -65,7 +69,7 @@ router.post('/signup', controller.signup);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
@@ -82,7 +86,7 @@ router.delete('/signout', decodeToken, controller.signout);
  *      tags:
  *      - Auth
  *      summary: 'user 로그인'
- *      description: user의 access token을 생성한다.
+ *      description: user의 access token을 생성한다. refreshToken을 쿠기에 저장(3h 만료), accessToken 발급(30m 만료)
  *      consumes:
  *        - application/json
  *      produces:
@@ -107,6 +111,14 @@ router.delete('/signout', decodeToken, controller.signout);
  *              $ref: '#/definitions/Response_UserWithAccessToken'
  *          400:
  *            description: request body에 name, password가 명시되지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          401:
+ *            description: password가 틀린 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없느 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
@@ -145,14 +157,31 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *            description: sample를 찾을 수 없는 경우, 파일을 첨부하지 않은 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          404:
- *            description: access token이 유효하지 않은 경우
+ *            description: 로그인 되지 않은 유저인 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          452:
+ *            description: 메타 데이터가 없는 경우 - 멀티 파트 데이터가 아닐 때와 동일
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          453:
+ *            description: audio 파일이 아닌 경우(ex. video, image)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          454:
+ *            description: audio 파일의 길이가 10분이 초과되는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
 router.patch(
     '/sample/:utteranceId',
     decodeToken,
+    controller.checkFile,
     controller.parseForm,
     controller.checkSample,
     controller.preprocess,
@@ -179,7 +208,7 @@ router.patch(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          404:
@@ -208,7 +237,7 @@ router.delete('/logout', decodeToken, controller.logout);
  *            schema:
  *              $ref: '#/definitions/Response_UserWithAccessToken'
  *          401:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip conflict)
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */

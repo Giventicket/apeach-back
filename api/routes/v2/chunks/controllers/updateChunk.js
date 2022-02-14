@@ -6,10 +6,7 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
     const chunk = await Chunk.findOneAndUpdate(
         { _id: req.params.id },
         {
-            status: req.body.status,
-            sourceWaveUrl: req.body.sourceWaveUrl,
             segments: req.body.segments,
-            targetWaveUrl: req.body.targetWaveUrl,
         },
         { new: true },
     ).exec();
