@@ -46,7 +46,11 @@ const login = asyncErrorWrapper(async (req, res, next) => {
         expiresIn: '30m',
     });
 
-    res.cookie('refreshToken', refreshToken);
+    res.cookie('refreshToken', refreshToken, {
+        sameSite: 'none',
+        secure: true,
+        httpOnly: true,
+    });
 
     res.status(200).json({
         message: `login success`,
