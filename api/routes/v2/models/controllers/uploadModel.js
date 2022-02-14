@@ -1,20 +1,20 @@
 const path = require('path');
 
-const Model = require('../../../../../models/v2/model/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
 
 const uploadModel = asyncErrorWrapper(async (req, res, next) => {
+    const user = req.user;
     const file = req.files.file;
     const filepath = file.filepath;
     const mimetype = file.mimetype;
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
         .upload(filepath, {
-            destination: `model/${req.params.speakerName}${path.extname(
-                file.originalFilename,
-            )}`,
+            destination: `model/${user.name}/${req.params.speakerName}${
+                user.models.length
+            }${path.extname(file.originalFilename)}`,
             metadata: {
                 contentType: mimetype,
             },
@@ -25,15 +25,8 @@ const uploadModel = asyncErrorWrapper(async (req, res, next) => {
         });
     asyncFileDelete(file.filepath);
 
-    const model = await Model.create({
-        speakerName: req.params.speakerName,
-        modelUrl: result[0].metadata.mediaLink,
-    });
-
-    res.status(200).json({
-        message: `upload success [upload a model on google bucket]`,
-        data: model,
-    });
+    req.modelUrl = result[0].metadata.mediaLink;
+    next();
 });
 
 module.exports = uploadModel;

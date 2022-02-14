@@ -17,4 +17,6 @@ const modelSchema = new Schema(
     },
 );
 
+modelSchema.set('timestamps', true);
+
 module.exports = modelSchema;

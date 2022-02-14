@@ -151,8 +151,6 @@ module.exports = app => {
  *          type: number
  *        waveUrl:
  *          type: string
- *        createdAt:
- *          type: string
  *
  *
  *    Chunk:
@@ -183,6 +181,8 @@ module.exports = app => {
  *        duration:
  *          type: number
  *        createdAt:
+ *          type: string
+ *        updatedAt:
  *          type: string
  *
  *    File:

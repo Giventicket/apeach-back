@@ -44,14 +44,12 @@ const chunkSchema = new Schema(
                 _id: false,
             },
         ],
-        createdAt: {
-            type: Date,
-            default: Date.now,
-        },
     },
     {
         versionKey: false,
     },
 );
+
+chunkSchema.set('timestamps', true);
 
 module.exports = chunkSchema;

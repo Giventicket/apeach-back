@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
 const chunkRef =
     process.env.NODE_ENV === 'production' ? 'Chunk_v2' : 'Chunk_v2_dev';
+const modelRef =
+    process.env.NODE_ENV === 'production' ? 'Model_v2' : 'Model_v2_dev';
 
 const utteranceIds = [
     10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009, 10010, 10011,
@@ -45,10 +47,6 @@ const userSchema = new Schema(
                         type: String,
                         default: '',
                     },
-                    createdAt: {
-                        type: Date,
-                        default: Date.now,
-                    },
                     _id: false,
                 },
             ],
@@ -56,6 +54,10 @@ const userSchema = new Schema(
         },
         chunks: {
             type: [{ type: Schema.Types.ObjectId, ref: chunkRef }],
+            default: [],
+        },
+        models: {
+            type: [{ type: Schema.Types.ObjectId, ref: modelRef }],
             default: [],
         },
         samplesAudioCnt: {
@@ -66,15 +68,13 @@ const userSchema = new Schema(
             type: Number,
             default: 0,
         },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-        },
     },
     {
         versionKey: false,
     },
 );
+
+userSchema.set('timestamps', true);
 
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {

@@ -33,11 +33,17 @@ const router = express.Router();
  *            description: model 파일을 첨부하지 않은 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
     '/upload/:speakerName',
+    controller.getUser,
     controller.parseForm,
     controller.uploadModel,
+    controller.createModelAndUpdateUserAfterUploadModel,
 );
 // model의 가중치 파일을 user 고유값의 파일 네임으로 업로드한다.
 
@@ -63,12 +69,13 @@ router.post(
  *            description: model을 정상적으로 가져온 경우
  *            schema:
  *              $ref: '#/definitions/Response_Model'
- *          400:
- *            description: model 파일을 첨부하지 않은 경우
+ *          404:
+ *            description: user를 찾을 수 없는 경우, model을 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+
  */
-router.get('/:speakerName', controller.getModel);
+router.get('/:speakerName', controller.getUser, controller.getModel);
 
 /**
  *  @swagger

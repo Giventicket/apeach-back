@@ -72,7 +72,6 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
 
     req.user = user;
     req.isAuthUser = true;
-    console.log('authorized user decoded');
     next();
 });
 

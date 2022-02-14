@@ -140,6 +140,7 @@ router.post('/login', isNameAndPasswordNotNull, controller.login);
  *        - in: header
  *          name: Authorization
  *          type: string
+ *          required: true
  *        - in: path
  *          name: utteranceId
  *          type: string
