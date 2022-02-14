@@ -1,3 +1,5 @@
+const Model = require('../../../../../models/v2/model/index');
+
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const getModel = asyncErrorWrapper(async (req, res, next) => {
@@ -8,9 +10,10 @@ const getModel = asyncErrorWrapper(async (req, res, next) => {
         err.status = 404;
         throw err;
     }
-    await user.populate('models').exec();
 
-    const model = user.models[user.models.length - 1];
+    const model = await Model.findOne({
+        _id: user.models[user.models.length - 1],
+    }).exec();
 
     res.status(200).json({
         message: `Find a model success`,

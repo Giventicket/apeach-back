@@ -268,9 +268,15 @@ module.exports = app => {
  *
  *    Model:
  *      properties:
+ *        _id:
+ *          type: string
  *        speakerName:
  *          type: string
  *        modelUrl:
+ *          type: string
+ *        createdAt:
+ *          type: string
+ *        updatedAt:
  *          type: string
  *
  */
