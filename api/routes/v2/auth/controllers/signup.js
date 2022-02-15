@@ -4,7 +4,7 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const signup = asyncErrorWrapper(async (req, res, next) => {
-    const { name, password } = req.body;
+    const { name, password, email } = req.body;
     const user = await User.findOne({ name });
     if (user) {
         const err = new Error(`Duplicate name ${name}`);
@@ -14,6 +14,7 @@ const signup = asyncErrorWrapper(async (req, res, next) => {
     const newUser = await User.create({
         name,
         password,
+        email,
     });
 
     asyncSendWebhook(

@@ -24,9 +24,12 @@ const router = express.Router();
  *            type: object
  *            required:
  *              - name
+ *              - email
  *              - password
  *            properties:
  *              name:
+ *                type: string
+ *              email:
  *                type: string
  *              password:
  *                type: string
@@ -36,7 +39,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          400:
- *            description: name, password가 없는 경우
+ *            description: name, password, email가 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          409:

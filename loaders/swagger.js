@@ -229,6 +229,8 @@ module.exports = app => {
  *      properties:
  *        name:
  *          type: string
+ *        email:
+ *          type: string
  *        samples:
  *          type: array
  *          items:
@@ -249,6 +251,8 @@ module.exports = app => {
  *    UserWithAccessToken:
  *      properties:
  *        name:
+ *          type: string
+ *        email:
  *          type: string
  *        samples:
  *          type: array

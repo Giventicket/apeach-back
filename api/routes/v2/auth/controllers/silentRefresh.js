@@ -46,6 +46,7 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
         message: `refresh success`,
         data: {
             name: user.name,
+            email: user.email,
             samples: user.samples,
             chunks: user.chunks,
             models: user.models,

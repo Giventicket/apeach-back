@@ -56,6 +56,7 @@ const login = asyncErrorWrapper(async (req, res, next) => {
         message: `login success`,
         data: {
             name: user.name,
+            email: user.email,
             samples: user.samples,
             chunks: user.chunks,
             models: user.models,
