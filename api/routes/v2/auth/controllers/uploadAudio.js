@@ -6,13 +6,13 @@ const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
 
 const uploadAudio = asyncErrorWrapper(async (req, res, next) => {
-    const { user, samplesAudioCnt } = req;
+    const { user, samplesAudioCnt, sample } = req;
 
     const file = req.files.file;
     const filepath = file.filepath + 'R';
     const mimetype = file.mimetype;
 
-    const destination = `audio/${user.name}/sample/${samplesAudioCnt}.wav`;
+    const destination = `audio/${user.name}/sample/${sample.utteranceId}.wav`;
 
     const result = await gcpStorage
         .bucket(process.env.BUCKET_NAME)
