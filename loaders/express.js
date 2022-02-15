@@ -46,6 +46,7 @@ module.exports = app => {
         'http://34.64.247.62:80',
         'http://34.64.247.62:3000',
         'https://dub-ai.site',
+        'dev.dub-ai.site',
         'http://34.64.211.37',
     ];
     var corsOptions = {
