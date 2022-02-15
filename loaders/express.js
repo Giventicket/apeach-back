@@ -39,6 +39,8 @@ module.exports = app => {
     const whitelist = [
         'http://localhost:80',
         'http://localhost:3000',
+        'https://localhost:80',
+        'https://localhost:3000',
         'http://34.64.100.12:3000/',
         'http://34.64.238.165:3000/',
         'http://34.64.247.62:80/',
