@@ -8,15 +8,10 @@ const signout = asyncErrorWrapper(async (req, res, next) => {
         _id: req.user._id,
     })
         .populate('chunks')
-        .populate('models')
         .exec();
 
     user.samples.forEach(sample => {
         asyncAudioDelete(sample.waveUrl);
-    });
-
-    user.models.forEach(model => {
-        asyncAudioDelete(model.modelUrl);
     });
 
     user.chunks.forEach(chunk => {
