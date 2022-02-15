@@ -37,13 +37,13 @@ module.exports = app => {
     app.use(express.urlencoded({ extended: false }));
 
     const whitelist = [
-        'http://localhost:80',
+        'http://localhost',
         'http://localhost:3000',
-        'https://localhost:80',
+        'https://localhost',
         'https://localhost:3000',
         'http://34.64.100.12:3000',
         'http://34.64.238.165:3000',
-        'http://34.64.247.62:80',
+        'http://34.64.247.62',
         'http://34.64.247.62:3000',
         'https://dub-ai.site',
         'dev.dub-ai.site',

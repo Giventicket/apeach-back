@@ -3,10 +3,12 @@ const url = require('url');
 const fs = require('fs');
 const { v4 } = require('uuid');
 
+const User = require('../../../../../models/v2/user/index');
 const Chunk = require('../../../../../models/v2/chunk/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const gcpStorage = require('../../../../../utils/gcpStorage.js');
 const asyncFileDelete = require('../../../../../utils/asyncFileDelete.js');
+const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const tts = asyncErrorWrapper(async (req, res, next) => {
     const { chunk, user, isAuthUser } = req;
@@ -67,10 +69,26 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         await User.updateOne(
             { _id: user._id },
             {
-                chunksAudioCnt: chunksAudioCnt + 1,
+                chunksAudioCnt: user.chunksAudioCnt + 1,
             },
             { new: true },
         ).exec();
+
+    const speakerD = `발화자 정보: ${chunk.speakerName}\n\n`;
+    const sourceD = `소스 음성: [sourceWaveUrl](${chunk.sourceWaveUrl})\n`;
+    const targetD = `타겟 음성: [targetWaveUrl](${chunk.targetWaveUrl})\n\n`;
+    let segsD = '';
+    for (let idx in chunk['segments']) {
+        const seg = chunk.segments[idx];
+        const segD = `  세그먼트 [${idx}]:\n    시작: ${seg.startTime}\n    끝: ${seg.endTime}\n    소스 텍스트: ${seg.sourceText}\n    타겟 텍스트: ${seg.targetText}\n\n`;
+        segsD += segD;
+    }
+
+    asyncSendWebhook(
+        speakerD + sourceD + targetD + segsD,
+        chunk['createdAt'],
+        isAuthUser ? user.name : 'anonymous',
+    );
 
     res.status(200).json({
         message: `tts request success`,

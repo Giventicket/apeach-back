@@ -5,7 +5,7 @@ const expressLoader = require('./loaders/express');
 const mongooseLoader = require('./loaders/mongoose');
 const swaggerLoader = require('./loaders/swagger');
 const jobSendWebhooks = require('./schedulers/jobSendWebhooks');
-const jobDeleteAudios = require('./schedulers/jobDeleteAudios');
+const jobdDeleteFiles = require('./schedulers/jobdDeleteFiles');
 
 const app = express();
 
@@ -21,6 +21,6 @@ if (process.env.NODE_ENV !== 'test') {
     mongooseLoader();
     if (process.env.NODE_APP_INSTANCE == 0) {
         jobSendWebhooks();
-        jobDeleteAudios();
+        jobdDeleteFiles();
     }
 }

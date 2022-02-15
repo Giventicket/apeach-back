@@ -1,5 +1,5 @@
 const Chunk = require('../../../../../models/v2/chunk/index');
-const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
+const asyncBucketFileDelete = require('../../../../../utils/asyncBucketFileDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
@@ -26,7 +26,7 @@ const deleteChunk = asyncErrorWrapper(async (req, res, next) => {
     }
 
     audios.forEach(audio => {
-        asyncAudioDelete(audio);
+        asyncBucketFileDelete(audio);
     });
 
     next();

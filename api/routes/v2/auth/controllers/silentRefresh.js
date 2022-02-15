@@ -48,6 +48,7 @@ const silentRefresh = asyncErrorWrapper(async (req, res, next) => {
             name: user.name,
             samples: user.samples,
             chunks: user.chunks,
+            models: user.models,
             samplesAudioCnt: user.samplesAudioCnt,
             chunksAudioCnt: user.chunksAudioCnt,
             accessToken,

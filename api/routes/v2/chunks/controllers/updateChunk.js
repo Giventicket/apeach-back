@@ -1,5 +1,4 @@
 const Chunk = require('../../../../../models/v2/chunk/index');
-const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const updateChunk = asyncErrorWrapper(async (req, res, next) => {
@@ -16,10 +15,6 @@ const updateChunk = asyncErrorWrapper(async (req, res, next) => {
         err.status = 404;
         throw err;
     }
-
-    // if (chunk.status === '3') {
-    //     asyncSendWebhook(chunk);
-    // }
 
     res.status(200).json({
         message: `Update a chunk success`,

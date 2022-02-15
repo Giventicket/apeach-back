@@ -237,6 +237,10 @@ module.exports = app => {
  *          type: array
  *          items:
  *              $ref: '#/definitions/Chunk'
+ *        models:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Model'
  *        samplesAudioCnt:
  *          type: number
  *        chunksAudioCnt:
@@ -254,6 +258,10 @@ module.exports = app => {
  *          type: array
  *          items:
  *              $ref: '#/definitions/Chunk'
+ *        models:
+ *          type: array
+ *          items:
+ *              $ref: '#/definitions/Model'
  *        samplesAudioCnt:
  *          type: number
  *        chunksAudioCnt:

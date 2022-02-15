@@ -1,6 +1,8 @@
 const Model = require('../../../../../models/v2/model/index');
 const User = require('../../../../../models/v2/user/index');
+
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
+const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const createModelAndUpdateUserAfterUploadModel = asyncErrorWrapper(
     async (req, res, next) => {
@@ -19,6 +21,12 @@ const createModelAndUpdateUserAfterUploadModel = asyncErrorWrapper(
                 models: user.models,
             },
         ).exec();
+
+        asyncSendWebhook(
+            `새로운 model 등록 완료! __**${user.name}**__님의 총 모델의 개수는 ${user.models.length}개 입니다.`,
+            model.createdAt,
+            user.name,
+        );
 
         res.status(200).json({
             message: `upload success [upload a model on google bucket]`,

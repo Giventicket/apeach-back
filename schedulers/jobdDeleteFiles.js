@@ -5,7 +5,8 @@ const gcpStorage = require('../utils/gcpStorage');
 const subClient = require('../utils/gcpSubClient');
 
 let isOn = false;
-const deleteAudios = () => {
+const deleteFiles = () => {
+    console.log('deleteAudios');
     asyncErrorLoggerWrapper(async () => {
         isOn = true;
         const formattedSubscription = subClient.subscriptionPath(
@@ -53,6 +54,6 @@ const deleteAudios = () => {
 };
 module.exports = () => {
     const job = schedule.scheduleJob('*/5 * * * * *', () => {
-        if (!isOn) deleteAudios();
+        if (!isOn) deleteFiles();
     });
 };

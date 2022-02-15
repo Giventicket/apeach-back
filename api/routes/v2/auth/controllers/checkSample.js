@@ -1,5 +1,5 @@
 const User = require('../../../../../models/v2/user/index');
-const asyncAudioDelete = require('../../../../../utils/asyncAudioDelete');
+const asyncBucketFileDelete = require('../../../../../utils/asyncBucketFileDelete');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const checkSample = asyncErrorWrapper(async (req, res, next) => {
@@ -26,7 +26,7 @@ const checkSample = asyncErrorWrapper(async (req, res, next) => {
     req.samplesAudioCnt = user.samplesAudioCnt;
 
     if (sample.waveUrl !== '') {
-        asyncAudioDelete(sample.waveUrl);
+        asyncBucketFileDelete(sample.waveUrl);
         req.samplesAudioCnt--;
     }
 

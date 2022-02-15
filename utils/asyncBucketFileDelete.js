@@ -3,7 +3,7 @@ const asyncErrorLoggerWrapper = require('./asyncErrorLoggerWrapper');
 const asyncPublishMessageBucket = require('./asyncPublishMessageBucket');
 const gcpStorage = require('./gcpStorage');
 
-const asyncAudioDelete = audioUrl => {
+const asyncBucketFileDelete = audioUrl => {
     asyncErrorLoggerWrapper(async () => {
         const parsedAudioUrl = url.parse(audioUrl).pathname.split('/');
         filename = decodeURIComponent(
@@ -20,4 +20,4 @@ const asyncAudioDelete = audioUrl => {
     })();
 };
 
-module.exports = asyncAudioDelete;
+module.exports = asyncBucketFileDelete;
