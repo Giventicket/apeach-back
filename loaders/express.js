@@ -35,7 +35,28 @@ module.exports = app => {
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-    app.use(cors({ credentials: true }));
+
+    const whitelist = [
+        'http://localhost:80',
+        'http://localhost:3000',
+        'http://34.64.100.12:3000/',
+        'http://34.64.238.165:3000/',
+        'http://34.64.247.62:80/',
+        'http://34.64.247.62:3000/',
+        'https://dub-ai.site/',
+    ];
+    var corsOptions = {
+        origin: function (origin, callback) {
+            console.log('@@@ ' + origin);
+            if (whitelist.indexOf(origin) >= 0 || !origin) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
+    };
+    app.use(cors(corsOptions));
+
     app.use(morgan(combined, { stream }));
     app.use('/api', indexRouter);
     app.use('*', (req, res, next) => {
