@@ -3,7 +3,7 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 const logger = require('../../../../../utils/logger');
 
 const parseForm = asyncErrorWrapper(async (req, res, next) => {
-    logger.info(`look at me chad! ${JSON.stringify(req.headers)}`);
+    logger.info(`look at me chad! ${JSON.stringify(req.headers)}\n`);
     const files = await asyncParseForm(req);
     if (Object.keys(files).length === 0) {
         const err = new Error('upload failed [no model file]');
