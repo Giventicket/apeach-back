@@ -5,7 +5,6 @@ const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const updateUserAfterUploadAudio = asyncErrorWrapper(async (req, res, next) => {
     const { user, sample, waveUrl, samplesAudioCnt } = req;
-    console.log('updateUserAfterUploadAudio ', samplesAudioCnt, waveUrl);
 
     sample.waveUrl = waveUrl;
 

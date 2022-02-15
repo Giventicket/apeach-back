@@ -6,7 +6,6 @@ const subClient = require('../utils/gcpSubClient');
 
 let isOn = false;
 const deleteFiles = () => {
-    console.log('deleteAudios');
     asyncErrorLoggerWrapper(async () => {
         isOn = true;
         const formattedSubscription = subClient.subscriptionPath(
