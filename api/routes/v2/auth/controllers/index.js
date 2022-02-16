@@ -9,6 +9,7 @@ const parseForm = require('./parseForm');
 const uploadAudio = require('./uploadAudio');
 const updateUserAfterUploadAudio = require('./updateUserAfterUploadAudio');
 const checkFile = require('./checkFile');
+const updateUser = require('./updateUser');
 
 module.exports = {
     login,
@@ -22,4 +23,5 @@ module.exports = {
     uploadAudio,
     updateUserAfterUploadAudio,
     checkFile,
+    updateUser,
 };

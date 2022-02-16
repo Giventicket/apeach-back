@@ -248,4 +248,33 @@ router.delete('/logout', decodeToken, controller.logout);
 router.post('/silentrefresh', controller.silentRefresh);
 //silentRefresh 진행
 
+/**
+ *  @swagger
+ *  /api/v2/auth/complete/{agreed}:
+ *    patch:
+ *      tags:
+ *      - Auth
+ *      summary: "자신의 목소리가 울려 퍼지는 것을 동의"
+ *      description: 자신의 목소리가 대중에게 울려 퍼지는 것을 동의한다.
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      responses:
+ *          200:
+ *            description: 토큰의 정상적인 발급
+ *            schema:
+ *              $ref: '#/definitions/Response_UserWithAccessToken'
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
+router.post('/complete/:agreed', decodeToken, controller.updateUser);
+//silentRefresh 진행
+
 module.exports = router;

@@ -62,6 +62,8 @@ const login = asyncErrorWrapper(async (req, res, next) => {
             models: user.models,
             samplesAudioCnt: user.samplesAudioCnt,
             chunksAudioCnt: user.chunksAudioCnt,
+            agreed: user.agreed,
+            sampleFinished: user.sampleFinished,
             accessToken,
         },
     });

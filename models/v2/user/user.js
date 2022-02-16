@@ -72,6 +72,14 @@ const userSchema = new Schema(
             type: Number,
             default: 0,
         },
+        agreed: {
+            type: Boolean,
+            default: false,
+        },
+        sampleFinished: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         versionKey: false,

@@ -247,6 +247,10 @@ module.exports = app => {
  *          type: number
  *        chunksAudioCnt:
  *          type: number
+ *        agreed:
+ *          type: boolean
+ *        sampleFinished:
+ *          type: boolean
  *
  *    UserWithAccessToken:
  *      properties:
@@ -270,6 +274,10 @@ module.exports = app => {
  *          type: number
  *        chunksAudioCnt:
  *          type: number
+ *        agreed:
+ *          type: boolean
+ *        sampleFinished:
+ *          type: boolean
  *        accesstoken:
  *          type: string
  *
