@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../../../../models/v2/user/index');
 const Token = require('../../../../../models/v2/token/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
+const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const login = asyncErrorWrapper(async (req, res, next) => {
     let user = await User.findOne({
@@ -51,6 +52,14 @@ const login = asyncErrorWrapper(async (req, res, next) => {
         secure: true,
         httpOnly: true,
     });
+
+    const date = new Date(Date.now());
+
+    asyncSendWebhook(
+        `${ip}에서 **${user.name}**님이 로그인 했습니다.`,
+        date.toISOString(),
+        user.email,
+    );
 
     res.status(200).json({
         message: `login success`,
