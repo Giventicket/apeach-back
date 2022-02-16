@@ -28,7 +28,7 @@ const signout = asyncErrorWrapper(async (req, res, next) => {
     asyncSendWebhook(
         `아쉽네요. __**${user.name}**__님이 탈퇴하셨습니다!`,
         user.createdAt,
-        user.name,
+        user.email,
     );
 
     res.cookie('refreshToken', '');

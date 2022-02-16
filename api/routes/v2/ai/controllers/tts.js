@@ -87,7 +87,7 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
     asyncSendWebhook(
         speakerD + sourceD + targetD + segsD,
         chunk['createdAt'],
-        isAuthUser ? user.name : 'anonymous',
+        isAuthUser ? user.email : 'anonymous',
     );
 
     res.status(200).json({

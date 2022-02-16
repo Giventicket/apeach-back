@@ -25,7 +25,7 @@ const createModelAndUpdateUserAfterUploadModel = asyncErrorWrapper(
         asyncSendWebhook(
             `새로운 model 등록 완료! __**${user.name}**__님의 총 모델의 개수는 ${user.models.length}개 입니다.`,
             model.createdAt,
-            user.name,
+            user.email,
         );
 
         res.status(200).json({

@@ -24,7 +24,7 @@ const updateUserAfterUploadAudio = asyncErrorWrapper(async (req, res, next) => {
     asyncSendWebhook(
         `sample audio 업로드 완료! [${samplesAudioCnt + 1}/145]`,
         date.toISOString(),
-        user.name,
+        user.email,
     );
 
     res.status(200).json({

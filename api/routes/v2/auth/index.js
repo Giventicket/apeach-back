@@ -100,10 +100,10 @@ router.delete('/signout', decodeToken, controller.signout);
  *          schema:
  *            type: object
  *            required:
- *              - name
+ *              - email
  *              - password
  *            properties:
- *              name:
+ *              email:
  *                type: string
  *              password:
  *                type: string
