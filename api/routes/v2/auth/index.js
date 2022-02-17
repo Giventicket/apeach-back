@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('./controllers/index');
 const decodeToken = require('../middlewares/decodeToken');
-const isNameAndPasswordNotNull = require('../middlewares/isNameAndPasswordNotNull');
+const isEmailAndPasswordNotNull = require('../middlewares/isEmailAndPasswordNotNull');
 
 const router = express.Router();
 
@@ -125,7 +125,7 @@ router.delete('/signout', decodeToken, controller.signout);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/login', isNameAndPasswordNotNull, controller.login);
+router.post('/login', isEmailAndPasswordNotNull, controller.login);
 
 /**
  *  @swagger
@@ -220,7 +220,7 @@ router.patch(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/logout', decodeToken, controller.logout);
+router.delete('/logout', controller.logout);
 //user의 logout 진행
 
 /**
@@ -265,11 +265,15 @@ router.post('/silentrefresh', controller.silentRefresh);
  *          name: Authorization
  *          type: string
  *          required: true
+ *        - in: path
+ *          name: agreed
+ *          type: string
+ *          required: true
  *      responses:
  *          200:
  *            description: 토큰의 정상적인 발급
  *            schema:
- *              $ref: '#/definitions/Response_UserWithAccessToken'
+ *              $ref: '#/definitions/Response_User'
  *          401:
  *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
@@ -279,7 +283,6 @@ router.post('/silentrefresh', controller.silentRefresh);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.post('/complete/:agreed', decodeToken, controller.updateUser);
-//silentRefresh 진행
+router.patch('/complete/:agreed', decodeToken, controller.updateUser);
 
 module.exports = router;

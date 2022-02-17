@@ -5,7 +5,7 @@ const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const updateUser = asyncErrorWrapper(async (req, res, next) => {
     const { user } = req;
-
+    console.log(req.params.agreed);
     const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {
@@ -31,8 +31,8 @@ const updateUser = asyncErrorWrapper(async (req, res, next) => {
             chunks: updatedUser.chunks,
             samplesAudioCnt: updatedUser.samplesAudioCnt,
             chunksAudioCnt: updatedUser.chunksAudioCnt,
-            agreed: user.agreed,
-            sampleFinished: user.sampleFinished,
+            agreed: updatedUser.agreed,
+            sampleFinished: updatedUser.sampleFinished,
         },
     });
 });

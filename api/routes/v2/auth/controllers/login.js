@@ -8,13 +8,13 @@ const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 
 const login = asyncErrorWrapper(async (req, res, next) => {
     let user = await User.findOne({
-        name: req.body.name,
+        email: req.body.email,
     })
         .populate('chunks')
         .exec();
 
     if (user == null) {
-        const err = new Error(`Login failed [Cannot find ${req.body.name}]`);
+        const err = new Error(`Login failed [Cannot find ${req.body.email}]`);
         err.status = 404;
         throw err;
     }
