@@ -65,6 +65,8 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { new: true },
     ).exec();
 
+    console.log(updatedChunk);
+
     if (isAuthUser)
         await User.updateOne(
             { _id: user._id },
@@ -74,12 +76,12 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
             { new: true },
         ).exec();
 
-    const speakerD = `발화자 정보: ${chunk.speakerName}\n\n`;
-    const sourceD = `소스 음성: [sourceWaveUrl](${chunk.sourceWaveUrl})\n`;
-    const targetD = `타겟 음성: [targetWaveUrl](${chunk.targetWaveUrl})\n\n`;
+    const speakerD = `발화자 정보: ${updatedChunk.speakerName}\n\n`;
+    const sourceD = `소스 음성: [sourceWaveUrl](${updatedChunk.sourceWaveUrl})\n`;
+    const targetD = `타겟 음성: [targetWaveUrl](${updatedChunk.targetWaveUrl})\n\n`;
     let segsD = '';
-    for (let idx in chunk['segments']) {
-        const seg = chunk.segments[idx];
+    for (let idx in updatedChunk.segments) {
+        const seg = updatedChunk.segments[idx];
         const segD = `  세그먼트 [${idx}]:\n    시작: ${seg.startTime}\n    끝: ${seg.endTime}\n    소스 텍스트: ${seg.sourceText}\n    타겟 텍스트: ${seg.targetText}\n\n`;
         segsD += segD;
     }
