@@ -13,16 +13,16 @@ const asyncSendWebhook = require('../../../../../utils/asyncSendWebhook');
 const tts = asyncErrorWrapper(async (req, res, next) => {
     const { chunk, user, isAuthUser } = req;
 
-    const parsedAudioUrl = url.parse(chunk.sourceWaveUrl).pathname.split('/');
-    const gs_uri = `gs://${process.env.BUCKET_NAME}/${decodeURIComponent(
-        parsedAudioUrl[parsedAudioUrl.length - 1],
-    )}`;
+    // const parsedAudioUrl = url.parse(chunk.sourceWaveUrl).pathname.split('/');
+    // const gs_uri = `gs://${process.env.BUCKET_NAME}/${decodeURIComponent(
+    //     parsedAudioUrl[parsedAudioUrl.length - 1],
+    // )}`;
 
     const ttsResult = await axios
         .post(
             `${process.env.AI_SERVER}/api/tts`,
             {
-                gs_uri,
+                sourceWaveUrl: chunk.sourceWaveUrl,
                 segments: chunk.segments,
                 spk_id: req.params.speakerName,
             },
