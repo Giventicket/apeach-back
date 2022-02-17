@@ -254,12 +254,17 @@ router.post('/silentrefresh', controller.silentRefresh);
  *    patch:
  *      tags:
  *      - Auth
- *      summary: "자신의 목소리가 울려 퍼지는 것을 동의"
+ *      summary: "자신의 목소리가 울려 퍼지는 것을 동의, agreed에는 true, false를 입력"
  *      description: 자신의 목소리가 대중에게 울려 퍼지는 것을 동의한다.
  *      consumes:
  *        - application/json
  *      produces:
  *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
  *      responses:
  *          200:
  *            description: 토큰의 정상적인 발급
