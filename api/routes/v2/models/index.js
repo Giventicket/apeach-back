@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v2/models/upload/{speakerName}:
+ *  /api/v2/models/upload/{speakerName}/{size}:
  *    post:
  *      tags:
  *      - Model
@@ -18,6 +18,10 @@ const router = express.Router();
  *      parameters:
  *        - in: path
  *          name: speakerName
+ *          type: string
+ *          required: true
+ *        - in: path
+ *          name: size
  *          type: string
  *          required: true
  *        - in: formData
@@ -37,9 +41,13 @@ const router = express.Router();
  *            description: user를 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
+ *          501:
+ *            description: os에서 parsing을 잘못한 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
-    '/upload/:speakerName',
+    '/upload/:speakerName/:size',
     controller.getUser,
     controller.parseForm,
     controller.uploadModel,

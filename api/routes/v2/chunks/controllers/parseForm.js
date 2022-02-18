@@ -9,6 +9,7 @@ const parseForm = asyncErrorWrapper(async (req, res, next) => {
         throw err;
     }
     req.files = files;
+
     next();
 });
 

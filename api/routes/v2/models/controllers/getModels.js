@@ -5,7 +5,9 @@ const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
 const getModels = asyncErrorWrapper(async (req, res, next) => {
     const users = await User.find({}).exec();
-    const filteredUsers = users.filter(user => user.models.length !== 0);
+    const filteredUsers = users.filter(
+        user => user.models.length !== 0 && user.agreed,
+    );
 
     let models = [];
 
