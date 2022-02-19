@@ -65,8 +65,6 @@ const tts = asyncErrorWrapper(async (req, res, next) => {
         { new: true },
     ).exec();
 
-    console.log(updatedChunk);
-
     if (isAuthUser)
         await User.updateOne(
             { _id: user._id },

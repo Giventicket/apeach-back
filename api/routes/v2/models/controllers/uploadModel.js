@@ -26,8 +26,6 @@ const uploadModel = asyncErrorWrapper(async (req, res, next) => {
     asyncFileDelete(file.filepath);
 
     req.modelUrl = result[0].metadata.mediaLink;
-    // console.log('gcs ', Number(result[0].metadata.size));
-
     next();
 });
 

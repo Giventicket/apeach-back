@@ -1,4 +1,11 @@
 const express = require('express');
+
+const Multer = require('multer');
+const multer = Multer({
+    storage: Multer.MemoryStorage,
+    fileSize: 500 * 1024 * 1024,
+});
+
 const controller = require('./controllers/index');
 const decodeToken = require('../middlewares/decodeToken');
 
@@ -57,7 +64,8 @@ const router = express.Router();
 router.post(
     '/',
     decodeToken,
-    controller.parseForm,
+    multer.single('file'),
+    controller.parseFile,
     controller.checkFile,
     controller.preprocess,
     controller.uploadAudio,

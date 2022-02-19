@@ -1,11 +1,17 @@
 const express = require('express');
-const controller = require('./controllers/index');
 
+const Multer = require('multer');
+const multer = Multer({
+    storage: Multer.MemoryStorage,
+    fileSize: 500 * 1024 * 1024,
+});
+
+const controller = require('./controllers/index');
 const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v2/models/upload/{speakerName}/{size}:
+ *  /api/v2/models/upload/{speakerName}:
  *    post:
  *      tags:
  *      - Model
@@ -18,10 +24,6 @@ const router = express.Router();
  *      parameters:
  *        - in: path
  *          name: speakerName
- *          type: string
- *          required: true
- *        - in: path
- *          name: size
  *          type: string
  *          required: true
  *        - in: formData
@@ -41,15 +43,12 @@ const router = express.Router();
  *            description: user를 찾을 수 없는 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
- *          501:
- *            description: os에서 parsing을 잘못한 경우
- *            schema:
- *              $ref: '#/definitions/Response_Only_Message'
  */
 router.post(
-    '/upload/:speakerName/:size',
+    '/upload/:speakerName',
     controller.getUser,
-    controller.parseForm,
+    multer.single('file'),
+    controller.parseFile,
     controller.uploadModel,
     controller.createModelAndUpdateUserAfterUploadModel,
 );

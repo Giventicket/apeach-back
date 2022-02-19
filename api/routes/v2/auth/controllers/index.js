@@ -5,11 +5,11 @@ const checkSample = require('./checkSample');
 const logout = require('./logout');
 const silentRefresh = require('./silentRefresh');
 const preprocess = require('./preprocess');
-const parseForm = require('./parseForm');
 const uploadAudio = require('./uploadAudio');
 const updateUserAfterUploadAudio = require('./updateUserAfterUploadAudio');
 const checkFile = require('./checkFile');
 const updateUser = require('./updateUser');
+const parseFile = require('./parseFile');
 
 module.exports = {
     login,
@@ -19,9 +19,9 @@ module.exports = {
     logout,
     silentRefresh,
     preprocess,
-    parseForm,
     uploadAudio,
     updateUserAfterUploadAudio,
     checkFile,
     updateUser,
+    parseFile,
 };

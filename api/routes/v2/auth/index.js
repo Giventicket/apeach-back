@@ -1,4 +1,11 @@
 const express = require('express');
+
+const Multer = require('multer');
+const multer = Multer({
+    storage: Multer.MemoryStorage,
+    fileSize: 500 * 1024 * 1024,
+});
+
 const controller = require('./controllers/index');
 const decodeToken = require('../middlewares/decodeToken');
 const isEmailAndPasswordNotNull = require('../middlewares/isEmailAndPasswordNotNull');
@@ -186,7 +193,8 @@ router.patch(
     '/sample/:utteranceId',
     decodeToken,
     controller.checkSample,
-    controller.parseForm,
+    multer.single('file'),
+    controller.parseFile,
     controller.checkFile,
     controller.preprocess,
     controller.uploadAudio,
