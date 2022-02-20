@@ -214,6 +214,11 @@ router.patch(
  *        - application/json
  *      produces:
  *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
  *      responses:
  *          200:
  *            description: 로그아웃을 정상적으로 할 경우
@@ -228,7 +233,7 @@ router.patch(
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.delete('/logout', controller.logout);
+router.delete('/logout', decodeToken, controller.logout);
 //user의 logout 진행
 
 /**
