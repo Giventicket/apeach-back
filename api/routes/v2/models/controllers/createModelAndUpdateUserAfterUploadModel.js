@@ -53,7 +53,8 @@ const createModelAndUpdateUserAfterUploadModel = asyncErrorWrapper(
                     user.agreed ? '동의' : '비동의'
                 }하셨습니다. </h1>`,
         };
-        transporter.sendMail(emailOptions);
+
+        transporter.sendMail(emailOptions).catch(err => {});
 
         res.status(200).json({
             message: `upload success [upload a model on google bucket]`,
