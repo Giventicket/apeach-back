@@ -7,6 +7,7 @@ const multer = Multer({
 });
 
 const controller = require('./controllers/index');
+const decodeToken = require('../middlewares/decodeToken');
 const router = express.Router();
 
 /**
@@ -96,13 +97,25 @@ router.get('/:speakerName', controller.getUser, controller.getModel);
  *        - application/json
  *      produces:
  *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *      responses:
  *          200:
  *            description: model을 배열 형태로 반환
  *            schema:
  *              $ref: '#/definitions/Response_Models'
  */
-router.get('/', controller.getModels);
+router.get('/', decodeToken, controller.getModels);
 
 /**
  *  @swagger
