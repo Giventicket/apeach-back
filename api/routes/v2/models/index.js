@@ -104,4 +104,33 @@ router.get('/:speakerName', controller.getUser, controller.getModel);
  */
 router.get('/', controller.getModels);
 
+/**
+ *  @swagger
+ *  /api/v2/models/{speakerName}:
+ *    patch:
+ *      tags:
+ *      - Model
+ *      summary: '모델에 sampleSentenceUrl 추가'
+ *      description: 모델에 sampleSentenceUrl 추가
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: speakerName
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: model을 변환
+ *            schema:
+ *              $ref: '#/definitions/Response_Model'
+ *          400:
+ *            description: speakerName이 명시되지 않은 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
+router.patch('/:speakerName', controller.tts, controller.updateModel);
+
 module.exports = router;

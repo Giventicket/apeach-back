@@ -11,6 +11,10 @@ const modelSchema = new Schema(
             type: String,
             required: true,
         },
+        sampleSentenceUrl: {
+            type: String,
+            default: '',
+        },
     },
     {
         versionKey: false,

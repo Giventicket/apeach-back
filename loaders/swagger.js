@@ -294,6 +294,8 @@ module.exports = app => {
  *          type: string
  *        modelUrl:
  *          type: string
+ *        sampleSentenceUrl:
+ *          type: string
  *        createdAt:
  *          type: string
  *        updatedAt:

@@ -263,7 +263,7 @@ router.post('/silentrefresh', controller.silentRefresh);
 
 /**
  *  @swagger
- *  /api/v2/auth/complete/{agreed}:
+ *  /api/v2/auth/userinfo:
  *    patch:
  *      tags:
  *      - Auth
