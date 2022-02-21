@@ -296,7 +296,7 @@ router.post('/silentrefresh', controller.silentRefresh);
  *            schema:
  *              $ref: '#/definitions/Response_User'
  *          400:
- *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            description: agreed, sampleFinished가 명시 안된 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
