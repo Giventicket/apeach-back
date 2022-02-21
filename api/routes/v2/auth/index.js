@@ -278,15 +278,27 @@ router.post('/silentrefresh', controller.silentRefresh);
  *          name: Authorization
  *          type: string
  *          required: true
- *        - in: path
- *          name: agreed
- *          type: string
- *          required: true
+ *        - in: body
+ *          name: JSON
+ *          schema:
+ *            type: object
+ *            required:
+ *              - agreed
+ *              - sampleFinished
+ *            properties:
+ *              agreed:
+ *                type: string
+ *              sampleFinished:
+ *                type: string
  *      responses:
  *          200:
  *            description: 토큰의 정상적인 발급
  *            schema:
  *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
  *          401:
  *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
  *            schema:
@@ -296,6 +308,6 @@ router.post('/silentrefresh', controller.silentRefresh);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.patch('/complete/:agreed', decodeToken, controller.updateUser);
+router.patch('/userinfo', decodeToken, controller.updateUser);
 
 module.exports = router;

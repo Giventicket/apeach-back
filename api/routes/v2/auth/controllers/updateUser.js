@@ -7,12 +7,11 @@ const asyncSendWebhookForSampleFinished = require('../../../../../utils/asyncSen
 
 const updateUser = asyncErrorWrapper(async (req, res, next) => {
     const { user } = req;
-    console.log(req.params.agreed);
     const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {
             agreed: req.params.agreed === 'true',
-            sampleFinished: true,
+            sampleFinished: req.params.sampleFinished === 'true',
         },
         { new: true },
     )
@@ -42,12 +41,12 @@ const updateUser = asyncErrorWrapper(async (req, res, next) => {
 
     const emailOptions = {
         from: process.env.APEACH_EMAIL,
-        to: user.email,
-        subject: `[Team Apeach (pathfinder)] Apeach에서 ${user.name}님의 모델 학습이 신청되었음을 공지드립니다.`,
+        to: updatedUser.email,
+        subject: `[Team Apeach (pathfinder)] Apeach에서 ${updatedUser.name}님의 모델 학습이 신청되었음을 공지드립니다.`,
         html:
-            `<h1>[Team Apeach (pathfinder)] Apeach에서 ${user.name}님의 모델 학습이 신청되었음을 공지드립니다.</h1>` +
-            `<h1> ${user.name}님은 파이널 쇼케이스에서 공개 여부에 ${
-                user.agreed ? '동의' : '비동의'
+            `<h1>[Team Apeach (pathfinder)] Apeach에서 ${updatedUser.name}님의 모델 학습이 신청되었음을 공지드립니다.</h1>` +
+            `<h1> ${updatedUser.name}님은 파이널 쇼케이스에서 공개 여부에 ${
+                updatedUser.agreed ? '동의' : '비동의'
             }하셨습니다. </h1>` +
             `<h1>모델학습이 완료되면 다시 한번 이메일로 공지드리도록하겠습니다.</h1>`,
     };
