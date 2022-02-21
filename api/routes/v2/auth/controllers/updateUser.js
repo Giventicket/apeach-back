@@ -10,8 +10,8 @@ const updateUser = asyncErrorWrapper(async (req, res, next) => {
     const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {
-            agreed: req.params.agreed === 'true',
-            sampleFinished: req.params.sampleFinished === 'true',
+            agreed: req.body.agreed === 'true',
+            sampleFinished: req.body.sampleFinished === 'true',
         },
         { new: true },
     )
