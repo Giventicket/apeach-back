@@ -263,7 +263,7 @@ router.post('/silentrefresh', controller.silentRefresh);
 
 /**
  *  @swagger
- *  /api/v2/auth/userinfo:
+ *  /api/v2/auth/agreed/{agreed}:
  *    patch:
  *      tags:
  *      - Auth
@@ -278,25 +278,17 @@ router.post('/silentrefresh', controller.silentRefresh);
  *          name: Authorization
  *          type: string
  *          required: true
- *        - in: body
- *          name: JSON
- *          schema:
- *            type: object
- *            required:
- *              - agreed
- *              - sampleFinished
- *            properties:
- *              agreed:
- *                type: string
- *              sampleFinished:
- *                type: string
+ *        - in: path
+ *          name: agreed
+ *          type: string
+ *          required: true
  *      responses:
  *          200:
- *            description: 토큰의 정상적인 발급
+ *            description: agreed를 정상적으로 update한 경우
  *            schema:
  *              $ref: '#/definitions/Response_User'
  *          400:
- *            description: agreed, sampleFinished가 명시 안된 경우
+ *            description: agreed 명시가 안 된 경우
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  *          401:
@@ -308,6 +300,43 @@ router.post('/silentrefresh', controller.silentRefresh);
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.patch('/userinfo', decodeToken, controller.updateUser);
+router.patch('/agreed/:agreed', decodeToken, controller.updateAgreed);
+
+/**
+ *  @swagger
+ *  /api/v2/auth/sampleFinished:
+ *    patch:
+ *      tags:
+ *      - Auth
+ *      summary: "모델 생성을 위해서 sampleFinished 의 값을 true로 변경하고 webhook 전송"
+ *      description: 모델 생성을 위해서 sampleFinished 의 값을 true로 변경하고 webhook 전송
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: string
+ *          required: true
+ *      responses:
+ *          200:
+ *            description: sampleFinished를 정상적으로 update한 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_User'
+ *          400:
+ *            description: sampleFinished 명시가 안 된 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          401:
+ *            description: 정상적인 로그인을 할 수 없는 경우(refreshToken을 DB에서 찾을 수 없음, refreshToken 만료, Ip 주소가 매칭이 안됨)
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ *          404:
+ *            description: user를 찾을 수 없는 경우
+ *            schema:
+ *              $ref: '#/definitions/Response_Only_Message'
+ */
+router.patch('/sampleFinished', decodeToken, controller.updateSampleFinished);
 
 module.exports = router;

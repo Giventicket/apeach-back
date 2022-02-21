@@ -8,8 +8,9 @@ const preprocess = require('./preprocess');
 const uploadAudio = require('./uploadAudio');
 const updateUserAfterUploadAudio = require('./updateUserAfterUploadAudio');
 const checkFile = require('./checkFile');
-const updateUser = require('./updateUser');
 const parseFile = require('./parseFile');
+const updateAgreed = require('./updateAgreed');
+const updateSampleFinished = require('./updateSampleFinished');
 
 module.exports = {
     login,
@@ -22,6 +23,7 @@ module.exports = {
     uploadAudio,
     updateUserAfterUploadAudio,
     checkFile,
-    updateUser,
     parseFile,
+    updateAgreed,
+    updateSampleFinished,
 };
