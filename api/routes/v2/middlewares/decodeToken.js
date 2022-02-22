@@ -14,7 +14,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
         req.isAuthUser = false;
         return next();
     }
-    /*
+
     const { refreshToken, userId, userIp } = await Token.findOne({
         refreshToken: req.cookies.refreshToken,
     }).exec();
@@ -46,7 +46,7 @@ const decodeToken = asyncErrorWrapper(async (req, res, next) => {
         err.status = 401;
         throw err;
     }
-*/
+
     //Case 4-2: 클라이언트가 전송한 req의 refreshToken의 ip와 request의 header에서 뽑아낸 ip가 같음. request.refreshToken.ip == request.header.ip
     const decodedAccessToken = await new Promise(async (resolve, reject) => {
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
