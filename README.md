@@ -149,7 +149,8 @@ swagger: http://localhost/api-docs/
 ```
 
 ## 2. 데이터 구조
-<image src="https://user-images.githubusercontent.com/39179946/150734582-229db647-ec15-4b0f-a6d5-79c1eb884713.png"/>
+
+<image src="https://user-images.githubusercontent.com/39179946/155265732-798c91e4-b6ee-47be-9c0f-4e943eb8257a.png"/>
 
 ## 3. 벡엔드 인프라
 
@@ -165,13 +166,20 @@ Message/Queue: GCP Pub/Sub
 Notification: Discord
 ```
 
-## 4. 데이터 플로우
-| <image src="https://user-images.githubusercontent.com/39179946/150782677-0cf9d0f4-9b85-4df2-8d3e-daa0afb318ad.png"/> | <image src="https://user-images.githubusercontent.com/39179946/150782733-8f77a94f-5fd6-4ddf-a42a-082a24564836.png"/> |
+## 4. sample voice 녹음 후 모델 생성 플로우
+| <image src="https://user-images.githubusercontent.com/39179946/155266049-fb676bb2-94da-471c-862f-20de2ac2148f.png"/> | <image src="https://user-images.githubusercontent.com/39179946/155266111-65379685-60f1-4fbf-b6d3-f1e2608ce80d.png"/> |
 | ------------- | ------------- |
-| <image src="https://user-images.githubusercontent.com/39179946/150783851-c25e8248-9243-4bdd-bda9-95a2244b7f77.png"/> | <image src="https://user-images.githubusercontent.com/39179946/150783866-18a278f6-e275-4bfc-8edf-b6a8711d3d75.png"/> |
-| <image src="https://user-images.githubusercontent.com/39179946/150783881-69a19bf3-2ec0-4f2f-84a6-7966e8c21a15.png"/> | <image src="https://user-images.githubusercontent.com/39179946/150783901-d8a91681-5a25-4e4c-a93f-c6e068abbaa5.png"/> |
+| <image src="https://user-images.githubusercontent.com/39179946/155266214-d43d81ec-3db8-41a0-9f59-d565bc52c8d9.png"/> | <image src="https://user-images.githubusercontent.com/39179946/155266252-2a42e869-ec04-417d-a4a5-ca9222f7d6c3.png"/> |
+| <image src="https://user-images.githubusercontent.com/39179946/155266322-53b3fd23-5375-4158-87c6-c333e47e90ee.png"/> | |
 
-## 5. 스케쥴러
+
+## 5. dubbing 플로우
+| <image src="https://user-images.githubusercontent.com/39179946/155266438-75c6af0c-bd78-452b-88eb-baa5cce7ee1c.png"/> | <image src="https://user-images.githubusercontent.com/39179946/155266452-db6fb7cc-d2a1-4f2b-9c4c-ddc7e2c5ac71.png"/> |
+| ------------- | ------------- |
+| <image src="https://user-images.githubusercontent.com/39179946/155266468-fbca9ca7-9c2f-460b-84c1-8190ba7e2ec7.png"/> | <image src="https://user-images.githubusercontent.com/39179946/155266479-3036dfcd-32ee-439e-9a93-97a8ca6a5203.png"/> |
+| <image src="https://user-images.githubusercontent.com/39179946/155266495-594a3da0-99b6-4c3d-8d44-690e320b0df7.png"/> | <image src="https://user-images.githubusercontent.com/39179946/155266505-f8263cc0-d96a-4a80-b05c-888d70e68d2a.png"/> |
+
+## 6. 스케쥴러
 | 디스코스 웹훅 전송 스케줄러  | 구글 버킷 삭제 스케줄러 |
 | ------------- | ------------- |
 | <image src="https://user-images.githubusercontent.com/39179946/150819434-04d36e91-710e-4dec-9b12-71cf48fa9f01.png"/> | <image src="https://user-images.githubusercontent.com/39179946/150819701-b823b27c-5c05-443a-8814-555caa890129.png"/> |
@@ -188,5 +196,5 @@ Notification: Discord
 * 각 스케줄러는 active할 때 또 다른 스케줄러를 생성하지 않는다.
 ```
 
-## 6. 유닛 테스트
+## 7. 유닛 테스트(deprecated)
 <image src="https://user-images.githubusercontent.com/39179946/148551241-49fdd83b-7bc7-4538-a061-6d4a2d9eb23d.png"/>
