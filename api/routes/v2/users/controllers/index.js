@@ -1,5 +1,5 @@
-const getSamplesbyName = require('./getSamplesbyName');
+const getSamplesByName = require('./getSamplesByName');
 
 module.exports = {
-    getSamplesbyName,
+    getSamplesByName,
 };

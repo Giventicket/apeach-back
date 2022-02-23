@@ -30,7 +30,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/definitions/Response_Only_Message'
  */
-router.get('/samples/:userName', controller.getSamplesbyName);
+router.get('/samples/:userName', controller.getSamplesByName);
 // [get] 매칭 되는 user의 samples 가져오기
 
 module.exports = router;

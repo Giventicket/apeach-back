@@ -1,7 +1,7 @@
 let User = require('../../../../../models/v2/user/index');
 const asyncErrorWrapper = require('../../../../../utils/asyncErrorWrapper.js');
 
-const getSamplesbyName = asyncErrorWrapper(async (req, res, next) => {
+const getSamplesByName = asyncErrorWrapper(async (req, res, next) => {
     const user = await User.findOne({ name: req.params.userName })
         .populate('samples')
         .exec();
@@ -17,4 +17,4 @@ const getSamplesbyName = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-module.exports = getSamplesbyName;
+module.exports = getSamplesByName;
