@@ -9,6 +9,8 @@ npm: 8.1.2
 <br/>
 
 ```bash
+sudo apt update
+sudo apt install ffmpeg
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
 git clone https://github.com/Giventicket/apeach-back.git
@@ -24,33 +26,70 @@ swagger: http://localhost/api-docs/
 
 ```bash
 ├── api
-│    ├── routes
-│    │      ├── index.js
-│    │      └── v1
-│    │          ├── index.js
-│    │          ├── audios
-│    │          │      ├── index.js
-│    │          │      └── controllers
-│    │          │               ├── index.js
-│    │          │               ├── checkFile.js
-│    │          │               ├── deleteFile.js
-│    │          │               ├── parseForm.js
-│    │          │               ├── preprocess.js
-│    │          │               └── uploadFile.js
-│    │          └── chunks
-│    │                 ├── index.js
-│    │                 └── controllers
-│    │                          ├── index.js
-│    │                          ├── createChunk.js
-│    │                          ├── deleteChunk.js
-│    │                          ├── deleteChunks.js
-│    │                          ├── getChunk.js
-│    │                          ├── getChunks.js
-│    │                          └── updateChunk.js
-│    └── middlewares
+│    └── routes
 │          ├── index.js
-│          ├── isRequired.js
-│          └── isValidID.js
+│          └── v2
+│              ├── index.js
+│              ├── ai
+│              │    ├── index.js
+│              │    └── controllers
+│              │            ├── index.js
+│              │            ├── getChunk.js
+│              │            ├── getUser.js
+│              │            ├── stt.js
+│              │            ├── translate.js
+│              │            └── tts.js
+│              ├── auth
+│              │      ├── index.js
+│              │      └── controllers
+│              │               ├── index.js
+│              │               ├── checkFile.js
+│              │               ├── checkSample.js
+│              │               ├── login.js
+│              │               ├── logout.js
+│              │               ├── parseFile.js
+│              │               ├── preprocess.js
+│              │               ├── signout.js
+│              │               ├── signup.js
+│              │               ├── silentRefresh.js
+│              │               ├── updateAgreed.js
+│              │               ├── updateSampleFinished.js
+│              │               ├── updateUser.js
+│              │               ├── updateUserAfterUploadAudio.js
+│              │               └── uploadAudio.js
+│              ├── chunks
+│              │      ├── index.js
+│              │      └── controllers
+│              │               ├── index.js
+│              │               ├── checkFile.js
+│              │               ├── createChunk.js
+│              │               ├── deleteChunk.js
+│              │               ├── parseFile.js
+│              │               ├── preprocess.js
+│              │               ├── updateChunk.js
+│              │               ├── updateUserAfterCreateChunk.js
+│              │               ├── updateUserAfterDeleteChunk.js
+│              │               └── uploadAudio.js
+│              ├── middlewares
+│              │      ├── decodeToken.js
+│              │      └── isEmailAndPasswordNotNull.js
+│              ├── models
+│              │      ├── index.js
+│              │      └── controllers
+│              │               ├── index.js
+│              │               ├── getSamplesByName.js
+│              │               ├── getModel.js
+│              │               ├── getModels.js
+│              │               ├── getUser.js
+│              │               ├── parseFile.js
+│              │               ├── tts.js
+│              │               ├── updateModel.js
+│              │               └── uploadModel.js
+│              └── users
+│                     ├── index.js
+│                     └── controllers
+│                              ├── index.js
+│                              └── getSamplesByName.js
 │
 ├── loaders
 │      ├── express.js
@@ -58,10 +97,19 @@ swagger: http://localhost/api-docs/
 │      └── swagger.js
 │
 ├── models
-│     └── v1
-│          └── chunk
-│                ├── index.js
-│                └── chunk.js
+│     └── v2
+│          ├── chunk
+│          |      ├── index.js
+│          |      └── chunk.js
+│          ├── model
+│          |      ├── index.js
+│          |      └── model.js
+│          ├── token
+│          |      ├── index.js
+│          |      └── token.js
+│          └── user
+│                 ├── index.js
+│                 └── user.js
 ├── utils
 │     ├── asyncAudioDelete.js
 │     ├── asyncAudioValidate.js
@@ -81,10 +129,14 @@ swagger: http://localhost/api-docs/
 │     └── jobSendWebhooks.js
 │  
 ├── tests
-│     └── api
-│          └── routes
-│                ├── db.js
-│                └── chunks.test.js
+│     ├── api
+│     |    └── routes
+|     |           └── v1
+│     |               ├── db.js
+│     |               ├── scenarios.test.js
+│     |               └── chunks.test.js
+|     └── artillery
+|            └── test.yaml
 ├── app.js
 ├── package-lock.json
 ├── package.json
